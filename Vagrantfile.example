@@ -11,4 +11,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.hostname = "mine-blockly"
+  config.vm.provision :shell, privileged: false, :path => "vagrant_scripts/vagrant.sh"
 end

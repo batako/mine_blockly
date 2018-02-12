@@ -17,3 +17,15 @@
 html, body {
   height: 100%;
 }
+
+button {
+  cursor: pointer;
+}
+
+form.flat {
+  display: inline-block;
+}
+
+.hide {
+  display: none;
+}

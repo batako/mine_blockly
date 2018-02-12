@@ -33,9 +33,13 @@
             <button id="linkButton" class="notext" title="...">
               <%= image_tag("blockly/1x1.gif", :class => "link icon21") %>
             </button>
-            <button id="runButton" class="notext primary" title="...">
-              <%= image_tag("blockly/1x1.gif", :class => "run icon21") %>
-            </button>
+            <%= form_tag(run_blockly_index_path, remote: true, class: "flat") do %>
+              <button id="runButton" class="notext primary" title="...">
+                <%= image_tag("blockly/1x1.gif", :class => "run icon21") %>
+              </button>
+              <div id="runParams"></div>
+              <%= token_tag %>
+            <% end %>
           </td>
         </tr>
       </table>
@@ -55,6 +59,31 @@
 <textarea id="content_xml" class="content" wrap="off"></textarea>
 
 <xml id="toolbox" style="display: none">
+  <category name="Minetest" colour="%{BKY_COLOUR_HUE}">
+    <block type="minetest_createblock">
+      <value name="material">
+        <block type="minetest_materials">
+          <field name="MATERIAL">stone</field>
+        </block>
+      </value>
+      <value name="x">
+        <block type="math_number">
+          <field name="X">0</field>
+        </block>
+      </value>
+      <value name="y">
+        <block type="math_number">
+          <field name="X">0</field>
+        </block>
+      </value>
+      <value name="z">
+        <block type="math_number">
+          <field name="X">0</field>
+        </block>
+      </value>
+    </block>
+    <block type="minetest_materials"></block>
+  </category>
   <category name="%{BKY_CATLOGIC}" colour="%{BKY_LOGIC_HUE}">
     <block type="controls_if"></block>
     <block type="logic_compare"></block>

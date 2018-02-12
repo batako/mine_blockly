@@ -509,9 +509,26 @@ Code.runJS = function() {
     }
   };
   var code = Blockly.JavaScript.workspaceToCode(Code.workspace);
+  var codes = [];
+  var createblock = function(material, x, y, z){
+    var code = `/createblock ${ material } ${ x } ${ y } ${ z }`;
+    codes.push(code);
+  }
   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   try {
+    codes = [];
+
     eval(code);
+
+    $('#runParams').html('')
+
+    $.each(codes, function(_, code) {
+      $('<input>').attr({
+        type: 'hidden',
+        name: 'codes[]',
+        value: code
+      }).appendTo('#runParams');
+    });
   } catch (e) {
     alert(MSG['badCode'].replace('%1', e));
   }

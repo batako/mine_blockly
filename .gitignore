@@ -1,4 +1,10 @@
 .vagrant
 Vagrantfile
-minetest/worlds
-minetest/debug.txt
+minetest/*
+!minetest/mods
+!minetest/worlds
+minetest/worlds/*
+!minetest/worlds/world
+minetest/worlds/world/*
+!minetest/worlds/world/world.mt
+!minetest/minetest.conf

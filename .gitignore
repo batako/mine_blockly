@@ -1,2 +1,4 @@
 .vagrant
 Vagrantfile
+minetest/worlds
+minetest/debug.txt

@@ -30,9 +30,9 @@
             <button id="trashButton" class="notext" title="...">
               <%= image_tag("blockly/1x1.gif", :class => "trash icon21") %>
             </button>
-            <button id="linkButton" class="notext" title="...">
+            <!-- <button id="linkButton" class="notext" title="...">
               <%= image_tag("blockly/1x1.gif", :class => "link icon21") %>
-            </button>
+            </button> -->
             <%= form_tag(run_blockly_index_path, remote: true, class: "flat") do %>
               <button id="runButton" class="notext primary" title="...">
                 <%= image_tag("blockly/1x1.gif", :class => "run icon21") %>
@@ -40,6 +40,10 @@
               <div id="runParams"></div>
               <%= token_tag %>
             <% end %>
+            <span class="local-starage-btns">
+              <button id="saveButton">Save</button>
+              <button id="restoreButton">Restore</button>
+            </span>
           </td>
         </tr>
       </table>
@@ -57,6 +61,16 @@
 <pre id="content_lua" class="content"></pre>
 <pre id="content_dart" class="content"></pre>
 <textarea id="content_xml" class="content" wrap="off"></textarea>
+
+<div id="restoreModal" class="restore-modal">
+  <div class="modal-window">
+    <div class="modal-header">Saved programs</div>
+    <ul id="restoreList" class="program-list"></ul>
+    <div class="modal-footer">
+      <a id="closeModal">Cancel</a>
+    </div>
+  </div>
+</div>
 
 <xml id="toolbox" style="display: none">
   <category name="Minetest" colour="%{BKY_COLOUR_HUE}">

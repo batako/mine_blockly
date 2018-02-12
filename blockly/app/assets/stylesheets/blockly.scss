@@ -70,9 +70,9 @@ body.blockly {
       .trash {
         background-position: 0px 0px;
       }
-      .link {
-        background-position: -21px 0px;
-      }
+      // .link {
+      //   background-position: -21px 0px;
+      // }
       .run {
         background-position: -42px 0px;
       }
@@ -90,12 +90,16 @@ body.blockly {
       border: 1px solid #ccc;
       border-bottom: none;
       white-space: nowrap;
+      font-size: 10px;
+      font-weight: bold;
+      line-height: 24px;
     }
     td {
       &.tabon {
         border-bottom-color: #ddd !important;
         background-color: #ddd;
         padding: 5px 19px;
+        font-size: 16px !important;
       }
       &.taboff {
         cursor: pointer;
@@ -117,6 +121,10 @@ body.blockly {
         padding-left: 10px;
         padding-right: 10px;
         text-align: right;
+
+        .local-starage-btns {
+          margin-left: 10px;
+        }
       }
     }
     tr.tabs td {
@@ -161,6 +169,47 @@ body.blockly {
       vertical-align: top;
       margin-top: 15px;
       margin-right: 15px;
+    }
+
+    .restore-modal {
+      display: none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      z-index: 90;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+
+      .modal-window {
+        width: 480px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border-radius: 8px;
+        padding: 10px 20px;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+
+        .modal-header {
+          font-weight: bold;
+        }
+        .program-list {
+          list-style: none;
+        }
+        .modal-footer {
+          text-align: right;
+        }
+        a {
+          cursor: pointer;
+          color: #48f;
+        }
+      }
     }
   }
 }

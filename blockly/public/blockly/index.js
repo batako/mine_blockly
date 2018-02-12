@@ -257,6 +257,12 @@ Code.tabClick = function(clickedName) {
     try {
       xmlDom = Blockly.Xml.textToDom(xmlText);
     } catch (e) {
+      // TODO: Replace window.confirm with alertify
+      // alertify.confirm(
+      //   MSG['badXml'].replace('%1', e),
+      //   function() {},
+      //   function() { return; }
+      // );
       var q =
           window.confirm(MSG['badXml'].replace('%1', e));
       if (!q) {
@@ -429,17 +435,17 @@ Code.init = function() {
       function() {Code.discard(); Code.renderContent();});
   Code.bindClick('runButton', Code.runJS);
   // Disable the link button if page isn't backed by App Engine storage.
-  var linkButton = document.getElementById('linkButton');
-  if ('BlocklyStorage' in window) {
-    BlocklyStorage['HTTPREQUEST_ERROR'] = MSG['httpRequestError'];
-    BlocklyStorage['LINK_ALERT'] = MSG['linkAlert'];
-    BlocklyStorage['HASH_ERROR'] = MSG['hashError'];
-    BlocklyStorage['XML_ERROR'] = MSG['xmlError'];
-    Code.bindClick(linkButton,
-        function() {BlocklyStorage.link(Code.workspace);});
-  } else if (linkButton) {
-    linkButton.className = 'disabled';
-  }
+  // var linkButton = document.getElementById('linkButton');
+  // if ('BlocklyStorage' in window) {
+  //   BlocklyStorage['HTTPREQUEST_ERROR'] = MSG['httpRequestError'];
+  //   BlocklyStorage['LINK_ALERT'] = MSG['linkAlert'];
+  //   BlocklyStorage['HASH_ERROR'] = MSG['hashError'];
+  //   BlocklyStorage['XML_ERROR'] = MSG['xmlError'];
+  //   Code.bindClick(linkButton,
+  //       function() {BlocklyStorage.link(Code.workspace);});
+  // } else if (linkButton) {
+  //   linkButton.className = 'disabled';
+  // }
 
   for (var i = 0; i < Code.TABS_.length; i++) {
     var name = Code.TABS_[i];
@@ -491,7 +497,7 @@ Code.initLanguage = function() {
   // Inject language strings.
   document.getElementById('tab_blocks').textContent = MSG['blocks'];
 
-  document.getElementById('linkButton').title = MSG['linkTooltip'];
+  // document.getElementById('linkButton').title = MSG['linkTooltip'];
   document.getElementById('runButton').title = MSG['runTooltip'];
   document.getElementById('trashButton').title = MSG['trashTooltip'];
 };
@@ -530,7 +536,7 @@ Code.runJS = function() {
       }).appendTo('#runParams');
     });
   } catch (e) {
-    alert(MSG['badCode'].replace('%1', e));
+    alertify.alert(MSG['badCode'].replace('%1', e));
   }
 };
 
@@ -539,12 +545,23 @@ Code.runJS = function() {
  */
 Code.discard = function() {
   var count = Code.workspace.getAllBlocks().length;
-  if (count < 2 ||
-      window.confirm(Blockly.Msg.DELETE_ALL_BLOCKS.replace('%1', count))) {
+  if (count < 2) {
     Code.workspace.clear();
     if (window.location.hash) {
       window.location.hash = '';
     }
+  } else {
+    alertify.confirm(
+      Blockly.Msg.DELETE_ALL_BLOCKS.replace('%1', count),
+      function(e) {
+        if (e) {
+          Code.workspace.clear();
+          if (window.location.hash) {
+            window.location.hash = '';
+          }
+        }
+      }
+    );
   }
 };
 

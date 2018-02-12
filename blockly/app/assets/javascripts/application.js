@@ -14,4 +14,7 @@
 //= require jquery
 //= require rails-ujs
 //= require turbolinks
+//= require alertify
 //= require_tree .
+
+window.onload = function(){ alertify.parent(document.body) };

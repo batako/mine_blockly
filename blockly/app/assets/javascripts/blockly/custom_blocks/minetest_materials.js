@@ -12,7 +12,6 @@ Blockly.Blocks['minetest_materials'] = {
           ["Stone", "stone"],
           ["Wood", "wood"],
           ["Gold", "default:goldblock"],
-          ["Nyan", "default:nyancat"],
           ["Diamond", "default:diamondblock"],
         ]), "MATERIAL");
     this.setOutput(true, "String");

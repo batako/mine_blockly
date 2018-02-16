@@ -3,7 +3,7 @@ class BlocklyController < ApplicationController
   end
 
   def run
-    File.open('/dev/shm/minetest-message', 'w') do |file|
+    File.open("#{Settings.minetest.blockly_mod_home}/admin", 'w') do |file|
       codes.each do |code|
         file.puts code
       end

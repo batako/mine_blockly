@@ -54,3 +54,10 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# Nginx
+rails_root = File.expand_path("../..", __FILE__)
+bind "unix://#{rails_root}/tmp/sockets/puma.sock"
+pidfile "#{rails_root}/tmp/pids/puma.pid"
+state_path "#{rails_root}/tmp/pids/puma.state"
+stdout_redirect "#{rails_root}/log/puma.stdout.log", "#{rails_root}/log/puma.stderr.log", true

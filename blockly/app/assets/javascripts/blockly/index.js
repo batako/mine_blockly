@@ -517,15 +517,15 @@ Code.runJS = function() {
   var code = Blockly.JavaScript.workspaceToCode(Code.workspace);
   var codes = [];
   var createblock = function(material, x, y, z){
-    var code = `/createblock ${ material } ${ x } ${ y } ${ z }`;
+    var code = '/createblock ' + material + ' ' + x + ' ' + y + ' ' + z;
     codes.push(code);
   }
   var createtextblock = function(materialitext, x, y, z, dx, dy, dz) {
-    var code = `/createtextblock ${ materialitext } ${ x } ${ y } ${ z } ${ dx } ${ dy } ${ dz }`;
+    var code = '/createtextblock ' + materialitext + ' ' + x + ' ' + y + ' ' + z + ' ' + dx + ' ' + dy + ' ' + dz;
     codes.push(code);
   }
   var deletetextblock = function(materialitext, x, y, z, dx, dy, dz) {
-    var code = `/deletetextblock ${ materialitext } ${ x } ${ y } ${ z } ${ dx } ${ dy } ${ dz }`;
+    var code = '/deletetextblock ' + materialitext + ' ' + x + ' ' + y + ' ' + z + ' ' + dx + ' ' + dy + ' ' + dz;
     codes.push(code);
   }
   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;

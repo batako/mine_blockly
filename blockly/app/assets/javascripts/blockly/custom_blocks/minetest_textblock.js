@@ -49,7 +49,7 @@ Blockly.JavaScript['minetest_textblock'] = function(block) {
   if (value_dx == "") value_dx = 0;
   if (value_dy == "") value_dy = 0;
   if (value_dz == "") value_dz = 0;
-  var code = `${ command }("${ text }", ${ value_x }, ${ value_y }, ${ value_z }, ${ value_dx }, ${ value_dy }, ${ value_dz })`;
+  var code = command + '("' + text + '", ' + value_x + ', ' + value_y + ', ' + value_z + ', ' + value_dx + ', ' + value_dy + ', ' + value_dz + ')';
   return code;
 };
 
@@ -70,7 +70,7 @@ Blockly.Python['minetest_textblock'] = function(block) {
   if (value_dx == "") value_dx = 0;
   if (value_dy == "") value_dy = 0;
   if (value_dz == "") value_dz = 0;
-  var code = `${ command }("${ text }", ${ value_x }, ${ value_y }, ${ value_z }, ${ value_dx }, ${ value_dy }, ${ value_dz })`;
+  var code = command + '("' + text + '", ' + value_x + ', ' + value_y + ', ' + value_z + ', ' + value_dx + ', ' + value_dy + ', ' + value_dz + ')';
   return code;
 };
 
@@ -91,7 +91,7 @@ Blockly.PHP['minetest_textblock'] = function(block) {
   if (value_dx == "") value_dx = 0;
   if (value_dy == "") value_dy = 0;
   if (value_dz == "") value_dz = 0;
-  var code = `${ command }("${ text }", ${ value_x }, ${ value_y }, ${ value_z }, ${ value_dx }, ${ value_dy }, ${ value_dz })`;
+  var code = command + '("' + text + '", ' + value_x + ', ' + value_y + ', ' + value_z + ', ' + value_dx + ', ' + value_dy + ', ' + value_dz + ')';
   return code;
 };
 
@@ -112,7 +112,7 @@ Blockly.Lua['minetest_textblock'] = function(block) {
   if (value_dx == "") value_dx = 0;
   if (value_dy == "") value_dy = 0;
   if (value_dz == "") value_dz = 0;
-  var code = `${ command }("${ text }", ${ value_x }, ${ value_y }, ${ value_z }, ${ value_dx }, ${ value_dy }, ${ value_dz })`;
+  var code = command + '("' + text + '", ' + value_x + ', ' + value_y + ', ' + value_z + ', ' + value_dx + ', ' + value_dy + ', ' + value_dz + ')';
   return code;
 };
 
@@ -133,6 +133,6 @@ Blockly.Dart['minetest_textblock'] = function(block) {
   if (value_dx == "") value_dx = 0;
   if (value_dy == "") value_dy = 0;
   if (value_dz == "") value_dz = 0;
-  var code = `${ command }("${ text }", ${ value_x }, ${ value_y }, ${ value_z }, ${ value_dx }, ${ value_dy }, ${ value_dz })`;
+  var code = command + '("' + text + '", ' + value_x + ', ' + value_y + ', ' + value_z + ', ' + value_dx + ', ' + value_dy + ', ' + value_dz + ')';
   return code;
 };

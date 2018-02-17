@@ -8,3 +8,4 @@ minetest/worlds/*
 minetest/worlds/world/*
 !minetest/worlds/world/world.mt.example
 !minetest/minetest.conf
+vagrant_scripts/nginx/nginx.conf

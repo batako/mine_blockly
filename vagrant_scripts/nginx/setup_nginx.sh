@@ -26,3 +26,7 @@ echo Installing SELinux policy for Nginx...
 # sudo cat /var/log/audit/audit.log | grep nginx | audit2allow -m nginx
 # sudo cat /var/log/audit/audit.log | audit2allow -M nginx
 sudo semodule -i $NGINX_PATH/nginx.pp
+
+echo Setting up firewall rule for Nginx...
+sudo firewall-cmd --add-service=http --permanent
+sudo firewall-cmd --reload

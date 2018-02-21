@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo Installing packages for rbenv...
-sudo yum install -y git openssl-devel readline-devel zlib-devel
+sudo yum install -y git openssl-devel readline-devel zlib-devel gcc
 
 echo Installing rbenv...
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv

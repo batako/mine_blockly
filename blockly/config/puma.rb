@@ -9,7 +9,7 @@ threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-port        ENV.fetch("PORT") { 3000 }
+# port        ENV.fetch("PORT") { 3000 }
 
 # Specifies the `environment` that Puma will run in.
 #
@@ -61,3 +61,5 @@ bind "unix://#{rails_root}/tmp/sockets/puma.sock"
 pidfile "#{rails_root}/tmp/pids/puma.pid"
 state_path "#{rails_root}/tmp/pids/puma.state"
 stdout_redirect "#{rails_root}/log/puma.stdout.log", "#{rails_root}/log/puma.stderr.log", true
+
+daemonize true

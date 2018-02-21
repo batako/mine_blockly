@@ -30,13 +30,13 @@ http {
     index   index.html index.htm;
 
     upstream puma {
-        server unix://APP_ROOT/tmp/sockets/puma.sock;
+        server unix://APP_PATH/tmp/sockets/puma.sock;
     }
     server {
         listen       80 default_server;
         listen       [::]:80 default_server;
         server_name  localhost;
-        root         APP_ROOT/public;
+        root         APP_PATH/public;
 
         include /etc/nginx/default.d/*.conf;
 

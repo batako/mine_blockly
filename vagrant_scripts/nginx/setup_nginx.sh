@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR=$(cd $(dirname $0); pwd)
+NGINX_PATH=$(cd $(dirname $0); pwd)
 
 echo Installing Nginx...
 sudo yum install -y nginx
@@ -11,7 +11,7 @@ if [ ! -e /etc/nginx/nginx.conf.original ] ; then
 fi
 
 echo Replacing nginx.conf...
-sudo cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
+sudo cp $NGINX_PATH/nginx.conf /etc/nginx/nginx.conf
 
 echo Enabling Nginx...
 sudo systemctl enable nginx
@@ -25,4 +25,4 @@ sudo yum install -y policycoreutils-python
 echo Installing SELinux policy for Nginx...
 # sudo cat /var/log/audit/audit.log | grep nginx | audit2allow -m nginx
 # sudo cat /var/log/audit/audit.log | audit2allow -M nginx
-sudo semodule -i $SCRIPT_DIR/nginx.pp
+sudo semodule -i $NGINX_PATH/nginx.pp

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-NGINX_PATH=$(cd $(dirname $0); pwd)
+__DIR__=$(cd $(dirname $0); pwd)
 
 echo Installing Nginx...
 sudo yum install -y nginx
@@ -11,13 +11,13 @@ if [ ! -e /etc/nginx/nginx.conf.original ] ; then
 fi
 
 echo Replacing nginx.conf...
-sudo cp $NGINX_PATH/nginx.conf /etc/nginx/nginx.conf
+sudo cp $__DIR__/nginx.conf /etc/nginx/nginx.conf
 
 echo Enabling Nginx...
 sudo systemctl enable nginx
 
 echo Running Nginx...
-sudo systemctl start nginx
+sudo systemctl restart nginx
 
 echo Installing packages for Nginx...
 sudo yum install -y policycoreutils-python
@@ -25,7 +25,7 @@ sudo yum install -y policycoreutils-python
 echo Installing SELinux policy for Nginx...
 # sudo cat /var/log/audit/audit.log | grep nginx | audit2allow -m nginx
 # sudo cat /var/log/audit/audit.log | audit2allow -M nginx
-sudo semodule -i $NGINX_PATH/nginx.pp
+sudo semodule -i $__DIR__/nginx.pp
 
 echo Setting up firewall rule for Nginx...
 sudo firewall-cmd --add-service=http --permanent

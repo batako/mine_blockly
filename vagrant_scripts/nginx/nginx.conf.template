@@ -30,7 +30,7 @@ http {
     index   index.html index.htm;
 
     upstream puma {
-        server unix://APP_PATH/tmp/sockets/puma.sock;
+        server unix://SOCKETS_PATH/puma.sock;
     }
     server {
         listen       80 default_server;

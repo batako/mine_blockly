@@ -17,5 +17,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 3000, host: 3000, auto_correct: true
   config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
   config.vm.provision :shell, privileged: false, :path => "vagrant_scripts/vagrant.sh"
-  config.vm.provision :shell, privileged: false, run: "always", path: "vagrant_scripts/run_blockly.sh"
+  config.vm.provision :shell,
+                      privileged: false,
+                      run: "always",
+                      inline: "RAILS_ENV=production /vagrant/vagrant_scripts/run_blockly.sh"
 end

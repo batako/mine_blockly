@@ -5,7 +5,7 @@ APP_ABSOLUTE_PATH=$(cd $APP_PATH; pwd)
 SCRIPTS_PATH=${SCRIPTS_PATH:-/vagrant/vagrant_scripts}
 SOCKETS_PATH=${SOCKETS_PATH:-$APP_ABSOLUTE_PATH/tmp/sockets}
 
-echo Adding repository for both nodejs and minetest...
+echo Adding repository for minetest...
 curl -O http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo rpm -Uvh epel-release-latest-7.noarch.rpm
 rm epel-release-latest-7.noarch.rpm

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo Installing packages for rails...
-sudo yum install -y libffi-devel sqlite-devel nodejs
+sudo yum install -y libffi-devel sqlite-devel
 
 echo Installing rails...
 ~/.rbenv/shims/gem install bundler

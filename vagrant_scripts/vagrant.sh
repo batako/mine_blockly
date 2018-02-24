@@ -27,3 +27,6 @@ cp $SCRIPTS_PATH/nginx/nginx.conf.template $SCRIPTS_PATH/nginx/nginx.conf
 grep -l 'APP_PATH' $SCRIPTS_PATH/nginx/nginx.conf | xargs sed -i -e 's/APP_PATH/'${APP_ABSOLUTE_PATH////\\/}'/g'
 grep -l 'SOCKETS_PATH' $SCRIPTS_PATH/nginx/nginx.conf | xargs sed -i -e 's/SOCKETS_PATH/'${SOCKETS_PATH////\\/}'/g'
 $SCRIPTS_PATH/nginx/setup_nginx.sh
+
+echo Restarting shell...
+exec $SHELL -l

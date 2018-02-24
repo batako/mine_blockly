@@ -5,11 +5,6 @@ APP_ABSOLUTE_PATH=$(cd $APP_PATH; pwd)
 SCRIPTS_PATH=${SCRIPTS_PATH:-/vagrant/vagrant_scripts}
 SOCKETS_PATH=${SOCKETS_PATH:-$APP_ABSOLUTE_PATH/tmp/sockets}
 
-echo Adding repository for minetest...
-curl -O http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-sudo rpm -Uvh epel-release-latest-7.noarch.rpm
-rm epel-release-latest-7.noarch.rpm
-
 echo Updating system...
 sudo yum -y update
 
@@ -20,7 +15,7 @@ echo Installing rails...
 APP_PATH=$APP_ABSOLUTE_PATH $SCRIPTS_PATH/install_rails.sh
 
 echo Installing minetest...
-sudo yum install -y minetest
+$SCRIPTS_PATH/minetest/install_minetest.sh
 
 echo Setting Up Nginx...
 cp $SCRIPTS_PATH/nginx/nginx.conf.template $SCRIPTS_PATH/nginx/nginx.conf

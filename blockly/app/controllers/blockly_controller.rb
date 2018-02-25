@@ -1,4 +1,6 @@
 class BlocklyController < ApplicationController
+  before_action :create_blockly_mod_home, only: :run
+
   def index
   end
 
@@ -15,5 +17,9 @@ class BlocklyController < ApplicationController
   private
     def codes
       params[:codes] || []
+    end
+
+    def create_blockly_mod_home
+      FileUtils.mkdir_p Settings.minetest.blockly_mod_home
     end
 end

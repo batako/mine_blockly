@@ -1,0 +1,12 @@
+[Unit]
+Description = Blockly Server
+After = network.target
+
+[Service]
+Type = simple
+User = BLOCKLY_USER
+Restart = always
+ExecStart = RUN_SCRIPT
+
+[Install]
+WantedBy = multi-user.target

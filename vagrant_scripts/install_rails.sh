@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+APP_PATH=${APP_PATH:-/vagrant/blockly}
+
 echo Installing packages for rails...
 sudo yum install -y libffi-devel sqlite-devel
 

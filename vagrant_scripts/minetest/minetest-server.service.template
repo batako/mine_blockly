@@ -1,0 +1,12 @@
+[Unit]
+Description = Minetest Server
+After = network.target
+
+[Service]
+Type = simple
+User = MINETEST_USER
+Restart = always
+ExecStart = /usr/bin/minetestserver --port 30000 --world MINETEST_PATH/worlds/world --config MINETEST_PATH/minetest.conf --logfile MINETEST_PATH/debug.txt
+
+[Install]
+WantedBy = multi-user.target

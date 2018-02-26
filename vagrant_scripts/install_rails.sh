@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
-APP_PATH=${APP_PATH:-/vagrant/blockly}
+__DIR__=$(cd $(dirname $0); pwd)
+APP_PATH=${APP_PATH:-$(cd $__DIR__/../blockly; pwd)}
+BREW_ROOT=${BREW_ROOT:-$HOME/.rbenv}
 
 echo Installing packages for rails...
 sudo yum install -y libffi-devel sqlite-devel
 
 echo Installing rails...
-~/.rbenv/shims/gem install bundler
+$BREW_ROOT/shims/gem install bundler
 cd $APP_PATH
-~/.rbenv/shims/bundle install
+$BREW_ROOT/shims/bundle install
 
 echo Setting Up SECRET_KEY_BASE...
 if [ -z $(grep 'SECRET_KEY_BASE' ~/.bash_profile) ] ; then

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 __DIR__=$(cd $(dirname $0); pwd)
-MINETEST_PATH=${MINETEST_PATH:-$HOME/.minetest}
+MINETEST_PATH=${MINETEST_PATH:-$(cd $__DIR__/../../minetest; pwd)}
 MINETEST_USER=${MINETEST_USER:-$USER}
 
 echo Adding repository for minetest...

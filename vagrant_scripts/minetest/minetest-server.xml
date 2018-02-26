@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Minetest Server</short>
+  <description>Allow default UDP port (30000) of Minetest Server.</description>
+  <port protocol="udp" port="30000"/>
+</service>

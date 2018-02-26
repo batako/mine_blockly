@@ -47,3 +47,8 @@ grep -l 'MINETEST_USER' $__DIR__/minetest-server.service | xargs sed -i -e 's/MI
 sudo cp $__DIR__/minetest-server.service /etc/systemd/system/.
 sudo systemctl enable minetest-server
 sudo systemctl restart minetest-server
+
+echo Setting up firewall rule for minetest-server...
+sudo cp $__DIR__/minetest-server.xml /etc/firewalld/services/.
+sudo firewall-cmd --add-service=minetest-server --permanent
+sudo firewall-cmd --reload

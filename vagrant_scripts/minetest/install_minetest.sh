@@ -5,7 +5,7 @@ MINETEST_PATH=${MINETEST_PATH:-$(cd $__DIR__/../../minetest; pwd)}
 MINETEST_USER=${MINETEST_USER:-$USER}
 MINETEST_HOME=/home/$MINETEST_USER/.minetest
 SAMPLE_WORLD_CONFIG=$__DIR__/../../minetest/worlds/world.mt.example
-WORLD_PATH=${WORLD_PATH:-$(cd $__DIR__/../../minetest/worlds/world; pwd)}
+WORLD_PATH=${WORLD_PATH:-$(cd $__DIR__/../../minetest/worlds; pwd)/world}
 
 echo Adding repository for minetest...
 curl -O http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -27,13 +27,13 @@ echo Changing owner of $MINETEST_PATH...
 sudo chown -R $MINETEST_USER.$MINETEST_USER $MINETEST_PATH
 
 echo Copying world.mt.example to $WORLD_PATH/world.mt...
+sudo -u $MINETEST_USER mkdir -p $WORLD_PATH
 if [ -e $WORLD_PATH/world.mt ]; then
   echo "$WORLD_PATH/world.mt: File exists"
   read -p "overwrite? (y/N): " INPUT
   case $INPUT in
     [yY]*)
       sudo rm $WORLD_PATH/world.mt
-      sudo -u $MINETEST_USER mkdir -p $WORLD_PATH
       sudo -u $MINETEST_USER cp $SAMPLE_WORLD_CONFIG $WORLD_PATH/world.mt
     ;;
   esac

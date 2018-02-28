@@ -4,6 +4,7 @@ local commands_path = mod_path .. "/../../blockly"
 os.execute("mkdir -p " .. commands_path)
 
 dofile(mod_path .. "/commands.lua")
+dofile(mod_path .. "/mobs.lua")
 
 
 function split(str, delim)

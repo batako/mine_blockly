@@ -161,6 +161,13 @@ minetest.register_entity("blockly:mob_sheep", {
               self.set_velocity(self, 0)
               self.set_animation(self, "stand")
 
+            elseif self.actions[step].action == "sound" then
+              self.set_velocity(self, 0)
+              self.set_animation(self, "stand")
+              if self.sounds and self.sounds.random then
+                minetest.sound_play(self.sounds.random, {object = self.object})
+              end
+
             end
 
             self.actions[step].done = true
@@ -178,7 +185,7 @@ minetest.register_entity("blockly:mob_sheep", {
       self.timer = self.timer + dtime
     end
 
-    if self.sounds and self.sounds.random and math.random(1, 100) <= 1 then
+    if not self.run and self.sounds and self.sounds.random and math.random(1, 100) <= 1 then
       minetest.sound_play(self.sounds.random, {object = self.object})
     end
   end,

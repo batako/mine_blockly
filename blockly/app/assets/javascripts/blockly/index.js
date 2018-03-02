@@ -516,6 +516,7 @@ Code.runJS = function() {
   };
   var code = Blockly.JavaScript.workspaceToCode(Code.workspace);
   var codes = [];
+  var actions_string = "";
   var createblock = function(material, x, y, z){
     var code = '/createblock ' + material + ' ' + x + ' ' + y + ' ' + z;
     codes.push(code);
@@ -527,6 +528,34 @@ Code.runJS = function() {
   var deletetextblock = function(materialitext, x, y, z, dx, dy, dz) {
     var code = '/deletetextblock ' + materialitext + ' ' + x + ' ' + y + ' ' + z + ' ' + dx + ' ' + dy + ' ' + dz;
     codes.push(code);
+  }
+  var moveForward = function() {
+    actions_string += "{[\"action\"]=\"walk\"},";
+  }
+  var turnLeft = function() {
+    actions_string += "{[\"action\"]=\"left\"},";
+  }
+  var turnRight = function() {
+    actions_string += "{[\"action\"]=\"right\"},";
+  }
+  var spawnEntity = function(x, y, z, name, actionsFunc) {
+    actions_string = "";
+    actionsFunc();
+    actions_string = "{[\"actions\"]={" + actions_string + "}}";
+    codes.push(
+      "/spawnentity " + x + " " + y + " " + z + " " + name + " " + actions_string
+    );
+  }
+  var wait = function(seconds) {
+    if( !(seconds > 0) ) return;
+    var i = 0;
+    while(i < seconds) {
+        actions_string += "{[\"action\"]=\"stand\"},";
+        i=(i+1)|0;
+    }
+  }
+  var playSound = function() {
+    actions_string += "{[\"action\"]=\"sound\"},";
   }
   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   try {

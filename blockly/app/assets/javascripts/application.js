@@ -15,6 +15,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require alertify
+//= require ./image_path
 //= require_tree .
 
 window.onload = function(){ alertify.parent(document.body) };

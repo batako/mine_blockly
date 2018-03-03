@@ -1,7 +1,8 @@
-Blockly.Blocks["minetest_add_entity"] =
+Blockly.Blocks["minetest_add_node"] =
   init: ->
-    @appendDummyInput()
-      .appendField("spawnentity")
+    @appendValueInput("material")
+      .setCheck("String")
+      .appendField("place")
     @appendValueInput("x")
       .setCheck("Number")
       .appendField("x")
@@ -11,13 +12,124 @@ Blockly.Blocks["minetest_add_entity"] =
     @appendValueInput("z")
       .setCheck("Number")
       .appendField("z")
+    @setInputsInline(true)
+    @setPreviousStatement(true, "null")
+    @setNextStatement(true, "null")
+    @setColour(45)
+    @setTooltip("Create a minetest block of a given material, at coordinates x, y, z")
+
+
+Blockly.JavaScript["minetest_add_node"] = (block) ->
+  material = Blockly.JavaScript.valueToCode(
+    block, "material", Blockly.JavaScript.ORDER_ATOMIC).slice(1,-1) || "air"
+  x = Blockly.JavaScript.valueToCode(
+    block, "x", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  y = Blockly.JavaScript.valueToCode(
+    block, "y", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  z = Blockly.JavaScript.valueToCode(
+    block, "z", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  code = "createblock('#{material}', #{x}, #{y}, #{z});\n"
+  return code
+
+
+Blockly.Blocks["minetest_add_text_node"] =
+  init: ->
+    @appendDummyInput()
+      .appendField("text to")
+      .appendField(new Blockly.FieldDropdown([
+        ["place", "createtextblock"],
+        ["delete", "deletetextblock"],
+      ]), "COMMAND")
+      .appendField(new Blockly.FieldTextInput("text"), "TEXT")
+    @appendValueInput("x")
+      .setCheck("Number")
+      .appendField("x")
+    @appendValueInput("y")
+      .setCheck("Number")
+      .appendField("y")
+    @appendValueInput("z")
+      .setCheck("Number")
+      .appendField("z")
+    @appendValueInput("dx")
+      .setCheck("Number")
+      .appendField("dx")
+    @appendValueInput("dy")
+      .setCheck("Number")
+      .appendField("dy")
+    @appendValueInput("dz")
+      .setCheck("Number")
+      .appendField("dz")
+    @setInputsInline(true)
+    @setPreviousStatement(true, "null")
+    @setNextStatement(true, "null")
+    @setColour(45)
+
+
+Blockly.JavaScript["minetest_add_text_node"] = (block) ->
+  text = block.getFieldValue("TEXT")
+  command = block.getFieldValue("COMMAND")
+  x = Blockly.JavaScript.valueToCode(
+    block, "x", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  y = Blockly.JavaScript.valueToCode(
+    block, "y", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  z = Blockly.JavaScript.valueToCode(
+    block, "z", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  dx = Blockly.JavaScript.valueToCode(
+    block, "dx", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  dy = Blockly.JavaScript.valueToCode(
+    block, "dy", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  dz = Blockly.JavaScript.valueToCode(
+    block, "dz", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  code = "#{command}('#{text}', #{x}, #{y}, #{z}, #{dx}, #{dy}, #{dz})"
+  return code
+
+
+Blockly.Blocks["minetest_node"] =
+  init: ->
+    @appendDummyInput()
+      .appendField(new Blockly.FieldDropdown([
+        ["Air", "air"],
+        ["Bookshelf", "bookshelf"],
+        ["Brick", "brick"],
+        ["Dirt", "dirt"],
+        ["Glass", "glass"],
+        ["Stone", "stone"],
+        ["Wood", "wood"],
+        ["Gold", "default:goldblock"],
+        ["Diamond", "default:diamondblock"],
+      ]), "MATERIAL")
+    @setOutput(true, "String")
+    @setColour(45)
+    @setTooltip("List of materials for Minetest blocks")
+
+
+Blockly.JavaScript["minetest_node"] = (block) ->
+  [
+    block.getFieldValue("MATERIAL")
+    Blockly.JavaScript.ORDER_NONE
+  ]
+
+
+Blockly.Blocks["minetest_add_entity"] =
+  init: ->
+    @appendDummyInput()
+      .appendField("spawn")
     @appendValueInput("entity")
       .setCheck("String")
       .appendField("entity")
+    @appendValueInput("x")
+      .setCheck("Number")
+      .appendField("x")
+    @appendValueInput("y")
+      .setCheck("Number")
+      .appendField("y")
+    @appendValueInput("z")
+      .setCheck("Number")
+      .appendField("z")
     @appendStatementInput("ACTIONS")
       .setCheck(null)
     @setInputsInline(true)
-    @setColour(290)
+    @setColour(120)
 
 
 Blockly.JavaScript["minetest_add_entity"] = (block) ->
@@ -41,7 +153,7 @@ Blockly.Blocks["minetest_move_forward"] =
       .appendField("move forward")
     @setPreviousStatement(true, null)
     @setNextStatement(true, null)
-    @setColour(184)
+    @setColour(185)
 
 
 Blockly.JavaScript["minetest_move_forward"] = (block) ->
@@ -58,7 +170,7 @@ Blockly.Blocks['minetest_turn'] =
       ]), "ACTION")
     @setPreviousStatement(true, null)
     @setNextStatement(true, null)
-    @setColour(184)
+    @setColour(185)
 
 
 Blockly.JavaScript["minetest_turn"] = (block) ->
@@ -76,7 +188,7 @@ Blockly.Blocks['minetest_wait'] =
     @setInputsInline(true)
     @setPreviousStatement(true, null)
     @setNextStatement(true, null)
-    @setColour(184)
+    @setColour(185)
 
 
 Blockly.JavaScript["minetest_wait"] = (block) ->
@@ -91,7 +203,7 @@ Blockly.Blocks['minetest_play_sound'] =
       .appendField("play sound")
     @setPreviousStatement(true, null)
     @setNextStatement(true, null)
-    @setColour(184)
+    @setColour(185)
 
 
 Blockly.JavaScript["minetest_play_sound"] = (block) ->
@@ -105,6 +217,18 @@ for language in [
   "Lua"
   "Dart"
 ]
+  Blockly[language]["minetest_add_node"] = (block) ->
+    ""
+
+  Blockly[language]["minetest_add_text_node"] = (block) ->
+    ""
+
+  Blockly[language]["minetest_node"] = (block) ->
+    [
+      block.getFieldValue("MATERIAL")
+      Blockly[language].ORDER_NONE
+    ]
+
   Blockly[language]["minetest_add_entity"] = (block) ->
     ""
 

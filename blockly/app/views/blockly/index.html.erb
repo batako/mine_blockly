@@ -71,10 +71,10 @@
 </div>
 
 <xml id="toolbox" style="display: none">
-  <category name="Minetest" colour="%{BKY_COLOUR_HUE}">
-    <block type="minetest_createblock">
+  <category name="Minetest TechMage" colour="%{BKY_COLOUR_HUE}">
+    <block type="minetest_add_node">
       <value name="material">
-        <block type="minetest_materials">
+        <block type="minetest_node">
           <field name="MATERIAL">stone</field>
         </block>
       </value>
@@ -95,7 +95,7 @@
       </value>
     </block>
 
-    <block type="minetest_textblock">
+    <block type="minetest_add_text_node">
   	  <value name="x">
         <shadow type="math_number">
           <field name="NUM">0</field>
@@ -128,11 +128,12 @@
       </value>
     </block>
 
-    <block type="minetest_materials"></block>
-  </category>
+    <block type="minetest_node"></block>
 
-  <category name="Minetest TechMage" colour="%{BKY_COLOUR_HUE}">
     <block type="minetest_add_entity">
+      <value name="entity">
+        <block type="minetest_entity_sheep"></block>
+      </value>
       <value name="x">
         <shadow type="math_number">
           <field name="NUM">0</field>
@@ -147,9 +148,6 @@
         <shadow type="math_number">
           <field name="NUM">0</field>
         </shadow>
-      </value>
-      <value name="entity">
-        <block type="minetest_entity_sheep"></block>
       </value>
     </block>
     <block type="minetest_move_forward"></block>

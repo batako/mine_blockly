@@ -84,32 +84,6 @@ Blockly.JavaScript["minetest_add_text_node"] = (block) ->
   return code
 
 
-Blockly.Blocks["minetest_node"] =
-  init: ->
-    @appendDummyInput()
-      .appendField(new Blockly.FieldDropdown([
-        ["Air", "air"],
-        ["Bookshelf", "bookshelf"],
-        ["Brick", "brick"],
-        ["Dirt", "dirt"],
-        ["Glass", "glass"],
-        ["Stone", "stone"],
-        ["Wood", "wood"],
-        ["Gold", "default:goldblock"],
-        ["Diamond", "default:diamondblock"],
-      ]), "MATERIAL")
-    @setOutput(true, "String")
-    @setColour(45)
-    @setTooltip("List of materials for Minetest blocks")
-
-
-Blockly.JavaScript["minetest_node"] = (block) ->
-  [
-    block.getFieldValue("MATERIAL")
-    Blockly.JavaScript.ORDER_NONE
-  ]
-
-
 Blockly.Blocks["minetest_add_entity"] =
   init: ->
     @appendDummyInput()
@@ -222,12 +196,6 @@ for language in [
 
   Blockly[language]["minetest_add_text_node"] = (block) ->
     ""
-
-  Blockly[language]["minetest_node"] = (block) ->
-    [
-      block.getFieldValue("MATERIAL")
-      Blockly[language].ORDER_NONE
-    ]
 
   Blockly[language]["minetest_add_entity"] = (block) ->
     ""

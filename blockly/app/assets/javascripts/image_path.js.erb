@@ -9,5 +9,6 @@ end
 %>
 
 window.image_path = function(name) {
-  return <%= imgs.to_json %>[name];
+  var images = <%= imgs.to_json %>;
+  return images[name];
 }

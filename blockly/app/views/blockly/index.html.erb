@@ -74,9 +74,7 @@
   <category name="Minetest TechMage" colour="%{BKY_COLOUR_HUE}">
     <block type="minetest_add_node">
       <value name="material">
-        <block type="minetest_node">
-          <field name="MATERIAL">stone</field>
-        </block>
+        <block type="minetest_dirt_block"></block>
       </value>
       <value name="x">
         <shadow type="math_number">
@@ -128,8 +126,6 @@
       </value>
     </block>
 
-    <block type="minetest_node"></block>
-
     <block type="minetest_add_entity">
       <value name="entity">
         <block type="minetest_entity_sheep"></block>
@@ -166,6 +162,18 @@
       </value>
     </block>
     <block type="minetest_play_sound"></block>
+  </category>
+
+  <category name="Minetest Blocks" colour="%{BKY_COLOUR_HUE}">
+    <block type="minetest_air_block"></block>
+    <block type="minetest_bookshelf_block"></block>
+    <block type="minetest_brick_block"></block>
+    <block type="minetest_dirt_block"></block>
+    <block type="minetest_glass_block"></block>
+    <block type="minetest_stone_block"></block>
+    <block type="minetest_wood_block"></block>
+    <block type="minetest_gold_block"></block>
+    <block type="minetest_diamond_block"></block>
   </category>
 
   <category name="Minetest Entities" colour="%{BKY_COLOUR_HUE}">

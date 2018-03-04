@@ -554,8 +554,8 @@ Code.runJS = function() {
         i=(i+1)|0;
     }
   }
-  var playSound = function() {
-    actions_string += "{[\"action\"]=\"sound\"},";
+  var playSound = function(name) {
+    actions_string += '{["action"]="sound",["sound"]="' + name + '"},';
   }
   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   try {

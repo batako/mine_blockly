@@ -166,8 +166,8 @@ function blocklymobs:register_mob(name, def)
               elseif self.actions[step].action == "sound" then
                 self.set_velocity(self, 0)
                 self.set_animation(self, "stand")
-                if self.sounds and self.sounds.random then
-                  minetest.sound_play(self.sounds.random, {object = self.object})
+                if self.actions[step].sound then
+                  minetest.sound_play(self.actions[step].sound, {object = self.object})
                 end
 
               end

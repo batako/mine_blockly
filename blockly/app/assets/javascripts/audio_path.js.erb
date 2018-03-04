@@ -1,0 +1,14 @@
+<%
+audios = {}
+Dir.chdir("#{Rails.root}/app/assets/audios/") do
+  audios = Dir["**/*"].inject({}) do |h,f|
+    h.merge!(f => audio_path(f)) unless Dir.exist? f
+    h
+  end
+end
+%>
+
+window.audio_path = function(name) {
+  var images = <%= audios.to_json %>;
+  return images[name];
+}

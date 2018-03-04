@@ -1,9 +1,5 @@
 xof 0303txt 0032
 
-// Copyright (c) 2014 Krupnov Pavel
-// Released under the MIT license
-// https://www.dropbox.com/s/mij0dptwvvztl5b/README.txt
-
 template XSkinMeshHeader {
   <3cf169ce-ff7c-44ab-93c0-f78f62d172e2>
   WORD nMaxSkinWeightsPerVertex;

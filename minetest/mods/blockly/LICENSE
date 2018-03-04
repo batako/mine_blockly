@@ -1,3 +1,15 @@
+# Copyright (c) 2014 Krupnov Pavel
+
+[Mod] KPGMobs [kpgmobs]
+https://forum.minetest.net/viewtopic.php?t=8798
+
+Released under the MIT license
+https://www.dropbox.com/s/mij0dptwvvztl5b/README.txt
+
+  models/mob_sheep.x
+  textures/mob_sheep.png
+
+
 # Copyright (c) 2015-2016 BlockMen <blockmen2015@gmail.com>
 
 Mod/Modpack Creatures

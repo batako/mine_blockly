@@ -23,6 +23,10 @@ function blocklymobs:register_mob(name, def)
     actions     = {},
     next_action = "",
 
+    is_reverse = function(self)
+      return self.walk_velocity < 0
+    end,
+
     on_rightclick = function(self, clicker)
       if not self.run and clicker:get_inventory() then
         self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
@@ -94,6 +98,11 @@ function blocklymobs:register_mob(name, def)
       local angle = math.floor(
         (self.object:getyaw() * 180 / math.pi) + 0.5
       ) % 360
+
+      if self.is_reverse(self) then
+        angle = (angle + 180) % 360
+      end
+
       if angle == 0 then
         ahead_pos = {
           x = current_pos.x,
@@ -127,9 +136,9 @@ function blocklymobs:register_mob(name, def)
       local ahead_node = self.get_ahead_node(self)
 
       if ahead_node.name == "air" then
-        self.object:setacceleration({x = 0, y = -10, z = 0})
+        self.object:setacceleration({x = 0, y = -9, z = 0})
       elseif self.next_action == "walk" then
-        self.object:setacceleration({x = 0, y = 10, z = 0})
+        self.object:setacceleration({x = 0, y = 11, z = 0})
       end
 
       if self.run then
@@ -233,4 +242,31 @@ blocklymobs:register_mob("blockly:mob_sheep", {
     textures     = {"mob_sheep.png"},
   },
   sounds = {random = "mob_sheep",},
+})
+
+blocklymobs:register_mob("blockly:mob_chicken", {
+  stats = {
+    armor                = 200,
+    hp_max               = 3,
+    makes_footstep_sound = true,
+    physical             = true,
+    type                 = "animal",
+    visual               = "mesh",
+    walk_velocity        = -1,
+  },
+  model = {
+    animation = {
+      speed_normal = 50,
+      stand_start  = 0,
+      stand_end    = 1,
+      walk_start   = 4,
+      walk_end     = 36,
+    },
+    collide_with_objects = false,
+    collisionbox         = {-0.25, -0.01, -0.3, 0.25, 0.45, 0.3},
+    drawtype             = "front",
+    mesh                 = "mob_chicken.b3d",
+    textures             = {"mob_chicken.png"},
+  },
+  sounds = {random = "mob_chicken",},
 })

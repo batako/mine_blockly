@@ -1,29 +1,34 @@
-Blockly.Blocks["minetest_entity_sheep"] =
-  init: ->
-    @appendDummyInput()
-      .appendField(
-        new Blockly.FieldImage(
-          window.image_path("blockly/entities/sheep.png")
-          50
-          50
-          "*"
+regist_mob = (name) ->
+  Blockly.Blocks["minetest_#{name}_entity"] =
+    init: ->
+      @appendDummyInput()
+        .appendField(
+          new Blockly.FieldImage(
+            window.image_path("blockly/entities/#{name}.png")
+            50
+            50
+            "*"
+          )
         )
-      )
-      .appendField("SHEEP")
-    @setInputsInline(true)
-    @setOutput(true, "String")
-    @setColour(230)
+        .appendField(name.toUpperCase())
+      @setInputsInline(true)
+      @setOutput(true, "String")
+      @setColour(230)
 
+  for language in [
+    "JavaScript"
+    "Python"
+    "PHP"
+    "Lua"
+    "Dart"
+  ]
+    Blockly[language]["minetest_#{name}_entity"] = (block) ->
+      [
+        "blockly:mob_#{name}"
+        Blockly[language].ORDER_NONE
+      ]
 
-for language in [
-  "JavaScript"
-  "Python"
-  "PHP"
-  "Lua"
-  "Dart"
+for name in [
+  "sheep"
 ]
-  Blockly[language]["minetest_entity_sheep"] = (block) ->
-    [
-      "blockly:mob_sheep"
-      Blockly[language].ORDER_NONE
-    ]
+  regist_mob(name)

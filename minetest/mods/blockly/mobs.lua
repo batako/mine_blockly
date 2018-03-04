@@ -9,7 +9,7 @@ function blocklymobs:register_mob(name, def)
     visual               = def.stats.visual,
     walk_velocity        = def.stats.walk_velocity,
 
-    animation            = {},
+    animation            = def.model.animation,
     collisionbox         = def.model.collisionbox,
     drawtype             = def.model.drawtype,
     mesh                 = def.model.mesh,
@@ -57,11 +57,7 @@ function blocklymobs:register_mob(name, def)
         return
       end
 
-      if not self.animation.current then
-        self.animation.current = ""
-      end
-
-      if type == "stand" and self.animation.current ~= "stand" then
+      if type == "stand" then
         if
           self.animation.stand_start
           and self.animation.stand_end
@@ -72,10 +68,9 @@ function blocklymobs:register_mob(name, def)
             self.animation.speed_normal,
             0
           )
-          self.animation.current = "stand"
         end
 
-      elseif type == "walk" and self.animation.current ~= "walk"  then
+      elseif type == "walk" then
         if
           self.animation.walk_start
           and self.animation.walk_end
@@ -86,7 +81,6 @@ function blocklymobs:register_mob(name, def)
             self.animation.speed_normal,
             0
           )
-          self.animation.current = "walk"
         end
 
       end
@@ -202,13 +196,17 @@ function blocklymobs:register_mob(name, def)
       self.object:set_armor_groups({fleshy = self.armor})
       self.object:setacceleration({x = 0, y = -10, z = 0})
       self.object:setvelocity({x = 0, y = self.object:getvelocity().y, z = 0})
-      self.object:setyaw(0)
+
+      if self.is_reverse(self) then
+        self.object:setyaw(math.pi)
+      else
+        self.object:setyaw(0)
+      end
 
       if staticdata then
         local tmp = minetest.deserialize(staticdata)
         if tmp and tmp.actions then
           self.actions   = tmp.actions
-          self.animation = def.model.animation
         end
       end
     end,

@@ -194,6 +194,44 @@ Blockly.JavaScript["minetest_play_sound"] = (block) ->
   "playSound('#{block.getFieldValue('SOUND')}');\n"
 
 
+Blockly.Blocks["minetest_place"] =
+  init: ->
+    @appendValueInput("material")
+      .setCheck("String")
+      .appendField("place")
+    @setInputsInline(true)
+    @setPreviousStatement(true, "null")
+    @setNextStatement(true, "null")
+    @setColour(185)
+
+
+Blockly.JavaScript["minetest_place"] = (block) ->
+  material = Blockly.JavaScript.valueToCode(
+    block, "material", Blockly.JavaScript.ORDER_ATOMIC).slice(1,-1) || "air"
+  code = "place('#{material}');\n"
+  return code
+
+
+Blockly.Blocks["minetest_place_ahead"] =
+  init: ->
+    @appendValueInput("material")
+      .setCheck("String")
+      .appendField("place")
+    @appendDummyInput()
+      .appendField("ahead")
+    @setInputsInline(true)
+    @setPreviousStatement(true, "null")
+    @setNextStatement(true, "null")
+    @setColour(185)
+
+
+Blockly.JavaScript["minetest_place_ahead"] = (block) ->
+  material = Blockly.JavaScript.valueToCode(
+    block, "material", Blockly.JavaScript.ORDER_ATOMIC).slice(1,-1) || "air"
+  code = "place('#{material}', 'ahead');\n"
+  return code
+
+
 # TODO
 for language in [
   "Python"
@@ -201,23 +239,16 @@ for language in [
   "Lua"
   "Dart"
 ]
-  Blockly[language]["minetest_add_node"] = (block) ->
-    ""
-
-  Blockly[language]["minetest_add_text_node"] = (block) ->
-    ""
-
-  Blockly[language]["minetest_add_entity"] = (block) ->
-    ""
-
-  Blockly[language]["minetest_move_forward"] = (block) ->
-    ""
-
-  Blockly[language]["minetest_turn"] = (block) ->
-    ""
-
-  Blockly[language]["minetest_wait"] = (block) ->
-    ""
-
-  Blockly[language]["minetest_play_sound"] = (block) ->
-    ""
+  for key in [
+    "minetest_add_node"
+    "minetest_add_text_node"
+    "minetest_add_entity"
+    "minetest_move_forward"
+    "minetest_turn"
+    "minetest_wait"
+    "minetest_play_sound"
+    "minetest_place"
+    "minetest_place_ahead"
+  ]
+    Blockly[language][key] = ->
+      ""

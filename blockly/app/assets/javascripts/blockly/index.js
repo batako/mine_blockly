@@ -557,6 +557,14 @@ Code.runJS = function() {
   var playSound = function(name) {
     actions_string += '{["action"]="sound",["sound"]="' + name + '"},';
   }
+  var place = function(material, type = "here") {
+    switch (type) {
+      case "here":
+      case "ahead":
+        actions_string += '{["action"]="place",["material"]="' + material + '",["type"]="' + type + '"},';
+        break;
+    }
+  }
   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   try {
     codes = [];

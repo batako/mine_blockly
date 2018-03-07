@@ -243,7 +243,7 @@ end
 blocklymobs:register_mob("blockly:mob_sheep", {
   stats = {
     armor                = 200,
-    hp_max               = 3,
+    hp_max               = 21,
     makes_footstep_sound = true,
     physical             = true,
     type                 = "animal",
@@ -269,7 +269,7 @@ blocklymobs:register_mob("blockly:mob_sheep", {
 blocklymobs:register_mob("blockly:mob_chicken", {
   stats = {
     armor                = 200,
-    hp_max               = 3,
+    hp_max               = 21,
     makes_footstep_sound = true,
     physical             = true,
     type                 = "animal",

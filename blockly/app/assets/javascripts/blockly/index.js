@@ -518,6 +518,15 @@ Code.runJS = function() {
   var codes = [];
   var actions_string = "";
   var createblock = function(material, x, y, z){
+    if (material == "wool:random") {
+      var wools = Object.keys(Blockly.Blocks).filter(function(key){
+          return key.match(/^minetest_wool_(?!.*random).*/)
+        }).map(function(name) {
+          return name.replace(/^minetest_wool_(.*)_block/, "$1");
+        });
+      material = "wool:" + wools[Math.floor(Math.random() * wools.length)];
+    }
+
     var code = '/createblock ' + material + ' ' + x + ' ' + y + ' ' + z;
     codes.push(code);
   }

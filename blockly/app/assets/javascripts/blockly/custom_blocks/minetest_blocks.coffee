@@ -39,5 +39,21 @@ for params in [
   {label: "WOOD", value: "wood", name: "wood"}
   {label: "GOLD", value: "default:goldblock", name: "gold"}
   {label: "DIAMOND", value: "default:diamondblock", name: "diamond"}
+  {label: "WHITE WOOL", value: "wool:white", name: "wool_white"}
+  {label: "GREY WOOL", value: "wool:grey", name: "wool_grey"}
+  {label: "DARK GREY WOOL", value: "wool:dark_grey", name: "wool_dark_grey"}
+  {label: "BLACK WOOL", value: "wool:black", name: "wool_black"}
+  {label: "BLUE WOOL", value: "wool:blue", name: "wool_blue"}
+  {label: "CYAN WOOL", value: "wool:cyan", name: "wool_cyan"}
+  {label: "GREEN WOOL", value: "wool:green", name: "wool_green"}
+  {label: "DARK GREEN WOOL", value: "wool:dark_green", name: "wool_dark_green"}
+  {label: "YELLOW WOOL", value: "wool:yellow", name: "wool_yellow"}
+  {label: "ORANGE WOOL", value: "wool:orange", name: "wool_orange"}
+  {label: "BROWN WOOL", value: "wool:brown", name: "wool_brown"}
+  {label: "RED WOOL", value: "wool:red", name: "wool_red"}
+  {label: "PINK WOOL", value: "wool:pink", name: "wool_pink"}
+  {label: "MAGENTA WOOL", value: "wool:magenta", name: "wool_magenta"}
+  {label: "VIOLET WOOL", value: "wool:violet", name: "wool_violet"}
+  {label: "RANDOM WOOL", value: "wool:random", name: "wool_random"}
 ]
   appy(params.label, params.name, params.value)

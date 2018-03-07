@@ -171,6 +171,14 @@ body.blockly {
       overflow: scroll;
     }
 
+    .blocklyWidgetDiv {
+
+      .blocklyDropdownMenu {
+        // height: 10em;
+        // overflow: scroll;
+      }
+    }
+
     .restore-modal {
       display: none;
       position: fixed;

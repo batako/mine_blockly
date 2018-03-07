@@ -4,9 +4,9 @@ minetest/*
 !minetest/mods
 !minetest/worlds
 minetest/worlds/*
-!minetest/worlds/world.mt.example
 !minetest/worlds/world
 minetest/worlds/world/*
+!minetest/worlds/world/world.mt
 !minetest/minetest.conf
 vagrant_scripts/blockly/blockly.service
 vagrant_scripts/minetest/minetest-server.service

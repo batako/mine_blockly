@@ -24,7 +24,7 @@ regist_mob = (name) ->
   ]
     Blockly[language]["minetest_#{name}_entity"] = (block) ->
       [
-        "blockly:mob_#{name}"
+        "'blockly:mob_#{name}'"
         Blockly[language].ORDER_NONE
       ]
 

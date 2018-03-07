@@ -28,4 +28,4 @@ Blockly.Blocks['minetest_materials'] = init: ->
 
 Blockly.JavaScript["minetest_materials"] = (block) ->
   code = block.getFieldValue('MATERIAL')
-  return [code, Blockly.JavaScript.ORDER_NONE]
+  return ["'#{code}'", Blockly.JavaScript.ORDER_NONE]

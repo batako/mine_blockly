@@ -28,7 +28,7 @@ Blockly.JavaScript["minetest_add_node"] = (block) ->
     block, "y", Blockly.JavaScript.ORDER_ATOMIC) || 0
   z = Blockly.JavaScript.valueToCode(
     block, "z", Blockly.JavaScript.ORDER_ATOMIC) || 0
-  code = "createblock('#{material}', #{x}, #{y}, #{z});\n"
+  code = "createblock(#{material}, #{x}, #{y}, #{z});\n"
   return code
 
 
@@ -117,7 +117,7 @@ Blockly.JavaScript["minetest_add_entity"] = (block) ->
     block, "entity", Blockly.JavaScript.ORDER_ATOMIC).slice(1,-1)
   actions = Blockly.JavaScript.statementToCode(block, "ACTIONS")
   code = "var actions = function() {\n#{actions}}\n"
-  code += "spawnEntity(#{x}, #{y}, #{z}, '#{entity}', actions);\n"
+  code += "spawnEntity(#{x}, #{y}, #{z}, #{entity}, actions);\n"
   return code
 
 
@@ -208,7 +208,7 @@ Blockly.Blocks["minetest_place"] =
 Blockly.JavaScript["minetest_place"] = (block) ->
   material = Blockly.JavaScript.valueToCode(
     block, "material", Blockly.JavaScript.ORDER_ATOMIC).slice(1,-1) || "air"
-  code = "place('#{material}');\n"
+  code = "place(#{material});\n"
   return code
 
 
@@ -228,7 +228,7 @@ Blockly.Blocks["minetest_place_ahead"] =
 Blockly.JavaScript["minetest_place_ahead"] = (block) ->
   material = Blockly.JavaScript.valueToCode(
     block, "material", Blockly.JavaScript.ORDER_ATOMIC).slice(1,-1) || "air"
-  code = "place('#{material}', 'ahead');\n"
+  code = "place(#{material}, 'ahead');\n"
   return code
 
 

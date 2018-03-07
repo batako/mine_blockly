@@ -7,5 +7,6 @@ load_mod_blockly = true
 load_mod_dig_blocker = true
 load_mod_orienteering = true
 load_mod_text_blocks = true
+load_mod_user_help_commands = true
 load_mod_whereami = true
 player_backend = files

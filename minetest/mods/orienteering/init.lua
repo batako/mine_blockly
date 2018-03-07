@@ -256,7 +256,10 @@ end
 function orienteering.update_hud_displays(player)
 	local toDegrees=180/math.pi
 	local name = player:get_player_name()
-	local gps, altimeter = true, triangulator = true, compass, sextant, watch, speedometer, quadcorder
+	local gps, altimeter, triangulator, compass, sextant, watch, speedometer, quadcorder
+
+  altimeter = true
+  triangulator = true
 
 	if orienteering.tool_active(player, "orienteering:gps") then
 		gps = true

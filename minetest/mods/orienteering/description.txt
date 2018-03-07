@@ -1,0 +1,1 @@
+A collection of tools to help you orient yourselves in the world, such as compass, altimeter, etc.

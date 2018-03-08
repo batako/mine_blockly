@@ -517,14 +517,18 @@ Code.runJS = function() {
   var code = Blockly.JavaScript.workspaceToCode(Code.workspace);
   var codes = [];
   var actions_string = "";
+  var getRandomWool = function() {
+    var wools = Object.keys(Blockly.Blocks).filter(function(key){
+        return key.match(/^minetest_wool_(?!.*random).*/)
+      }).map(function(name) {
+        return name.replace(/^minetest_wool_(.*)_block/, "$1");
+      });
+
+    return material = "wool:" + wools[Math.floor(Math.random() * wools.length)];
+  }
   var createblock = function(material, x, y, z){
     if (material == "wool:random") {
-      var wools = Object.keys(Blockly.Blocks).filter(function(key){
-          return key.match(/^minetest_wool_(?!.*random).*/)
-        }).map(function(name) {
-          return name.replace(/^minetest_wool_(.*)_block/, "$1");
-        });
-      material = "wool:" + wools[Math.floor(Math.random() * wools.length)];
+      material = getRandomWool()
     }
 
     var code = '/createblock ' + material + ' ' + x + ' ' + y + ' ' + z;
@@ -567,6 +571,10 @@ Code.runJS = function() {
     actions_string += '{["action"]="sound",["sound"]="' + name + '"},';
   }
   var place = function(material, type = "here") {
+    if (material == "wool:random") {
+      material = getRandomWool()
+    }
+
     switch (type) {
       case "here":
       case "ahead":

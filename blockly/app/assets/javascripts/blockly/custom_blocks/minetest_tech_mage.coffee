@@ -141,6 +141,7 @@ Blockly.Blocks['minetest_turn'] =
       .appendField(new Blockly.FieldDropdown([
         ["left", "turnLeft();"]
         ["right", "turnRight();"]
+        ["random", "turnRandom();"]
       ]), "ACTION")
     @setPreviousStatement(true, null)
     @setNextStatement(true, null)

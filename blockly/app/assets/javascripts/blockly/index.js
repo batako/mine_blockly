@@ -551,6 +551,11 @@ Code.runJS = function() {
   var turnRight = function() {
     actions_string += "{[\"action\"]=\"right\"},";
   }
+  var turnRandom = function() {
+    var directions = ["left", "right"];
+    var action = directions[Math.floor(Math.random() * directions.length)];
+    actions_string += "{[\"action\"]=\"" + action + "\"},";
+  }
   var spawnEntity = function(x, y, z, name, actionsFunc) {
     actions_string = "";
     actionsFunc();

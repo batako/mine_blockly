@@ -1,0 +1,3 @@
+[submodule "minetest/mods/mesecons"]
+	path = minetest/mods/mesecons
+	url = git@github.com:minetest-mods/mesecons.git

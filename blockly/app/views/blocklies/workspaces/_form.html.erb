@@ -1,0 +1,38 @@
+<%= form_for workspace, remote: true do |f| %>
+<div class="row none-margin">
+<% if workspace.new_record? %>
+  <div class="col-sm-9 none-padding">
+    <%= f.text_field :name, class: "form-control", id: "name" %>
+  </div>
+  <div class="col-sm-3 none-padding">
+    <%= f.submit "Save",
+                 class: "btn btn-outline-primary" %>
+  </div>
+<% else %>
+  <div class="col-sm-6 none-padding">
+    <%= f.text_field :name, class: "form-control", id: "name" %>
+  </div>
+  <div class="col-sm-3 none-padding">
+    <%= f.submit "Update",
+                 class: "btn btn-outline-primary" %>
+  </div>
+  <div class="col-sm-3 none-padding">
+    <%= link_to "Cancel",
+                new_workspace_path,
+                class: "btn btn-outline-danger",
+                remote: true %>
+  </div>
+<% end %>
+</div>
+<%= f.hidden_field :xml, id: "xml" %>
+<% end %>
+
+<script>
+$("#workspaceForm").submit(function(){
+  $("#workspaceForm #xml").val(
+    Blockly.Xml.domToText(
+      Blockly.Xml.workspaceToDom(Code.workspace)
+    )
+  )
+})
+</script>

@@ -1,0 +1,9 @@
+$("#workspaceForm")
+  .html('<%= j( render "form", workspace: @workspace ) %>');
+
+Code.workspace.clear()
+
+Blockly.Xml.domToWorkspace(
+  Blockly.Xml.textToDom('<%= @workspace.xml.html_safe %>'),
+  Code.workspace
+);

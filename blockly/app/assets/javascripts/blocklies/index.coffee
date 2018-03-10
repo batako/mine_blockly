@@ -1,5 +1,6 @@
 $ ->
-  return unless $("body").hasClass("index")
+  return unless $("body").hasClass("blocklies") && $("body").hasClass("index")
+
 
   openSideNav = ->
     $("#navbarSide").addClass("reveal")

@@ -1,0 +1,12 @@
+$("#workspaceForm")
+  .html('<%= j( render "form", workspace: Workspace.new ) %>');
+
+$("#workspaces")
+  .html('<%= j( render "index", workspaces: @workspaces ) %>');
+
+<% if @status == "success" %>
+  $('#navbarSide').removeClass("reveal")
+  $("#overlay").hide()
+<% else %>
+  alertify.alert("Error")
+<% end %>

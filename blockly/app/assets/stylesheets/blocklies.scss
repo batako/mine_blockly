@@ -1,4 +1,4 @@
-html[dir=rtl] body.blockly.index {
+html[dir=rtl] body.blocklies.index {
   .farSide {
     text-align: left;
   }
@@ -7,9 +7,9 @@ html[dir=rtl] body.blockly.index {
   }
 }
 
-body.blockly {
+body.blocklies {
   &.index {
-    background-color: #646464;
+    background-color: #553b2e;
     font-family: sans-serif;
     margin: 0;
     overflow: hidden;
@@ -88,6 +88,7 @@ body.blockly {
       font-size: 140%;
       margin: 8px 5px;
       color: white;
+      font-weight: bold;
     }
 
     table {
@@ -95,6 +96,12 @@ body.blockly {
       margin: 0;
       padding: 0;
       border: none;
+
+      .header {
+        background: -moz-linear-gradient(to bottom, #4c8220, #3b2616 30%, #553b2e);
+        background: -webkit-linear-gradient(to bottom, #4c8220,#3b2616 30%, #553b2e);
+        background: linear-gradient(to bottom, #4c8220, #3b2616 30%, #553b2e);
+      }
 
       /* Tabs */
       .tab-row {
@@ -151,9 +158,13 @@ body.blockly {
       direction: ltr;
     }
     pre.content {
-      background-color: white;
+      background: #4e4e4e;
       border: 1px solid #ccc;
       overflow: scroll;
+
+      .pln {
+        color: #ddd;
+      }
     }
     .content-blocks {
       padding: 0;
@@ -162,6 +173,8 @@ body.blockly {
       border-top: none !important;
     }
     .content-xml {
+      background: #4e4e4e;
+      color: white;
       resize: none;
       outline: none;
       border: 1px solid #ccc;
@@ -225,11 +238,11 @@ body.blockly {
     }
     .navbar-side {
       height: 100%;
-      width: 25%;
+      width: 30%;
       position: fixed;
       top: 0;
       right: 0;
-      padding: 0;
+      padding: 5px;
       list-style: none;
       border-left: 2px solid #ccc;
       background-color: #f7f7f9;
@@ -250,23 +263,33 @@ body.blockly {
         transition: 300ms ease;
       }
 
-      .navbar-side-item {
-        padding: 5px 10px;
-        margin: 0;
-        border-bottom: 2px solid #ccc;
+      .save-form {
+        height: 10%;
 
-        .side-link {
-          padding-left: 2rem;
+        .btn {
+          margin: 0;
+          width: 100%;
+          height: 38px;
         }
       }
+      .workspaces {
+        height: 80%;
+        overflow: auto;
 
+        .name {
+          word-wrap: break-word;
+          font-weight: bold;
+        }
+      }
       .language-menu-wrap {
-        position: absolute;
-        bottom: 0;
+        position: relative;
+        height: 10%;
         width: 100%;
-        padding: 5px;
 
         .language-menu {
+          position: absolute;
+          bottom: 0;
+          left: 0;
           width: 100%;
           height: 29px;
           background-color: white;

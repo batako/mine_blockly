@@ -1,0 +1,5 @@
+$("#workspaceForm")
+  .html('<%= j( render "form", workspace: Workspace.new ) %>');
+
+$("#workspaces")
+  .html('<%= j( render "index", workspaces: @workspaces ) %>');

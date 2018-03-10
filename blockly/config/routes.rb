@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
-  resources :blockly, only: [:index] do
+  resources :blocklies, only: [:index] do
     post 'run', on: :collection
+
+    scope module: :blocklies do
+      collection do
+        resources :workspaces, except: [:edit]#, controller: "blocklies/workspaces"
+      end
+    end
   end
 
-  root to: 'blockly#index'
+  root to: 'blocklies#index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

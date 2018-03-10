@@ -1,0 +1,19 @@
+<% workspaces.each do |workspace| %>
+  <div class="row none-margin">
+    <div class="col-sm-6 name none-padding"><%= workspace.name %></div>
+    <div class="col-sm-3 restore">
+      <%= link_to "Restore",
+                  workspace,
+                  method: :get,
+                  id: "restore",
+                  remote: true %>
+    </div>
+    <div class="col-sm-3 destroy">
+      <%= link_to "Destroy",
+                  workspace,
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  remote: true %>
+    </div>
+  </div>
+<% end %>

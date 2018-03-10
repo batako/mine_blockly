@@ -9,13 +9,15 @@ html[dir=rtl] body.blockly.index {
 
 body.blockly {
   &.index {
-    background-color: #fff;
+    background-color: #646464;
     font-family: sans-serif;
     margin: 0;
     overflow: hidden;
 
     .farSide {
       text-align: right;
+      padding-top: 7.5px;
+      padding-right: 15px;
     }
 
     /* Buttons */
@@ -85,52 +87,7 @@ body.blockly {
       font-weight: normal;
       font-size: 140%;
       margin: 8px 5px;
-    }
-
-    /* Tabs */
-    #tabRow>td {
-      border: 1px solid #ccc;
-      border-bottom: none;
-      white-space: nowrap;
-      font-size: 10px;
-      font-weight: bold;
-      line-height: 24px;
-    }
-    td {
-      &.tabon {
-        border-bottom-color: #ddd !important;
-        background-color: #ddd;
-        padding: 5px 19px;
-        font-size: 16px !important;
-      }
-      &.taboff {
-        cursor: pointer;
-        padding: 5px 19px;
-      }
-      &.taboff:hover {
-        background-color: #eee;
-      }
-      &.tabmin {
-        border-top-style: none !important;
-        border-left-style: none !important;
-        border-right-style: none !important;
-      }
-      &.tabmax {
-        border-top-style: none !important;
-        border-left-style: none !important;
-        border-right-style: none !important;
-        width: 99%;
-        padding-left: 10px;
-        padding-right: 10px;
-        text-align: right;
-
-        .local-starage-btns {
-          margin-left: 10px;
-        }
-      }
-    }
-    tr.tabs td {
-      white-space: nowrap;
+      color: white;
     }
 
     table {
@@ -138,10 +95,53 @@ body.blockly {
       margin: 0;
       padding: 0;
       border: none;
-    }
-    td {
-      padding: 0;
-      vertical-align: top;
+
+      /* Tabs */
+      .tab-row {
+        height: 1em;
+
+        td {
+          border: 1px solid #ccc;
+          border-bottom: none;
+          white-space: nowrap;
+          font-size: 10px;
+          font-weight: bold;
+          line-height: 24px;
+
+          &.tabon {
+            border-bottom-color: #ddd !important;
+            background-color: #ddd;
+            padding: 5px 19px;
+            font-size: 16px !important;
+          }
+          &.taboff {
+            background-color: white;
+            cursor: pointer;
+            padding: 5px 19px;
+          }
+          &.taboff:hover {
+            background-color: #eee;
+          }
+          &.tabmin {
+            border-top-style: none !important;
+            border-left-style: none !important;
+            border-right-style: none !important;
+          }
+          &.tabmax {
+            border-top-style: none !important;
+            border-left-style: none !important;
+            border-right-style: none !important;
+            width: 99%;
+            padding-left: 10px;
+            padding-right: 10px;
+            text-align: right;
+
+            .local-starage-btns {
+              margin-left: 10px;
+            }
+          }
+        }
+      }
     }
     .content {
       visibility: hidden;
@@ -151,27 +151,22 @@ body.blockly {
       direction: ltr;
     }
     pre.content {
+      background-color: white;
       border: 1px solid #ccc;
       overflow: scroll;
     }
-    #content_blocks {
+    .content-blocks {
       padding: 0;
     }
     .blocklySvg {
       border-top: none !important;
     }
-    #content_xml {
+    .content-xml {
       resize: none;
       outline: none;
       border: 1px solid #ccc;
       font-family: monospace;
       overflow: scroll;
-    }
-    #languageMenu {
-      vertical-align: top;
-      margin-top: 7.5px;
-      margin-right: 15px;
-      height: 29px;
     }
 
     .restore-modal {
@@ -211,6 +206,70 @@ body.blockly {
         a {
           cursor: pointer;
           color: #48f;
+        }
+      }
+    }
+
+
+    .overlay {
+      position: fixed;
+      display: none;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      cursor: pointer;
+      background-color: black;
+      opacity: 0.6;
+      z-index: 100;
+    }
+    .navbar-side {
+      height: 100%;
+      width: 25%;
+      position: fixed;
+      top: 0;
+      right: 0;
+      padding: 0;
+      list-style: none;
+      border-left: 2px solid #ccc;
+      background-color: #f7f7f9;
+      overflow-y: scroll;
+      z-index: 1000;
+      // other code omitted
+      -webkit-transform: translateX(100%);
+      -ms-transform: translateX(100%);
+      transform: translateX(100%);
+      -webkit-transition: 300ms ease;
+      transition: 300ms ease;
+
+      &.reveal {
+        -webkit-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+        transform: translateX(0%);
+        -webkit-transition: 300ms ease;
+        transition: 300ms ease;
+      }
+
+      .navbar-side-item {
+        padding: 5px 10px;
+        margin: 0;
+        border-bottom: 2px solid #ccc;
+
+        .side-link {
+          padding-left: 2rem;
+        }
+      }
+
+      .language-menu-wrap {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 5px;
+
+        .language-menu {
+          width: 100%;
+          height: 29px;
+          background-color: white;
         }
       }
     }

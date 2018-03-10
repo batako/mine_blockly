@@ -1,16 +1,28 @@
+<div class="overlay" id="overlay"></div>
+<ul class="navbar-side" id="navbarSide">
+  <div class="workspaces">
+
+  </div>
+  <div class="language-menu-wrap">
+  <select class="language-menu" id="languageMenu"></select>
+</div>
+</ul>
+
 <table width="100%" height="100%">
   <tr>
     <td>
       <h1>Mine Blockly</h1>
     </td>
     <td class="farSide">
-      <select id="languageMenu"></select>
+      <button type="button"
+              class="navbar-toggler pull-xs-right"
+              id="navbarSideButton">&#9776;</button>
     </td>
   </tr>
   <tr>
     <td colspan=2>
       <table width="100%">
-        <tr id="tabRow" height="1em">
+        <tr id="tabRow" class="tab-row">
           <td id="tab_blocks" class="tabon">...</td>
           <td class="tabmin">&nbsp;</td>
           <td id="tab_javascript" class="taboff">JavaScript</td>
@@ -52,13 +64,13 @@
     </td>
   </tr>
 </table>
-<div id="content_blocks" class="content"></div>
+<div id="content_blocks" class="content-blocks content"></div>
 <pre id="content_javascript" class="content"></pre>
 <pre id="content_python" class="content"></pre>
 <pre id="content_php" class="content"></pre>
 <pre id="content_lua" class="content"></pre>
 <pre id="content_dart" class="content"></pre>
-<textarea id="content_xml" class="content" wrap="off"></textarea>
+<textarea id="content_xml" class="content-xml content" wrap="off"></textarea>
 
 <div id="restoreModal" class="restore-modal">
   <div class="modal-window">

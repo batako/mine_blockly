@@ -233,6 +233,70 @@ Blockly.JavaScript["minetest_place_ahead"] = (block) ->
   return code
 
 
+Blockly.Blocks["minetest_teleport"] =
+  init: ->
+    @appendDummyInput()
+      .appendField("teleport")
+    @appendValueInput("name")
+      .setCheck("String")
+    @appendValueInput("x")
+      .setCheck("Number")
+      .appendField("x")
+    @appendValueInput("y")
+      .setCheck("Number")
+      .appendField("y")
+    @appendValueInput("z")
+      .setCheck("Number")
+      .appendField("z")
+    @setInputsInline(true)
+    @setPreviousStatement(true, "null")
+    @setNextStatement(true, "null")
+    @setColour(45)
+
+
+Blockly.JavaScript["minetest_teleport"] = (block) ->
+  name = Blockly.JavaScript.valueToCode(
+    block, "name")
+  x = Blockly.JavaScript.valueToCode(
+    block, "x", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  y = Blockly.JavaScript.valueToCode(
+    block, "y", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  z = Blockly.JavaScript.valueToCode(
+    block, "z", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  code = "teleport(#{name}, #{x}, #{y}, #{z});\n"
+  return code
+
+
+Blockly.Blocks["minetest_teleport_all"] =
+  init: ->
+    @appendDummyInput()
+      .appendField("teleport near")
+    @appendValueInput("x")
+      .setCheck("Number")
+      .appendField("x")
+    @appendValueInput("y")
+      .setCheck("Number")
+      .appendField("y")
+    @appendValueInput("z")
+      .setCheck("Number")
+      .appendField("z")
+    @setInputsInline(true)
+    @setPreviousStatement(true, "null")
+    @setNextStatement(true, "null")
+    @setColour(45)
+
+
+Blockly.JavaScript["minetest_teleport_all"] = (block) ->
+  x = Blockly.JavaScript.valueToCode(
+    block, "x", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  y = Blockly.JavaScript.valueToCode(
+    block, "y", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  z = Blockly.JavaScript.valueToCode(
+    block, "z", Blockly.JavaScript.ORDER_ATOMIC) || 0
+  code = "teleport_all(#{x}, #{y}, #{z});\n"
+  return code
+
+
 # TODO
 for language in [
   "Python"
@@ -250,6 +314,8 @@ for language in [
     "minetest_play_sound"
     "minetest_place"
     "minetest_place_ahead"
+    "minetest_teleport"
+    "minetest_teleport_all"
   ]
     Blockly[language][key] = ->
       ""

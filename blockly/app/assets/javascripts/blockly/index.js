@@ -587,6 +587,14 @@ Code.runJS = function() {
         break;
     }
   }
+  var teleport = function(name, x, y, z) {
+    var code = '/bring ' + name + ' ' + x + ' ' + y + ' ' + z;
+    codes.push(code);
+  }
+  var teleport_all = function(x, y, z) {
+    var code = '/bring_all ' + x + ' ' + y + ' ' + z;
+    codes.push(code);
+  }
   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   try {
     codes = [];

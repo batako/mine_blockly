@@ -3,6 +3,7 @@
 __DIR__=$(cd $(dirname $0); pwd)
 BIN_PATH=${BIN_PATH:-$HOME/.rbenv/shims}
 SOCKETS_PATH=${SOCKETS_PATH:-/var/run/blockly}
+RAILS_ENV=${RAILS_ENV:-production}
 
 cd $__DIR__/../../blockly
 
@@ -10,7 +11,7 @@ echo Installing gems...
 $BIN_PATH/bundle install
 
 echo Migrating database...
-$BIN_PATH/rake db:migrate
+$BIN_PATH/rake db:migrate RAILS_ENV=$RAILS_ENV
 
 echo Precompiling assets...
 $BIN_PATH/rake assets:clean assets:precompile
@@ -23,7 +24,7 @@ echo Creating socket directory...
 /usr/bin/sudo chown $USER.$USER $SOCKETS_PATH
 
 echo Running puma...
-RAILS_ENV=${RAILS_ENV:-production} \
+RAILS_ENV=$RAILS_ENV \
   SOCKETS_PATH=$SOCKETS_PATH \
   SECRET_KEY_BASE=$($BIN_PATH/rake secret) \
   BLOCKLY_MOD_HOME=${BLOCKLY_MOD_HOME:-$(cd $__DIR__/../../minetest; pwd)/blockly} \

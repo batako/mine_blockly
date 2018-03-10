@@ -10,6 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20180309034651) do
+
+  create_table "workspaces", force: :cascade do |t|
+    t.string "name"
+    t.string "xml"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end

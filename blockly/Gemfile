@@ -43,6 +43,11 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-doc'
   gem 'pry-byebug'
+
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "guard-rspec"
+  gem "spring-commands-rspec"
 end
 
 group :development do
@@ -56,6 +61,11 @@ end
 
 group :test do
   gem 'coveralls', require: false
+
+  gem "faker"
+  gem "database_cleaner"
+  gem "launchy"
+  gem "shoulda-matchers"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

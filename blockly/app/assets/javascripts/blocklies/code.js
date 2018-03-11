@@ -410,7 +410,7 @@ Code.init = function() {
            length: 3,
            colour: '#ccc',
            snap: true},
-       media: '/blockly/media/',
+       media: '/blocklies/media/',
        rtl: rtl,
        toolbox: toolboxXml,
        zoom:
@@ -641,8 +641,8 @@ Code.discard = function() {
 };
 
 // Load the Code demo's language strings.
-document.write('<script src="/blockly/locales/base/' + Code.LANG + '.js"></script>\n');
+document.write('<script src="/blocklies/locales/base/' + Code.LANG + '.js"></script>\n');
 // Load Blockly's language strings.
-document.write('<script src="/blockly/locales/index/' + Code.LANG + '.js"></script>\n');
+document.write('<script src="/blocklies/locales/index/' + Code.LANG + '.js"></script>\n');
 
 window.addEventListener('load', Code.init);

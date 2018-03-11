@@ -4,7 +4,7 @@ regist_mob = (name) ->
       @appendDummyInput()
         .appendField(
           new Blockly.FieldImage(
-            window.image_path("blockly/entities/#{name}.png")
+            window.image_path("blocklies/entities/#{name}.png")
             50
             50
             "*"

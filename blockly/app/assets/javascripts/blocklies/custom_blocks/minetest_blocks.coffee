@@ -4,7 +4,7 @@ appy = (label, name, value) ->
       @appendDummyInput()
         .appendField(
           new Blockly.FieldImage(
-            window.image_path("blockly/blocks/#{name}.png")
+            window.image_path("blocklies/blocks/#{name}.png")
             50
             50
             "*"

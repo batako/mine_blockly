@@ -186,7 +186,7 @@ Blockly.Blocks['minetest_play_sound'] =
   onchange: (ev) ->
     return unless sound = ev.newValue
     audio = new Audio(
-      window.audio_path("blockly/#{sound}.ogg")
+      window.audio_path("blocklies/#{sound}.ogg")
     )
     audio.play()
 

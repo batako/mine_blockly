@@ -41,14 +41,14 @@
           <td id="tab_xml" class="taboff">XML</td>
           <td class="tabmax">
             <button id="trashButton" class="notext" title="...">
-              <%= image_tag("blockly/1x1.gif", :class => "trash icon21") %>
+              <%= image_tag("blocklies/1x1.gif", :class => "trash icon21") %>
             </button>
             <!-- <button id="linkButton" class="notext" title="...">
-              <%= image_tag("blockly/1x1.gif", :class => "link icon21") %>
+              <%= image_tag("blocklies/1x1.gif", :class => "link icon21") %>
             </button> -->
             <%= form_tag(run_blocklies_path, remote: true, class: "flat") do %>
               <button id="runButton" class="notext primary" title="...">
-                <%= image_tag("blockly/1x1.gif", :class => "run icon21") %>
+                <%= image_tag("blocklies/1x1.gif", :class => "run icon21") %>
               </button>
               <div id="runParams"></div>
               <%= token_tag %>

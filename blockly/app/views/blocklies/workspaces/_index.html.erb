@@ -3,7 +3,7 @@
     <div class="col-sm-6 name none-padding"><%= workspace.name %></div>
     <div class="col-sm-3 restore">
       <%= link_to "Restore",
-                  workspace,
+                  edit_workspace_path(workspace.id),
                   method: :get,
                   id: "restore",
                   remote: true %>

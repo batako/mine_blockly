@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
     scope module: :blocklies do
       collection do
-        resources :workspaces, except: [:edit]#, controller: "blocklies/workspaces"
+        resources :workspaces, except: [:index, :show]
       end
     end
   end

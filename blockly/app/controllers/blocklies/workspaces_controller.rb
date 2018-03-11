@@ -1,10 +1,10 @@
 class Blocklies::WorkspacesController < ApplicationController
-  before_action :set_workspace, only: [:show, :update, :destroy]
-
-  def show
-  end
+  before_action :set_workspace, only: [:edit, :update, :destroy]
 
   def new
+  end
+
+  def edit
   end
 
   def create

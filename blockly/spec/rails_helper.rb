@@ -57,3 +57,6 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 end
+
+require 'coveralls'
+Coveralls.wear!('rails')

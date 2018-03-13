@@ -6,7 +6,6 @@ class BlockliesController < ApplicationController
   end
 
   def run
-    FileUtils.mkdir_p(Settings.minetest.blockly_mod_home)
     File.open("#{Settings.minetest.blockly_mod_home}/admin", 'a') do |file|
       codes.each do |code|
         file.puts code

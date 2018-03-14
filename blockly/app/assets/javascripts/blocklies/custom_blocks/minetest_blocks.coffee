@@ -25,7 +25,7 @@ appy = (label, name, value) ->
   ]
     Blockly[language]["minetest_#{name}_block"] = (block) ->
       [
-        value
+        "'#{value}'"
         Blockly[language].ORDER_NONE
       ]
 

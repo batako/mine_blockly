@@ -25,3 +25,12 @@ minetest.register_chatcommand("highjump", {
     })
   end,
 })
+
+dofile(minetest.get_modpath("user_help_commands").."/position/first.txt")
+dofile(minetest.get_modpath("user_help_commands").."/position/second.txt")
+dofile(minetest.get_modpath("user_help_commands").."/position/third.txt")
+dofile(minetest.get_modpath("user_help_commands").."/position/fourth.txt")
+
+
+dofile(minetest.get_modpath("user_help_commands").."/position/red.txt")
+dofile(minetest.get_modpath("user_help_commands").."/position/blue.txt")

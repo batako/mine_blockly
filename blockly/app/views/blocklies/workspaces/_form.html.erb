@@ -2,7 +2,10 @@
 <div class="row none-margin">
 <% if workspace.new_record? %>
   <div class="col-sm-9 none-padding">
-    <%= f.text_field :name, class: "form-control", id: "name" %>
+    <%= f.text_field :name,
+                     class: "form-control",
+                     id: "name",
+                     placeholder: "workspace name" %>
   </div>
   <div class="col-sm-3 none-padding">
     <%= f.submit "Save",

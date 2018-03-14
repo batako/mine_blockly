@@ -1,18 +1,25 @@
 <div class="overlay" id="overlay"></div>
 <div class="navbar-side" id="navbarSide">
-  <div class="save-form" id="workspaceForm">
-    <%= render "blocklies/workspaces/new" %>
-  </div>
-  <div class="workspaces" id="workspaces">
-    <%= render "blocklies/workspaces/index", workspaces: @workspaces %>
-  </div>
   <div class="language-menu-wrap">
     <select class="language-menu" id="languageMenu"></select>
   </div>
 </div>
 
+<div class="dashboard-wrap" id="dashboard-wrap">
+  <div class="overlay" id="overlay"></div>
+  <div class="dashboard" id="dashboard">
+    <div class="index" id="index">workspaces</div>
+    <div id="workspaceForm">
+      <%= render "blocklies/workspaces/new" %>
+    </div>
+    <div class="workspaces" id="workspaces">
+      <%= render "blocklies/workspaces/index", workspaces: @workspaces %>
+    </div>
+  </div>
+</div>
+
 <table width="100%" height="100%">
-  <tr class="header">
+  <tr class="header" id="header">
     <td>
       <h1>Mine Blockly</h1>
     </td>
@@ -22,7 +29,7 @@
               id="navbarSideButton">&#9776;</button>
     </td>
   </tr>
-  <tr>
+  <tr id="workspace-header">
     <td colspan=2>
       <table width="100%">
         <tr id="tabRow" class="tab-row">

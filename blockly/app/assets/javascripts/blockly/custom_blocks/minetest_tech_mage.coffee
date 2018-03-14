@@ -16,7 +16,7 @@ Blockly.Blocks["minetest_add_node"] =
     @setPreviousStatement(true, "null")
     @setNextStatement(true, "null")
     @setColour(45)
-    @setTooltip("Create a minetest block of a given material, at coordinates x, y, z")
+    @setTooltip("Create a block of a given material, at coordinates x, y, z")
 
 
 Blockly.JavaScript["minetest_add_node"] = (block) ->

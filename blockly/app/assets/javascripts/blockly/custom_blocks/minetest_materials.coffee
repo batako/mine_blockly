@@ -21,7 +21,7 @@ Blockly.Blocks['minetest_materials'] = init: ->
     ['Diamond', 'default:diamondblock']
   ]), 'MATERIAL'
   @setOutput true
-  @setTooltip 'List of materials for Minetest blocks'
+  @setTooltip 'List of materials for blocks'
   return
 
 

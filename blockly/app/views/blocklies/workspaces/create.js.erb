@@ -5,7 +5,7 @@ $("#workspaces")
   .html('<%= j( render "index", workspaces: @workspaces ) %>');
 
 <% if @status == "success" %>
-  $('#navbarSide').removeClass("reveal")
+  $("#dashboard-wrap #dashboard").removeClass("open")
   $("#overlay").hide()
 <% else %>
   alertify.alert("Error")

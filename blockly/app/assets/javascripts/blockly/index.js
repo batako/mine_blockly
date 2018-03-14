@@ -482,7 +482,7 @@ Code.runJS = function() {
         return name.replace(/^minetest_wool_(.*)_block/, "$1");
       });
 
-    return material = "wool:" + wools[Math.floor(Math.random() * wools.length)];
+    return "wool:" + wools[Math.floor(Math.random() * wools.length)];
   }
   var createblock = function(material, x, y, z){
     if (material == "wool:random") {

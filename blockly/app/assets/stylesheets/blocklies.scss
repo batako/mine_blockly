@@ -223,7 +223,6 @@ body.blocklies {
       }
     }
 
-
     .overlay {
       position: fixed;
       display: none;
@@ -260,21 +259,6 @@ body.blocklies {
         transform: translateX(0%);
         -webkit-transition: 300ms ease;
         transition: 300ms ease;
-      }
-
-      .language-menu-wrap {
-        position: relative;
-        height: 10%;
-        width: 100%;
-
-        .language-menu {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 29px;
-          background-color: white;
-        }
       }
     }
 
@@ -330,6 +314,23 @@ body.blocklies {
             font-weight: bold;
           }
         }
+      }
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      width: 119px;
+      padding: 5px;
+      background-color: #4e4e4e;
+      color: #969292;
+
+      .language-menu {
+        font-size: 11px;
+        width: 100%;
+        height: 24px;
       }
     }
   }

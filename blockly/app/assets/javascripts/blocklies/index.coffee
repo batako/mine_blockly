@@ -28,18 +28,21 @@ $ ->
 
   fitWorkspaces = ->
     $("#workspaces").css(
-      height: $("#dashboard").height() - $("#workspaceForm").height()
+      height: parseInt($("#dashboard_wrap #dashboard").height()) \
+                - parseInt($("#workspace_form").height())
     )
 
 
   fitDashboard = ->
-    $("#dashboard-wrap #dashboard").css(
+    $("#dashboard_wrap #dashboard").css(
       height: $(window).height() \
                 - $("#header").height() \
-                - $("#workspace-header").height()
+                - $("#workspace_header").height()
     )
 
-    fitWorkspaces()
+    setTimeout ->
+      fitWorkspaces()
+    , 500
 
 
   $("#navbar_sideButton").on "click", ->

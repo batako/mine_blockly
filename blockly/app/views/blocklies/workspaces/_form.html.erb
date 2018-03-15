@@ -31,8 +31,8 @@
 <% end %>
 
 <script>
-$("#workspaceForm").submit(function(){
-  $("#workspaceForm #xml").val(
+$("#workspace_form").submit(function(){
+  $("#workspace_form #xml").val(
     Blockly.Xml.domToText(
       Blockly.Xml.workspaceToDom(Code.workspace)
     )

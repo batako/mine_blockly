@@ -3,27 +3,27 @@ $ ->
 
 
   openSideNav = ->
-    $("#navbarSide").addClass("reveal")
+    $("#navbar_side").addClass("reveal")
     $("#overlay").show()
 
 
   closeSideNav = ->
-    $("#navbarSide").removeClass("reveal")
+    $("#navbar_side").removeClass("reveal")
     $("#overlay").hide()
 
 
   openDashboard = ->
-    $("#dashboard-wrap #overlay").show()
-    $("#dashboard-wrap #dashboard").addClass("open")
+    $("#dashboard_wrap #overlay").show()
+    $("#dashboard_wrap #dashboard").addClass("open")
 
 
   closeDashboad = ->
-    $("#dashboard-wrap #overlay").hide()
-    $("#dashboard-wrap #dashboard").removeClass("open")
+    $("#dashboard_wrap #overlay").hide()
+    $("#dashboard_wrap #dashboard").removeClass("open")
 
 
   isOpenedDashboad = ->
-    $("#dashboard-wrap #overlay").is(':visible')
+    $("#dashboard_wrap #overlay").is(':visible')
 
 
   fitWorkspaces = ->
@@ -42,7 +42,7 @@ $ ->
     fitWorkspaces()
 
 
-  $("#navbarSideButton").on "click", ->
+  $("#navbar_sideButton").on "click", ->
     openSideNav()
 
 
@@ -54,11 +54,11 @@ $ ->
     fitDashboard()
 
 
-  $("#dashboard-wrap #overlay").on "click", ->
+  $("#dashboard_wrap #overlay").on "click", ->
     closeDashboad()
 
 
-  $("#dashboard-wrap #index").on "click", ->
+  $("#dashboard_wrap #index").on "click", ->
     if isOpenedDashboad()
       closeDashboad()
     else

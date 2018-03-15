@@ -7,7 +7,7 @@
                      id: "name",
                      placeholder: "workspace name" %>
   </div>
-  <div class="col-sm-3 none-padding">
+  <div class="col-sm-3 none-padding btn-wrap center">
     <%= f.submit "Save",
                  class: "btn btn-outline-primary" %>
   </div>
@@ -15,11 +15,11 @@
   <div class="col-sm-6 none-padding">
     <%= f.text_field :name, class: "form-control", id: "name" %>
   </div>
-  <div class="col-sm-3 none-padding">
+  <div class="col-sm-3 none-padding btn-wrap right">
     <%= f.submit "Update",
                  class: "btn btn-outline-primary" %>
   </div>
-  <div class="col-sm-3 none-padding">
+  <div class="col-sm-3 none-padding btn-wrap center">
     <%= link_to "Cancel",
                 new_workspace_path,
                 class: "btn btn-outline-danger",

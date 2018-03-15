@@ -1,0 +1,36 @@
+.btn-wrap .btn {
+  padding-left: 0;
+  padding-right: 0;
+  width: 90%;
+}
+
+.btn {
+  font-weight: bold;
+
+  &.btn-outline-primary {
+    background: rgb(76, 175, 80);
+    border: 1px solid rgb(76, 175, 80);
+    color: #fff;
+
+    &:active {
+      background-color: rgb(76, 175, 80) !important;
+      border-color: rgb(76, 175, 80) !important;
+    }
+    &:hover {
+      background: #fff;
+      border: 1px solid rgb(76, 175, 80);
+      color: rgb(76, 175, 80);
+    }
+  }
+
+  &.btn-outline-danger {
+    background: #dc3545;
+    border: 1px solid #dc3545;
+    color: #fff;
+
+    &:hover {
+      background: #fff;
+      color: #dc3545;
+    }
+  }
+}

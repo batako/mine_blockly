@@ -17,10 +17,6 @@ regist_mob = (name) ->
 
   for language in [
     "JavaScript"
-    "Python"
-    "PHP"
-    "Lua"
-    "Dart"
     "Ruby"
   ]
     Blockly[language]["minetest_#{name}_entity"] = (block) ->

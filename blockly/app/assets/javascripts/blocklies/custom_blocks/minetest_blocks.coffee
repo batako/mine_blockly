@@ -18,10 +18,6 @@ appy = (label, name, value) ->
 
   for language in [
     "JavaScript"
-    "Python"
-    "PHP"
-    "Lua"
-    "Dart"
     "Ruby"
   ]
     Blockly[language]["minetest_#{name}_block"] = (block) ->

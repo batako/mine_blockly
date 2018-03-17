@@ -240,7 +240,7 @@ Code.LANG = Code.getLang();
  * List of tab names.
  * @private
  */
-Code.TABS_ = ['blocks', 'javascript', 'php', 'python', 'dart', 'lua', 'xml', 'ruby'];
+Code.TABS_ = ['blocks', 'javascript', 'xml', 'ruby'];
 
 Code.selected = 'blocks';
 

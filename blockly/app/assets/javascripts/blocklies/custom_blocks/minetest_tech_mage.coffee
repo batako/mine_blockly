@@ -299,10 +299,6 @@ Blockly.JavaScript["minetest_teleport_all"] = (block) ->
 
 # TODO
 for language in [
-  "Python"
-  "PHP"
-  "Lua"
-  "Dart"
   "Ruby"
 ]
   for key in [

@@ -22,6 +22,7 @@ appy = (label, name, value) ->
     "PHP"
     "Lua"
     "Dart"
+    "Ruby"
   ]
     Blockly[language]["minetest_#{name}_block"] = (block) ->
       [

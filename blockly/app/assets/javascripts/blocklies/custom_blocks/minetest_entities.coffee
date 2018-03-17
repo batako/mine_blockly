@@ -21,6 +21,7 @@ regist_mob = (name) ->
     "PHP"
     "Lua"
     "Dart"
+    "Ruby"
   ]
     Blockly[language]["minetest_#{name}_entity"] = (block) ->
       [

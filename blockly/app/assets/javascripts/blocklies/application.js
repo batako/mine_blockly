@@ -5,6 +5,7 @@
 //= require ./php_compressed
 //= require ./lua_compressed
 //= require ./dart_compressed
+//= require ./ruby_compressed
 //= require ./index
 //= require_tree ./custom_blocks
 //= require_tree .

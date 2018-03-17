@@ -303,6 +303,7 @@ for language in [
   "PHP"
   "Lua"
   "Dart"
+  "Ruby"
 ]
   for key in [
     "minetest_add_node"

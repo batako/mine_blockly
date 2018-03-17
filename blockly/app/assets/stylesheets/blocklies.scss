@@ -157,6 +157,7 @@ body.blocklies {
       background: #4e4e4e;
       border: 1px solid #ccc;
       overflow: scroll;
+      z-index: 200;
 
       .pln {
         color: #ddd;
@@ -176,6 +177,7 @@ body.blocklies {
       border: 1px solid #ccc;
       font-family: monospace;
       overflow: scroll;
+      z-index: 200;
     }
 
     .restore-modal {

@@ -19,89 +19,176 @@ function blocklymobs:register_mob(name, def)
 
     sounds = def.sounds,
 
-    timer       = 0,
+    step        = 1,
     run         = false,
     actions     = {},
     next_action = "",
+    statuses = {
+      neutral    = nil,
+      processing = 1,
+      done       = 2,
+    },
 
     is_reverse = function(self)
       return self.walk_velocity < 0
     end,
 
-    run_action = function(self, dtime)
-      local step = math.floor(self.timer) + 1
+    next_step = function(self)
+      self.set_velocity(self, 0)
+      self.actions[self.step].stats = self.statuses["done"]
+      self.step = self.step + 1
+    end,
 
-      if step > 0 then
-        if step <= #self.actions then
-          if not self.actions[step].done then
-            if self.actions[step].action == "walk" then
-              self.set_velocity(self, self.walk_velocity)
-              self.set_animation(self, "walk")
+    collision_detection = function(self)
+      local velocity = self.get_velocity(self)
 
-            elseif self.actions[step].action == "stand" then
-              self.set_velocity(self, 0)
-              self.set_animation(self, "stand")
+      -- TODO: don't jump on slow-footed block (Dirt with Snow)
+      if velocity < self.walk_velocity then
+        self.jump(self)
+        self.set_velocity(self, self.walk_velocity)
+      end
+    end,
 
-            elseif self.actions[step].action == "left" then
-              self.set_velocity(self, 0)
-              self.set_animation(self, "stand")
-              self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
+    walk = function(self)
+      local pos = self.object:getpos()
 
-            elseif self.actions[step].action == "right" then
-              self.set_velocity(self, 0)
-              self.set_animation(self, "stand")
-              self.object:setyaw(self.object:getyaw() + (-90/180*math.pi) )
+      self.collision_detection(self)
 
-            elseif self.actions[step].action == "wait" then
-              self.set_velocity(self, 0)
-              self.set_animation(self, "stand")
-
-            elseif self.actions[step].action == "sound" then
-              self.set_velocity(self, 0)
-              self.set_animation(self, "stand")
-              if self.actions[step].sound then
-                minetest.sound_play(self.actions[step].sound, {object = self.object})
-              end
-
-            elseif self.actions[step].action == "place" then
-              self.set_velocity(self, 0)
-              self.set_animation(self, "stand")
-              if self.actions[step].material then
-                local pos = { x = null, y = null, z = null}
-                if self.actions[step].type == "here" then
-                  pos = self.object:getpos()
-                  self.object:setpos({x = pos.x, y = pos.y + 1, z = pos.z})
-                elseif self.actions[step].type == "ahead" then
-                  pos = self.get_ahead_pos(self)
-                end
-                minetest.add_node(pos, { name = self.actions[step].material })
-              end
-
-            end
-
-            self.actions[step].done = true
-          end
-
-          if step < #self.actions then
-            self.next_action = self.actions[step + 1].action
-          end
-
-        else
-          self.object:remove()
+      -- +dz
+      if self.actions[self.step].angle == 0 then
+        if pos.z >= self.actions[self.step].next_pos.z then
+          self.object:setpos({
+            x = pos.x,
+            y = pos.y,
+            z = self.actions[self.step].next_pos.z,
+          })
+          self.next_step(self)
         end
-      end
 
-      self.timer = self.timer + dtime
+      -- -dx
+      elseif self.actions[self.step].angle == 90 then
+        if pos.x <= self.actions[self.step].next_pos.x then
+          self.object:setpos({
+            x = self.actions[self.step].next_pos.x,
+            y = pos.y,
+            z = pos.z,
+          })
+          self.next_step(self)
+        end
+
+      -- -dz
+      elseif self.actions[self.step].angle == 180 then
+        if pos.z <= self.actions[self.step].next_pos.z then
+          self.object:setpos({
+            x = pos.x,
+            y = pos.y,
+            z = self.actions[self.step].next_pos.z,
+          })
+          self.next_step(self)
+        end
+
+      -- +dx
+      elseif self.actions[self.step].angle == 270 then
+        if pos.x >= self.actions[self.step].next_pos.x then
+          self.object:setpos({
+            x = self.actions[self.step].next_pos.x,
+            y = pos.y,
+            z = pos.z,
+          })
+          self.next_step(self)
+        end
+
+      end
     end,
 
-    on_rightclick = function(self, clicker)
-      if not self.run and clicker:get_inventory() then
-        self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
+    wait = function(self, dtime)
+      self.actions[self.step].dtime = self.actions[self.step].dtime + dtime
+
+      if self.actions[self.step].dtime > 1 then
+        self.next_step(self)
       end
     end,
 
-    on_punch = function(self, _)
-      self.run = true
+    action = function(self)
+      if self.actions[self.step].action == "walk" then
+        local ahead_pos = self.get_ahead_pos(self)
+
+        self.actions[self.step].next_pos = {
+          x = ahead_pos.x,
+          y = ahead_pos.y,
+          z = ahead_pos.z,
+        }
+        self.actions[self.step].angle = self.get_angle(self)
+
+        self.set_velocity(self, self.walk_velocity)
+        self.set_animation(self, "walk")
+
+      elseif self.actions[self.step].action == "stand" then
+        self.actions[self.step].dtime = 0
+
+        self.set_animation(self, "stand")
+
+      else
+        if self.actions[self.step].action == "stand" then
+          self.set_animation(self, "stand")
+
+        elseif self.actions[self.step].action == "left" then
+          self.set_animation(self, "stand")
+          self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
+
+        elseif self.actions[self.step].action == "right" then
+          self.set_animation(self, "stand")
+          self.object:setyaw(self.object:getyaw() + (-90/180*math.pi) )
+
+        elseif self.actions[self.step].action == "sound" then
+          self.set_animation(self, "stand")
+          if self.actions[self.step].sound then
+            minetest.sound_play(self.actions[self.step].sound, {object = self.object})
+          end
+
+        elseif self.actions[self.step].action == "place" then
+          self.set_animation(self, "stand")
+          if self.actions[self.step].material then
+            local pos = { x = nil, y = nil, z = nil}
+            if self.actions[self.step].type == "here" then
+              pos = self.object:getpos()
+              self.object:setpos({x = pos.x, y = pos.y + 1, z = pos.z})
+            elseif self.actions[self.step].type == "ahead" then
+              pos = self.get_ahead_pos(self)
+            end
+            minetest.add_node(pos, { name = self.actions[self.step].material })
+          end
+
+        end
+
+        self.next_step(self)
+      end
+    end,
+
+    run_action = function(self, dtime)
+      if self.step <= #self.actions then
+        if self.actions[self.step].stats == self.statuses["neutral"] then
+          self.actions[self.step].stats = self.statuses["processing"]
+
+          self.action(self)
+
+        elseif self.actions[self.step].stats == self.statuses["processing"] then
+          if self.actions[self.step].action == "walk" then
+            self.walk(self)
+
+          elseif self.actions[self.step].action == "stand" then
+            self.wait(self, dtime)
+
+          end
+        end
+
+        if self.step < #self.actions then
+          self.next_action = self.actions[self.step + 1].action
+        end
+
+      else
+        self.object:remove()
+      end
     end,
 
     set_velocity = function(self, v)
@@ -153,9 +240,7 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
-    get_ahead_pos = function(self)
-      local current_pos = self.object:getpos()
-      local ahead_pos = {}
+    get_angle = function(self)
       local angle = math.floor(
         (self.object:getyaw() * 180 / math.pi) + 0.5
       ) % 360
@@ -163,6 +248,14 @@ function blocklymobs:register_mob(name, def)
       if self.is_reverse(self) then
         angle = (angle + 180) % 360
       end
+
+      return angle
+    end,
+
+    get_ahead_pos = function(self)
+      local current_pos = self.object:getpos()
+      local ahead_pos = {}
+      local angle = self.get_angle(self)
 
       if angle == 0 then
         ahead_pos = {
@@ -199,13 +292,36 @@ function blocklymobs:register_mob(name, def)
       )
     end,
 
+    jump = function(self)
+      self.object:setacceleration({x = 0, y = 5, z = 0})
+    end,
+
+    fall = function(self)
+      self.object:setacceleration({x = 0, y = -10, z = 0})
+    end,
+
+    on_rightclick = function(self, clicker)
+      if not self.run and clicker:get_inventory() then
+        self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
+      end
+    end,
+
+    on_punch = function(self, _)
+      if self.run then
+        self.object:remove()
+      else
+        self.run = true
+      end
+    end,
+
     on_step = function(self, dtime)
       local ahead_node = self.get_ahead_node(self)
 
+      -- TODO: detect forward entity
       if ahead_node.name == "air" then
-        self.object:setacceleration({x = 0, y = -9, z = 0})
+        self.fall(self)
       elseif self.next_action == "walk" then
-        self.object:setacceleration({x = 0, y = 11, z = 0})
+        self.jump(self)
       end
 
       if self.run then
@@ -245,8 +361,6 @@ end
 
 blocklymobs:register_mob("blockly:mob_sheep", {
   stats = {
-    armor                = 200,
-    hp_max               = 3,
     makes_footstep_sound = true,
     physical             = true,
     type                 = "animal",
@@ -271,8 +385,6 @@ blocklymobs:register_mob("blockly:mob_sheep", {
 
 blocklymobs:register_mob("blockly:mob_chicken", {
   stats = {
-    armor                = 200,
-    hp_max               = 3,
     makes_footstep_sound = true,
     physical             = true,
     type                 = "animal",

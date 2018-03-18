@@ -8,6 +8,7 @@ function blocklymobs:register_mob(name, def)
     type                 = def.stats.type,
     visual               = def.stats.visual,
     walk_velocity        = def.stats.walk_velocity,
+    lifetime             = def.stats.lifetime or 60,
 
     animation            = def.model.animation,
     collisionbox         = def.model.collisionbox,
@@ -208,6 +209,8 @@ function blocklymobs:register_mob(name, def)
       end
 
       if self.run then
+        self.lifetime = self.lifetime - dtime
+        if self.lifetime < 0 then self.object:remove() end
         self.run_action(self, dtime)
       end
 

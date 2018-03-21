@@ -597,6 +597,9 @@ Code.runJS = function() {
   var playSound = function(name) {
     actions_string += '{["action"]="sound",["sound"]="' + name + '"},';
   }
+  var destroyBlock = function() {
+    actions_string += "{[\"action\"]=\"destroy_block\"},";
+  }
   var place = function(material, type = "here") {
     if (material == "wool:random") {
       material = getRandomWool()

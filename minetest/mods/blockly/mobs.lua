@@ -203,6 +203,16 @@ function blocklymobs:register_mob(name, def)
 
         elseif condition.actions[condition.step].action == "disappear" then
           self.object:remove()
+
+        elseif condition.actions[condition.step].action == "destroy_block" then
+          local pos = self.get_ahead_pos(self)
+          local ahead_node = minetest.get_node(pos)
+          local current_pos = self.object:getpos()
+
+          if ahead_node.name ~= "air" then
+            minetest.swap_node(pos, { name = "air" })
+            minetest.add_item(current_pos, ahead_node.name)
+          end
         end
 
         self.next_step(self, condition)

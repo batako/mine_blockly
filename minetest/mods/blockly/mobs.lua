@@ -19,7 +19,8 @@ function blocklymobs:register_mob(name, def)
 
     sounds = def.sounds,
 
-    settings    = nil,
+    settings   = nil,
+    is_panched = false,
     statuses = {
       neutral    = nil,
       processing = 1,
@@ -30,8 +31,22 @@ function blocklymobs:register_mob(name, def)
       return self.walk_velocity < 0
     end,
 
+    next_action = function(self, condition)
+      local action = ""
+
+      if condition.step < #condition.actions then
+        action = condition.actions[condition.step + 1].action
+      end
+
+      return action
+    end,
+
     next_step = function(self, condition)
-      self.set_velocity(self, 0)
+      if condition.actions[condition.step].action == "walk" and self.next_action(self, condition) ~= "walk" then
+        self.set_animation(self, "stand")
+        self.set_velocity(self, 0)
+      end
+
       condition.actions[condition.step].stats = self.statuses["done"]
       condition.step = condition.step + 1
     end,
@@ -123,28 +138,19 @@ function blocklymobs:register_mob(name, def)
       elseif condition.actions[condition.step].action == "stand" then
         condition.actions[condition.step].dtime = 0
 
-        self.set_animation(self, "stand")
-
       else
-        if condition.actions[condition.step].action == "stand" then
-          self.set_animation(self, "stand")
-
-        elseif condition.actions[condition.step].action == "left" then
-          self.set_animation(self, "stand")
+        if condition.actions[condition.step].action == "left" then
           self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
 
         elseif condition.actions[condition.step].action == "right" then
-          self.set_animation(self, "stand")
           self.object:setyaw(self.object:getyaw() + (-90/180*math.pi) )
 
         elseif condition.actions[condition.step].action == "sound" then
-          self.set_animation(self, "stand")
           if condition.actions[condition.step].sound then
             minetest.sound_play(condition.actions[condition.step].sound, {object = self.object})
           end
 
         elseif condition.actions[condition.step].action == "place" then
-          self.set_animation(self, "stand")
           if condition.actions[condition.step].material then
             local pos = { x = nil, y = nil, z = nil}
             if condition.actions[condition.step].type == "here" then
@@ -178,6 +184,10 @@ function blocklymobs:register_mob(name, def)
 
           end
         end
+
+      else
+        self.is_panched = false
+        self.init_condition(self, condition)
       end
     end,
 
@@ -315,23 +325,51 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
+    when_punched = function(self, dtime)
+      if self.settings.when_punched and self.settings.when_punched.actions then
+        self.run_action(self, dtime, self.settings.when_punched)
+      else
+        self.is_panched = false
+        self.init_condition(self, self.settings.when_spawned)
+      end
+    end,
+
     lifetime_countdown_clock = function(self, dtime)
       self.lifetime = self.lifetime - dtime
       if self.lifetime < 0 then self.object:remove() end
     end,
 
     on_rightclick = function(self, _)
-      self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
+      -- self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
+      print("on_rightclick")
+    end,
+
+    init_condition = function(self, condition)
+      condition.actions = condition.actions
+      condition.step    = 1
+      condition.stats   = self.statuses.neutral
     end,
 
     on_punch = function(self, _)
-      self.object:remove()
+      self.is_panched = true
+
+      if self.settings.when_punched then
+        self.settings.when_punched.step = 1
+
+        for index, value in pairs(self.settings.when_punched.actions) do
+          self.settings.when_punched.actions[index].stats = self.statuses.neutral
+        end
+      end
     end,
 
     on_step = function(self, dtime)
       self.gravity(self)
 
-      self.when_spawned(self, dtime)
+      if self.is_panched then
+        self.when_punched(self, dtime)
+      else
+        self.when_spawned(self, dtime)
+      end
 
       self.lifetime_countdown_clock(self, dtime)
     end,
@@ -352,14 +390,32 @@ function blocklymobs:register_mob(name, def)
       if staticdata then
         local settings = minetest.deserialize(staticdata)
         if settings then
+          local has_actions = false
+
           if settings.when_spawned and #settings.when_spawned.actions > 0 then
+            has_actions = true
             self.settings.when_spawned = {
               actions = settings.when_spawned.actions,
-              step    = 1,
-              stats   = nil,
             }
+            self.init_condition(self, self.settings.when_spawned)
           end
+
+          if settings.when_punched and #settings.when_punched.actions > 0 then
+            has_actions = true
+            self.settings.when_punched = {
+              actions = settings.when_punched.actions,
+            }
+            self.init_condition(self, self.settings.when_punched)
+          end
+
+          if not has_actions then self.object:remove() end
+
+        else
+          self.object:remove()
         end
+
+      else
+        self.object:remove()
       end
     end,
 

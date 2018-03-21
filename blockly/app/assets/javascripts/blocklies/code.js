@@ -566,13 +566,19 @@ Code.runJS = function() {
   }
   var spawnEntity = function(x, y, z, name, actionsFunc) {
     var when_spawned = "";
+    var when_punched = "";
     if (actionsFunc.when_spawned) {
       actions_string = "";
       actionsFunc.when_spawned();
       when_spawned = "[\"when_spawned\"]={[\"actions\"]={" + actions_string + "}},";
     }
+    if (actionsFunc.when_punched) {
+      actions_string = "";
+      actionsFunc.when_punched();
+      when_punched = "[\"when_punched\"]={[\"actions\"]={" + actions_string + "}},";
+    }
 
-    actions_string = "{" + when_spawned + "}";
+    actions_string = "{" + when_spawned + when_punched + "}";
     codes.push(
       "/spawnentity " + x + " " + y + " " + z + " " + name + " " + actions_string
     );

@@ -377,12 +377,6 @@ function blocklymobs:register_mob(name, def)
       return ahead_pos
     end,
 
-    get_ahead_node = function(self)
-      return minetest.get_node(
-        self.get_ahead_pos(self)
-      )
-    end,
-
     get_under_node = function(self)
       local pos = self.object:getpos()
       pos.y = pos.y - 1
@@ -397,12 +391,6 @@ function blocklymobs:register_mob(name, def)
     fall = function(self)
       self.object:setacceleration({x = 0, y = -10, z = 0})
     end,
-
-    -- random_sound = function(self)
-    --   if self.sounds and self.sounds.random and math.random(1, 100) <= 1 then
-    --     minetest.sound_play(self.sounds.random, {object = self.object})
-    --   end
-    -- end,
 
     gravity = function(self)
       if self.get_under_node(self).name == "air" then

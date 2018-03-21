@@ -63,6 +63,13 @@ function blocklymobs:register_mob(name, def)
 
     walk = function(self, condition)
       local pos = self.object:getpos()
+      local current_angle = self.get_angle(self)
+
+      if current_angle ~= condition.actions[condition.step].angle then
+        condition.actions[condition.step].angle = current_angle
+        -- FIXME: distance
+        self.set_next_pos(self, condition)
+      end
 
       self.collision_detection(self)
 
@@ -121,17 +128,33 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
+    turn = function(self, angle)
+      self.object:setyaw(self.object:getyaw() + (angle/180*math.pi) )
+    end,
+
+    turn_left = function(self)
+      self.turn(self, 90)
+    end,
+
+    turn_right = function(self)
+      self.turn(self, -90)
+    end,
+
+    set_next_pos = function(self, condition)
+      local ahead_pos = self.get_ahead_pos(self)
+
+      condition.actions[condition.step].next_pos = {
+        x = ahead_pos.x,
+        y = ahead_pos.y,
+        z = ahead_pos.z,
+      }
+    end,
+
     action = function(self, condition)
       if condition.actions[condition.step].action == "walk" then
-        local ahead_pos = self.get_ahead_pos(self)
-
-        condition.actions[condition.step].next_pos = {
-          x = ahead_pos.x,
-          y = ahead_pos.y,
-          z = ahead_pos.z,
-        }
         condition.actions[condition.step].angle = self.get_angle(self)
 
+        self.set_next_pos(self, condition)
         self.set_velocity(self, self.walk_velocity)
         self.set_animation(self, "walk")
 
@@ -140,10 +163,26 @@ function blocklymobs:register_mob(name, def)
 
       else
         if condition.actions[condition.step].action == "left" then
-          self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
+          local velocity = self.get_velocity(self)
+
+          if velocity == 0 then
+            self.turn_left(self)
+          else
+            self.set_velocity(self, 0)
+            self.turn_left(self)
+            self.set_velocity(self, velocity)
+          end
 
         elseif condition.actions[condition.step].action == "right" then
-          self.object:setyaw(self.object:getyaw() + (-90/180*math.pi) )
+          local velocity = self.get_velocity(self)
+
+          if velocity == 0 then
+            self.turn_right(self)
+          else
+            self.set_velocity(self, 0)
+            self.turn_right(self)
+            self.set_velocity(self, velocity)
+          end
 
         elseif condition.actions[condition.step].action == "sound" then
           if condition.actions[condition.step].sound then
@@ -185,9 +224,13 @@ function blocklymobs:register_mob(name, def)
           end
         end
 
-      else
+      elseif condition.name == "when_punched" then
         self.is_panched = false
-        self.init_condition(self, condition)
+
+        if self.settings.when_punched.previous_velocity > 0 then
+          self.set_velocity(self, self.settings.when_punched.previous_velocity)
+          self.set_animation(self, "walk")
+        end
       end
     end,
 
@@ -321,16 +364,15 @@ function blocklymobs:register_mob(name, def)
 
     when_spawned = function(self, dtime)
       if self.settings.when_spawned and self.settings.when_spawned.actions then
+        self.settings.when_spawned.name = "when_spawned"
         self.run_action(self, dtime, self.settings.when_spawned)
       end
     end,
 
     when_punched = function(self, dtime)
       if self.settings.when_punched and self.settings.when_punched.actions then
+        self.settings.when_punched.name = "when_punched"
         self.run_action(self, dtime, self.settings.when_punched)
-      else
-        self.is_panched = false
-        self.init_condition(self, self.settings.when_spawned)
       end
     end,
 
@@ -345,20 +387,30 @@ function blocklymobs:register_mob(name, def)
     end,
 
     init_condition = function(self, condition)
-      condition.actions = condition.actions
       condition.step    = 1
       condition.stats   = self.statuses.neutral
+
+      for index, _ in pairs(condition.actions) do
+        condition.actions[index].stats = self.statuses.neutral
+      end
+    end,
+
+    init_when_punched = function(self)
+      if self.settings.when_punched then
+        self.settings.when_punched.previous_velocity = self.get_velocity(self)
+
+        self.set_animation(self, "stand")
+        self.set_velocity(self, 0)
+
+        self.init_condition(self, self.settings.when_punched)
+      end
     end,
 
     on_punch = function(self, _)
-      self.is_panched = true
+      if self.settings.when_punched and self.settings.when_punched.actions then
+        self.is_panched = true
 
-      if self.settings.when_punched then
-        self.settings.when_punched.step = 1
-
-        for index, value in pairs(self.settings.when_punched.actions) do
-          self.settings.when_punched.actions[index].stats = self.statuses.neutral
-        end
+        self.init_when_punched(self)
       end
     end,
 

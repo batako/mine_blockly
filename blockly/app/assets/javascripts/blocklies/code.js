@@ -565,9 +565,14 @@ Code.runJS = function() {
     actions_string += "{[\"action\"]=\"" + action + "\"},";
   }
   var spawnEntity = function(x, y, z, name, actionsFunc) {
-    actions_string = "";
-    actionsFunc();
-    actions_string = "{[\"actions\"]={" + actions_string + "}}";
+    var when_spawned = "";
+    if (actionsFunc.when_spawned) {
+      actions_string = "";
+      actionsFunc.when_spawned();
+      when_spawned = "[\"when_spawned\"]={[\"actions\"]={" + actions_string + "}},";
+    }
+
+    actions_string = "{" + when_spawned + "}";
     codes.push(
       "/spawnentity " + x + " " + y + " " + z + " " + name + " " + actions_string
     );

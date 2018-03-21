@@ -16,6 +16,7 @@ Blockly.Blocks["minetest_add_entity"] =
       .appendField("z")
     @appendStatementInput("ACTIONS")
       .setCheck(null)
+      .appendField("when spawned")
     @setInputsInline(true)
     @setColour(120)
 
@@ -23,11 +24,11 @@ Blockly.Blocks["minetest_add_entity"] =
 getCode = (language, x, y, z, entity, actions) ->
   switch language
     when "JavaScript"
-      code = "var actions = function() {\n#{actions}}\n"
-      code += "spawnEntity(#{x}, #{y}, #{z}, #{entity}, actions);\n"
+      "spawnEntity(#{x}, #{y}, #{z}, #{entity}," \
+        + " {\nwhen_spawned: function() {\n#{actions}}\n});\n"
     when "Ruby"
-      code = "actions = ->{\n#{actions}}\n"
-      code += "spawnEntity(#{x}, #{y}, #{z}, #{entity}, actions)\n"
+      "spawnEntity(#{x}, #{y}, #{z}, #{entity}," \
+        + " {\nwhen_spawned: ->{\n#{actions}}\n})\n"
 
 
 apply = (language) ->

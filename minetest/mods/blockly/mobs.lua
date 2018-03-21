@@ -19,10 +19,7 @@ function blocklymobs:register_mob(name, def)
 
     sounds = def.sounds,
 
-    step        = 1,
-    run         = false,
-    actions     = {},
-    next_action = "",
+    settings    = nil,
     statuses = {
       neutral    = nil,
       processing = 1,
@@ -33,10 +30,10 @@ function blocklymobs:register_mob(name, def)
       return self.walk_velocity < 0
     end,
 
-    next_step = function(self)
+    next_step = function(self, condition)
       self.set_velocity(self, 0)
-      self.actions[self.step].stats = self.statuses["done"]
-      self.step = self.step + 1
+      condition.actions[condition.step].stats = self.statuses["done"]
+      condition.step = condition.step + 1
     end,
 
     collision_detection = function(self)
@@ -49,145 +46,138 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
-    walk = function(self)
+    walk = function(self, condition)
       local pos = self.object:getpos()
 
       self.collision_detection(self)
 
       -- +dz
-      if self.actions[self.step].angle == 0 then
-        if pos.z >= self.actions[self.step].next_pos.z then
+      if condition.actions[condition.step].angle == 0 then
+        if pos.z >= condition.actions[condition.step].next_pos.z then
           self.object:setpos({
             x = pos.x,
             y = pos.y,
-            z = self.actions[self.step].next_pos.z,
+            z = condition.actions[condition.step].next_pos.z,
           })
-          self.next_step(self)
+          self.next_step(self, condition)
         end
 
       -- -dx
-      elseif self.actions[self.step].angle == 90 then
-        if pos.x <= self.actions[self.step].next_pos.x then
+      elseif condition.actions[condition.step].angle == 90 then
+        if pos.x <= condition.actions[condition.step].next_pos.x then
           self.object:setpos({
-            x = self.actions[self.step].next_pos.x,
+            x = condition.actions[condition.step].next_pos.x,
             y = pos.y,
             z = pos.z,
           })
-          self.next_step(self)
+          self.next_step(self, condition)
         end
 
       -- -dz
-      elseif self.actions[self.step].angle == 180 then
-        if pos.z <= self.actions[self.step].next_pos.z then
+      elseif condition.actions[condition.step].angle == 180 then
+        if pos.z <= condition.actions[condition.step].next_pos.z then
           self.object:setpos({
             x = pos.x,
             y = pos.y,
-            z = self.actions[self.step].next_pos.z,
+            z = condition.actions[condition.step].next_pos.z,
           })
-          self.next_step(self)
+          self.next_step(self, condition)
         end
 
       -- +dx
-      elseif self.actions[self.step].angle == 270 then
-        if pos.x >= self.actions[self.step].next_pos.x then
+      elseif condition.actions[condition.step].angle == 270 then
+        if pos.x >= condition.actions[condition.step].next_pos.x then
           self.object:setpos({
-            x = self.actions[self.step].next_pos.x,
+            x = condition.actions[condition.step].next_pos.x,
             y = pos.y,
             z = pos.z,
           })
-          self.next_step(self)
+          self.next_step(self, condition)
         end
 
       end
     end,
 
-    wait = function(self, dtime)
-      self.actions[self.step].dtime = self.actions[self.step].dtime + dtime
+    wait = function(self, dtime, condition)
+      condition.actions[condition.step].dtime = condition.actions[condition.step].dtime + dtime
 
-      if self.actions[self.step].dtime > 1 then
-        self.next_step(self)
+      if condition.actions[condition.step].dtime > 1 then
+        self.next_step(self, condition)
       end
     end,
 
-    action = function(self)
-      if self.actions[self.step].action == "walk" then
+    action = function(self, condition)
+      if condition.actions[condition.step].action == "walk" then
         local ahead_pos = self.get_ahead_pos(self)
 
-        self.actions[self.step].next_pos = {
+        condition.actions[condition.step].next_pos = {
           x = ahead_pos.x,
           y = ahead_pos.y,
           z = ahead_pos.z,
         }
-        self.actions[self.step].angle = self.get_angle(self)
+        condition.actions[condition.step].angle = self.get_angle(self)
 
         self.set_velocity(self, self.walk_velocity)
         self.set_animation(self, "walk")
 
-      elseif self.actions[self.step].action == "stand" then
-        self.actions[self.step].dtime = 0
+      elseif condition.actions[condition.step].action == "stand" then
+        condition.actions[condition.step].dtime = 0
 
         self.set_animation(self, "stand")
 
       else
-        if self.actions[self.step].action == "stand" then
+        if condition.actions[condition.step].action == "stand" then
           self.set_animation(self, "stand")
 
-        elseif self.actions[self.step].action == "left" then
+        elseif condition.actions[condition.step].action == "left" then
           self.set_animation(self, "stand")
           self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
 
-        elseif self.actions[self.step].action == "right" then
+        elseif condition.actions[condition.step].action == "right" then
           self.set_animation(self, "stand")
           self.object:setyaw(self.object:getyaw() + (-90/180*math.pi) )
 
-        elseif self.actions[self.step].action == "sound" then
+        elseif condition.actions[condition.step].action == "sound" then
           self.set_animation(self, "stand")
-          if self.actions[self.step].sound then
-            minetest.sound_play(self.actions[self.step].sound, {object = self.object})
+          if condition.actions[condition.step].sound then
+            minetest.sound_play(condition.actions[condition.step].sound, {object = self.object})
           end
 
-        elseif self.actions[self.step].action == "place" then
+        elseif condition.actions[condition.step].action == "place" then
           self.set_animation(self, "stand")
-          if self.actions[self.step].material then
+          if condition.actions[condition.step].material then
             local pos = { x = nil, y = nil, z = nil}
-            if self.actions[self.step].type == "here" then
+            if condition.actions[condition.step].type == "here" then
               pos = self.object:getpos()
               self.object:setpos({x = pos.x, y = pos.y + 1, z = pos.z})
-            elseif self.actions[self.step].type == "ahead" then
+            elseif condition.actions[condition.step].type == "ahead" then
               pos = self.get_ahead_pos(self)
             end
-            minetest.add_node(pos, { name = self.actions[self.step].material })
+            minetest.add_node(pos, { name = condition.actions[condition.step].material })
           end
 
         end
 
-        self.next_step(self)
+        self.next_step(self, condition)
       end
     end,
 
-    run_action = function(self, dtime)
-      if self.step <= #self.actions then
-        if self.actions[self.step].stats == self.statuses["neutral"] then
-          self.actions[self.step].stats = self.statuses["processing"]
+    run_action = function(self, dtime, condition)
+      if condition.step <= #condition.actions then
+        if condition.actions[condition.step].stats == self.statuses["neutral"] then
+          condition.actions[condition.step].stats = self.statuses["processing"]
 
-          self.action(self)
+          self.action(self, condition)
 
-        elseif self.actions[self.step].stats == self.statuses["processing"] then
-          if self.actions[self.step].action == "walk" then
-            self.walk(self)
+        elseif condition.actions[condition.step].stats == self.statuses["processing"] then
+          if condition.actions[condition.step].action == "walk" then
+            self.walk(self, condition)
 
-          elseif self.actions[self.step].action == "stand" then
-            self.wait(self, dtime)
+          elseif condition.actions[condition.step].action == "stand" then
+            self.wait(self, dtime, condition)
 
           end
         end
-
-        if self.step < #self.actions then
-          self.next_action = self.actions[self.step + 1].action
-        end
-
-      else
-        self.object:remove()
       end
     end,
 
@@ -292,6 +282,13 @@ function blocklymobs:register_mob(name, def)
       )
     end,
 
+    get_under_node = function(self)
+      local pos = self.object:getpos()
+      pos.y = pos.y - 1
+
+      return minetest.get_node(pos)
+    end,
+
     jump = function(self)
       self.object:setacceleration({x = 0, y = 5, z = 0})
     end,
@@ -300,42 +297,48 @@ function blocklymobs:register_mob(name, def)
       self.object:setacceleration({x = 0, y = -10, z = 0})
     end,
 
-    on_rightclick = function(self, clicker)
-      if not self.run and clicker:get_inventory() then
-        self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
+    -- random_sound = function(self)
+    --   if self.sounds and self.sounds.random and math.random(1, 100) <= 1 then
+    --     minetest.sound_play(self.sounds.random, {object = self.object})
+    --   end
+    -- end,
+
+    gravity = function(self)
+      if self.get_under_node(self).name == "air" then
+        self.fall(self)
       end
+    end,
+
+    when_spawned = function(self, dtime)
+      if self.settings.when_spawned and self.settings.when_spawned.actions then
+        self.run_action(self, dtime, self.settings.when_spawned)
+      end
+    end,
+
+    lifetime_countdown_clock = function(self, dtime)
+      self.lifetime = self.lifetime - dtime
+      if self.lifetime < 0 then self.object:remove() end
+    end,
+
+    on_rightclick = function(self, _)
+      self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
     end,
 
     on_punch = function(self, _)
-      if self.run then
-        self.object:remove()
-      else
-        self.run = true
-      end
+      self.object:remove()
     end,
 
     on_step = function(self, dtime)
-      local ahead_node = self.get_ahead_node(self)
+      self.gravity(self)
 
-      -- TODO: detect forward entity
-      if ahead_node.name == "air" then
-        self.fall(self)
-      elseif self.next_action == "walk" then
-        self.jump(self)
-      end
+      self.when_spawned(self, dtime)
 
-      if self.run then
-        self.lifetime = self.lifetime - dtime
-        if self.lifetime < 0 then self.object:remove() end
-        self.run_action(self, dtime)
-      end
-
-      if not self.run and self.sounds and self.sounds.random and math.random(1, 100) <= 1 then
-        minetest.sound_play(self.sounds.random, {object = self.object})
-      end
+      self.lifetime_countdown_clock(self, dtime)
     end,
 
     on_activate = function(self, staticdata, dtime_s)
+      self.settings = {}
+
       self.object:set_armor_groups({fleshy = self.armor})
       self.object:setacceleration({x = 0, y = -10, z = 0})
       self.object:setvelocity({x = 0, y = self.object:getvelocity().y, z = 0})
@@ -347,9 +350,15 @@ function blocklymobs:register_mob(name, def)
       end
 
       if staticdata then
-        local tmp = minetest.deserialize(staticdata)
-        if tmp and tmp.actions then
-          self.actions   = tmp.actions
+        local settings = minetest.deserialize(staticdata)
+        if settings then
+          if settings.when_spawned and #settings.when_spawned.actions > 0 then
+            self.settings.when_spawned = {
+              actions = settings.when_spawned.actions,
+              step    = 1,
+              stats   = nil,
+            }
+          end
         end
       end
     end,

@@ -583,6 +583,12 @@ Code.runJS = function() {
       "/spawnentity " + x + " " + y + " " + z + " " + name + " " + actions_string
     );
   }
+  var forever = function(actionsFunc) {
+    var original_actions_string = actions_string;
+    actions_string = "";
+    actionsFunc();
+    actions_string = original_actions_string + "{[\"action\"]=\"forever\",[\"actions\"]={" + actions_string + "}},";
+  }
   var wait = function(seconds) {
     if( !(seconds > 0) ) return;
     var i = 0;

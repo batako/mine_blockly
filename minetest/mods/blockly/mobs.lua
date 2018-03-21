@@ -172,7 +172,7 @@ function blocklymobs:register_mob(name, def)
       }
     end,
 
-    action = function(self, condition)
+    action = function(self, condition, dtime)
       if condition.actions[condition.step].action == "walk" then
         condition.actions[condition.step].angle = self.get_angle(self)
 
@@ -182,6 +182,14 @@ function blocklymobs:register_mob(name, def)
 
       elseif condition.actions[condition.step].action == "stand" then
         condition.actions[condition.step].dtime = 0
+
+      elseif condition.actions[condition.step].action == "forever" then
+        if not condition.actions[condition.step].name then
+          condition.actions[condition.step].name = "forever"
+          self.init_condition(self, condition.actions[condition.step])
+        end
+
+        self.run_action(self, dtime, condition.actions[condition.step])
 
       else
         if condition.actions[condition.step].action == "left" then
@@ -246,7 +254,7 @@ function blocklymobs:register_mob(name, def)
         if condition.actions[condition.step].stats == self.statuses["neutral"] then
           condition.actions[condition.step].stats = self.statuses["processing"]
 
-          self.action(self, condition)
+          self.action(self, condition, dtime)
 
         elseif condition.actions[condition.step].stats == self.statuses["processing"] then
           if condition.actions[condition.step].action == "walk" then
@@ -254,6 +262,9 @@ function blocklymobs:register_mob(name, def)
 
           elseif condition.actions[condition.step].action == "stand" then
             self.wait(self, dtime, condition)
+
+          elseif condition.actions[condition.step].action == "forever" then
+            self.run_action(self, dtime, condition.actions[condition.step])
 
           end
         end
@@ -265,6 +276,9 @@ function blocklymobs:register_mob(name, def)
           self.set_velocity(self, self.settings.when_punched.previous_velocity)
           self.set_animation(self, "walk")
         end
+
+      elseif condition.name == "forever" then
+        self.init_condition(self, condition)
       end
     end,
 

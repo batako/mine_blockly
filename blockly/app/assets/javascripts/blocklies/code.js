@@ -618,6 +618,9 @@ Code.runJS = function() {
         break;
     }
   }
+  var drop = function(item_name) {
+    actions_string += "{[\"action\"]=\"drop\",[\"item_name\"]=\"" + item_name + "\"},";
+  }
   var teleport = function(name, x, y, z) {
     var code = '/bring ' + name + ' ' + x + ' ' + y + ' ' + z;
     codes.push(code);

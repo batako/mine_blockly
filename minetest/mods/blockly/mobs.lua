@@ -243,6 +243,12 @@ function blocklymobs:register_mob(name, def)
             minetest.swap_node(pos, { name = "air" })
             minetest.add_item(current_pos, ahead_node.name)
           end
+
+        elseif condition.actions[condition.step].action == "drop" then
+          minetest.add_item(
+            self.object:getpos(),
+            condition.actions[condition.step].item_name
+          )
         end
 
         self.next_step(self, condition)

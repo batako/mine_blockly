@@ -591,6 +591,9 @@ Code.runJS = function() {
         i=(i+1)|0;
     }
   }
+  var disappear = function() {
+    actions_string += "{[\"action\"]=\"disappear\"},";
+  }
   var playSound = function(name) {
     actions_string += '{["action"]="sound",["sound"]="' + name + '"},';
   }

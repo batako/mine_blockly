@@ -201,6 +201,8 @@ function blocklymobs:register_mob(name, def)
             minetest.add_node(pos, { name = condition.actions[condition.step].material })
           end
 
+        elseif condition.actions[condition.step].action == "disappear" then
+          self.object:remove()
         end
 
         self.next_step(self, condition)

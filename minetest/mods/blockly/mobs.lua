@@ -41,10 +41,52 @@ function blocklymobs:register_mob(name, def)
       return action
     end,
 
+    fix_pos_after_walk = function(self, condition)
+      local pos = self.object:getpos()
+
+      -- +dz
+      if condition.actions[condition.step].angle == 0 then
+        self.object:setpos({
+          x = pos.x,
+          y = pos.y,
+          z = condition.actions[condition.step].next_pos.z,
+        })
+
+      -- -dx
+      elseif condition.actions[condition.step].angle == 90 then
+        self.object:setpos({
+          x = condition.actions[condition.step].next_pos.x,
+          y = pos.y,
+          z = pos.z,
+        })
+
+      -- -dz
+      elseif condition.actions[condition.step].angle == 180 then
+        self.object:setpos({
+          x = pos.x,
+          y = pos.y,
+          z = condition.actions[condition.step].next_pos.z,
+        })
+
+      -- +dx
+      elseif condition.actions[condition.step].angle == 270 then
+        self.object:setpos({
+          x = condition.actions[condition.step].next_pos.x,
+          y = pos.y,
+          z = pos.z,
+        })
+
+      end
+    end,
+
     next_step = function(self, condition)
-      if condition.actions[condition.step].action == "walk" and self.next_action(self, condition) ~= "walk" then
-        self.set_animation(self, "stand")
+      if condition.actions[condition.step].action == "walk" then
         self.set_velocity(self, 0)
+        self.fix_pos_after_walk(self, condition)
+
+        if self.next_action(self, condition) ~= "walk" then
+          self.set_animation(self, "stand")
+        end
       end
 
       condition.actions[condition.step].stats = self.statuses["done"]
@@ -76,44 +118,24 @@ function blocklymobs:register_mob(name, def)
       -- +dz
       if condition.actions[condition.step].angle == 0 then
         if pos.z >= condition.actions[condition.step].next_pos.z then
-          self.object:setpos({
-            x = pos.x,
-            y = pos.y,
-            z = condition.actions[condition.step].next_pos.z,
-          })
           self.next_step(self, condition)
         end
 
       -- -dx
       elseif condition.actions[condition.step].angle == 90 then
         if pos.x <= condition.actions[condition.step].next_pos.x then
-          self.object:setpos({
-            x = condition.actions[condition.step].next_pos.x,
-            y = pos.y,
-            z = pos.z,
-          })
           self.next_step(self, condition)
         end
 
       -- -dz
       elseif condition.actions[condition.step].angle == 180 then
         if pos.z <= condition.actions[condition.step].next_pos.z then
-          self.object:setpos({
-            x = pos.x,
-            y = pos.y,
-            z = condition.actions[condition.step].next_pos.z,
-          })
           self.next_step(self, condition)
         end
 
       -- +dx
       elseif condition.actions[condition.step].angle == 270 then
         if pos.x >= condition.actions[condition.step].next_pos.x then
-          self.object:setpos({
-            x = condition.actions[condition.step].next_pos.x,
-            y = pos.y,
-            z = pos.z,
-          })
           self.next_step(self, condition)
         end
 

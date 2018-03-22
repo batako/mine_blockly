@@ -426,10 +426,10 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
-    when_used = function(self, dtime)
-      if self.settings.when_used and self.settings.when_used.actions then
-        self.settings.when_used.name = "when_used"
-        self.run_action(self, dtime, self.settings.when_used)
+    when_rightclicked = function(self, dtime)
+      if self.settings.when_rightclicked and self.settings.when_rightclicked.actions then
+        self.settings.when_rightclicked.name = "when_rightclicked"
+        self.run_action(self, dtime, self.settings.when_rightclicked)
       end
     end,
 
@@ -448,12 +448,12 @@ function blocklymobs:register_mob(name, def)
     end,
 
     on_rightclick = function(self, _)
-      if self.settings.when_used and self.settings.when_used.actions then
+      if self.settings.when_rightclicked and self.settings.when_rightclicked.actions then
         if not self.is_rightclicked then
           if self.is_panched then
-            self.settings.when_used.previous_velocity = 0
+            self.settings.when_rightclicked.previous_velocity = 0
           else
-            self.settings.when_used.previous_velocity = self.get_velocity(self)
+            self.settings.when_rightclicked.previous_velocity = self.get_velocity(self)
           end
 
           self.is_panched = false
@@ -462,7 +462,7 @@ function blocklymobs:register_mob(name, def)
 
         self.set_animation(self, "stand")
         self.set_velocity(self, 0)
-        self.init_condition(self, self.settings.when_used)
+        self.init_condition(self, self.settings.when_rightclicked)
       end
     end,
 
@@ -491,7 +491,7 @@ function blocklymobs:register_mob(name, def)
       if self.is_panched then
         self.when_punched(self, dtime)
       elseif self.is_rightclicked then
-        self.when_used(self, dtime)
+        self.when_rightclicked(self, dtime)
       else
         self.when_spawned(self, dtime)
       end
@@ -533,12 +533,12 @@ function blocklymobs:register_mob(name, def)
             self.init_condition(self, self.settings.when_punched)
           end
 
-          if settings.when_used and #settings.when_used.actions > 0 then
+          if settings.when_rightclicked and #settings.when_rightclicked.actions > 0 then
             has_actions = true
-            self.settings.when_used = {
-              actions = settings.when_used.actions,
+            self.settings.when_rightclicked = {
+              actions = settings.when_rightclicked.actions,
             }
-            self.init_condition(self, self.settings.when_used)
+            self.init_condition(self, self.settings.when_rightclicked)
           end
 
           if not has_actions then self.object:remove() end

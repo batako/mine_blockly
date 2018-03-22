@@ -21,6 +21,7 @@ function blocklymobs:register_mob(name, def)
 
     settings   = nil,
     is_panched = false,
+    is_rightclicked = false,
     statuses = {
       neutral    = nil,
       processing = 1,
@@ -425,6 +426,13 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
+    when_used = function(self, dtime)
+      if self.settings.when_used and self.settings.when_used.actions then
+        self.settings.when_used.name = "when_used"
+        self.run_action(self, dtime, self.settings.when_used)
+      end
+    end,
+
     lifetime_countdown_clock = function(self, dtime)
       self.lifetime = self.lifetime - dtime
       if self.lifetime < 0 then self.object:remove() end
@@ -440,15 +448,35 @@ function blocklymobs:register_mob(name, def)
     end,
 
     on_rightclick = function(self, _)
-      -- self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
-      print("on_rightclick")
+      if self.settings.when_used and self.settings.when_used.actions then
+        if not self.is_rightclicked then
+          if self.is_panched then
+            self.settings.when_used.previous_velocity = 0
+          else
+            self.settings.when_used.previous_velocity = self.get_velocity(self)
+          end
+
+          self.is_panched = false
+          self.is_rightclicked = true
+        end
+
+        self.set_animation(self, "stand")
+        self.set_velocity(self, 0)
+        self.init_condition(self, self.settings.when_used)
+      end
     end,
 
     on_punch = function(self, _)
       if self.settings.when_punched and self.settings.when_punched.actions then
         if not self.is_panched then
+          if self.is_rightclicked then
+            self.settings.when_punched.previous_velocity = 0
+          else
+            self.settings.when_punched.previous_velocity = self.get_velocity(self)
+          end
+
           self.is_panched = true
-          self.settings.when_punched.previous_velocity = self.get_velocity(self)
+          self.is_rightclicked = false
         end
 
         self.set_animation(self, "stand")
@@ -462,6 +490,8 @@ function blocklymobs:register_mob(name, def)
 
       if self.is_panched then
         self.when_punched(self, dtime)
+      elseif self.is_rightclicked then
+        self.when_used(self, dtime)
       else
         self.when_spawned(self, dtime)
       end
@@ -501,6 +531,14 @@ function blocklymobs:register_mob(name, def)
               actions = settings.when_punched.actions,
             }
             self.init_condition(self, self.settings.when_punched)
+          end
+
+          if settings.when_used and #settings.when_used.actions > 0 then
+            has_actions = true
+            self.settings.when_used = {
+              actions = settings.when_used.actions,
+            }
+            self.init_condition(self, self.settings.when_used)
           end
 
           if not has_actions then self.object:remove() end

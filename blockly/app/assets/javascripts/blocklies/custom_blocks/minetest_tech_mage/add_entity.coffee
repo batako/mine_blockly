@@ -20,20 +20,25 @@ Blockly.Blocks["minetest_add_entity"] =
     @appendStatementInput("punch_actions")
       .setCheck(null)
       .appendField("when touched")
+    @appendStatementInput("used_actions")
+      .setCheck(null)
+      .appendField("when used")
     @setInputsInline(true)
     @setColour(120)
 
 
-getCode = (language, x, y, z, entity, spawn_actions, punch_actions) ->
+getCode = (language, x, y, z, entity, spawn_actions, punch_actions, used_actions) ->
   switch language
     when "JavaScript"
       "spawnEntity(#{x}, #{y}, #{z}, #{entity}," \
         + " {\nwhen_spawned: function() {\n#{spawn_actions}},\n" \
-        + "when_punched: function() {\n#{punch_actions}}\n});\n"
+        + "when_punched: function() {\n#{punch_actions}},\n" \
+        + "when_used: function() {\n#{used_actions}}\n});\n"
     when "Ruby"
       "spawnEntity(#{x}, #{y}, #{z}, #{entity}," \
-        + " {\nwhen_spawned: ->{\n#{spawn_actions}},\w" \
-        + "when_punched: ->{\n#{punch_actions}}\n})\n"
+        + " {\nwhen_spawned: ->{\n#{spawn_actions}},\n" \
+        + "when_punched: ->{\n#{punch_actions}},\n" \
+        + "when_used: ->{\n#{used_actions}}\n})\n"
 
 
 apply = (language) ->
@@ -48,8 +53,9 @@ apply = (language) ->
       block, "entity", Blockly[language].ORDER_ATOMIC).slice(1,-1)
     spawn_actions = Blockly[language].statementToCode(block, "spawn_actions")
     punch_actions = Blockly[language].statementToCode(block, "punch_actions")
+    used_actions = Blockly[language].statementToCode(block, "used_actions")
 
-    getCode(language, x, y, z, entity, spawn_actions, punch_actions)
+    getCode(language, x, y, z, entity, spawn_actions, punch_actions, used_actions)
 
 
 for language in [

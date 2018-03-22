@@ -423,11 +423,6 @@ function blocklymobs:register_mob(name, def)
       if self.lifetime < 0 then self.object:remove() end
     end,
 
-    on_rightclick = function(self, _)
-      -- self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
-      print("on_rightclick")
-    end,
-
     init_condition = function(self, condition)
       condition.step    = 1
       condition.stats   = self.statuses.neutral
@@ -437,22 +432,19 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
-    init_when_punched = function(self)
-      if self.settings.when_punched then
-        self.settings.when_punched.previous_velocity = self.get_velocity(self)
-
-        self.set_animation(self, "stand")
-        self.set_velocity(self, 0)
-
-        self.init_condition(self, self.settings.when_punched)
-      end
+    on_rightclick = function(self, _)
+      -- self.object:setyaw(self.object:getyaw() + (90/180*math.pi) )
+      print("on_rightclick")
     end,
 
     on_punch = function(self, _)
       if self.settings.when_punched and self.settings.when_punched.actions then
         self.is_panched = true
+        self.settings.when_punched.previous_velocity = self.get_velocity(self)
 
-        self.init_when_punched(self)
+        self.set_animation(self, "stand")
+        self.set_velocity(self, 0)
+        self.init_condition(self, self.settings.when_punched)
       end
     end,
 

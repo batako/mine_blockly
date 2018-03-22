@@ -439,8 +439,10 @@ function blocklymobs:register_mob(name, def)
 
     on_punch = function(self, _)
       if self.settings.when_punched and self.settings.when_punched.actions then
-        self.is_panched = true
-        self.settings.when_punched.previous_velocity = self.get_velocity(self)
+        if not self.is_panched then
+          self.is_panched = true
+          self.settings.when_punched.previous_velocity = self.get_velocity(self)
+        end
 
         self.set_animation(self, "stand")
         self.set_velocity(self, 0)

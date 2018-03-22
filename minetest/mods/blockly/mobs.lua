@@ -93,13 +93,20 @@ function blocklymobs:register_mob(name, def)
       condition.step = condition.step + 1
     end,
 
-    collision_detection = function(self)
-      local velocity = self.get_velocity(self)
+    is_slowdown = function(self)
+      return self.get_velocity(self) < self.walk_velocity
+    end,
 
+    collision_detection = function(self)
       -- TODO: don't jump on slow-footed block (Dirt with Snow)
-      if velocity < self.walk_velocity then
-        self.jump(self)
+      if self.is_slowdown(self) then
         self.set_velocity(self, self.walk_velocity)
+
+        if self.get_under_node(self).name == "air" then
+          self.fall(self)
+        else
+          self.jump(self)
+        end
       end
     end,
 

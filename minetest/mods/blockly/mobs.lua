@@ -31,6 +31,23 @@ function blocklymobs:register_mob(name, def)
       processing = 1,
       done       = 2,
     },
+    wool_nodes = {
+      "wool:white",
+      "wool:grey",
+      "wool:dark_grey",
+      "wool:black",
+      "wool:blue",
+      "wool:cyan",
+      "wool:green",
+      "wool:dark_green",
+      "wool:yellow",
+      "wool:orange",
+      "wool:brown",
+      "wool:red",
+      "wool:pink",
+      "wool:magenta",
+      "wool:violet",
+    },
 
     is_reverse = function(self)
       return self.walk_velocity < 0
@@ -187,6 +204,17 @@ function blocklymobs:register_mob(name, def)
       }
     end,
 
+    convert_material = function(self, material)
+      if material == "wool:random" and self.wool_nodes then
+        math.randomseed(os.time())
+
+        return self.wool_nodes[math.random(#self.wool_nodes)]
+
+      else
+        return material
+      end
+    end,
+
     action = function(self, condition, dtime)
       if condition.actions[condition.step].action == "walk" then
         condition.actions[condition.step].angle = self.get_angle(self)
@@ -251,13 +279,16 @@ function blocklymobs:register_mob(name, def)
         elseif condition.actions[condition.step].action == "place" then
           if condition.actions[condition.step].material then
             local pos = { x = nil, y = nil, z = nil}
+            local material = self.convert_material(self, condition.actions[condition.step].material)
+
             if condition.actions[condition.step].type == "here" then
               pos = self.object:getpos()
               self.object:setpos({x = pos.x, y = pos.y + 1, z = pos.z})
             elseif condition.actions[condition.step].type == "ahead" then
               pos = self.get_ahead_pos(self)
             end
-            minetest.add_node(pos, { name = condition.actions[condition.step].material })
+
+            minetest.add_node(pos, { name = material })
           end
 
         elseif condition.actions[condition.step].action == "disappear" then

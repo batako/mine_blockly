@@ -613,10 +613,6 @@ Code.runJS = function() {
     actions_string += "{[\"action\"]=\"destroy_block\"},";
   }
   var place = function(material, type = "here") {
-    if (material == "wool:random") {
-      material = getRandomWool()
-    }
-
     switch (type) {
       case "here":
       case "ahead":

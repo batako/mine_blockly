@@ -194,6 +194,29 @@ function blocklymobs:register_mob(name, def)
       self.turn(self, -90)
     end,
 
+    turn_random = function(self)
+      local angules = {90, -90, 180}
+
+      math.randomseed(os.time())
+
+      self.turn(
+        self,
+        angules[math.random(#angules)]
+      )
+    end,
+
+    run_turn_action = function(self, action)
+      local velocity = self.get_velocity(self)
+
+      if velocity == 0 then
+        self[action](self)
+      else
+        self.set_velocity(self, 0)
+        self[action](self)
+        self.set_velocity(self, velocity)
+      end
+    end,
+
     set_next_pos = function(self, condition)
       local ahead_pos = self.get_ahead_pos(self)
 
@@ -249,27 +272,14 @@ function blocklymobs:register_mob(name, def)
         end
 
       else
-        if condition.actions[condition.step].action == "left" then
-          local velocity = self.get_velocity(self)
+        if condition.actions[condition.step].action == "turn_left" then
+          self.run_turn_action(self, condition.actions[condition.step].action)
 
-          if velocity == 0 then
-            self.turn_left(self)
-          else
-            self.set_velocity(self, 0)
-            self.turn_left(self)
-            self.set_velocity(self, velocity)
-          end
+        elseif condition.actions[condition.step].action == "turn_right" then
+          self.run_turn_action(self, condition.actions[condition.step].action)
 
-        elseif condition.actions[condition.step].action == "right" then
-          local velocity = self.get_velocity(self)
-
-          if velocity == 0 then
-            self.turn_right(self)
-          else
-            self.set_velocity(self, 0)
-            self.turn_right(self)
-            self.set_velocity(self, velocity)
-          end
+        elseif condition.actions[condition.step].action == "turn_random" then
+          self.run_turn_action(self, condition.actions[condition.step].action)
 
         elseif condition.actions[condition.step].action == "sound" then
           if condition.actions[condition.step].sound then

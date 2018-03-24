@@ -554,15 +554,13 @@ Code.runJS = function() {
     actions_string += "{[\"action\"]=\"walk\"},";
   }
   var turnLeft = function() {
-    actions_string += "{[\"action\"]=\"left\"},";
+    actions_string += "{[\"action\"]=\"turn_left\"},";
   }
   var turnRight = function() {
-    actions_string += "{[\"action\"]=\"right\"},";
+    actions_string += "{[\"action\"]=\"turn_right\"},";
   }
   var turnRandom = function() {
-    var directions = ["left", "right"];
-    var action = directions[Math.floor(Math.random() * directions.length)];
-    actions_string += "{[\"action\"]=\"" + action + "\"},";
+    actions_string += "{[\"action\"]=\"turn_random\"},";
   }
   var spawnEntity = function(x, y, z, name, actionsFunc) {
     var when_spawned = "";

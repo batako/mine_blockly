@@ -19,9 +19,13 @@ function blocklymobs:register_mob(name, def)
 
     sounds = def.sounds,
 
-    settings   = nil,
-    is_panched = false,
-    is_rightclicked = false,
+    settings     = nil,
+    process_type = nil,
+    processes = {
+      spawn      = nil,
+      punch      = 1,
+      rightclick = 2,
+    },
     statuses = {
       neutral    = nil,
       processing = 1,
@@ -115,6 +119,7 @@ function blocklymobs:register_mob(name, def)
       local pos = self.object:getpos()
       local current_angle = self.get_angle(self)
 
+      -- Intercepted
       if current_angle ~= condition.actions[condition.step].angle then
         condition.actions[condition.step].angle = current_angle
         -- FIXME: distance
@@ -283,11 +288,11 @@ function blocklymobs:register_mob(name, def)
           end
         end
 
-      elseif condition.name == "when_punched" then
-        self.is_panched = false
+      elseif condition.name == "when_punched" or condition.name == "when_rightclicked" then
+        self.process_type = nil
 
-        if self.settings.when_punched.previous_velocity > 0 then
-          self.set_velocity(self, self.settings.when_punched.previous_velocity)
+        if self.settings[condition.name].previous_velocity > 0 then
+          self.set_velocity(self, self.settings[condition.name].previous_velocity)
           self.set_animation(self, "walk")
         end
 
@@ -439,58 +444,46 @@ function blocklymobs:register_mob(name, def)
     end,
 
     init_condition = function(self, condition)
-      condition.step    = 1
-      condition.stats   = self.statuses.neutral
+      condition.step  = 1
+      condition.stats = self.statuses.neutral
 
       for index, _ in pairs(condition.actions) do
         condition.actions[index].stats = self.statuses.neutral
       end
     end,
 
-    on_rightclick = function(self, _)
-      if self.settings.when_rightclicked and self.settings.when_rightclicked.actions then
-        if not self.is_rightclicked then
-          if self.is_panched then
-            self.settings.when_rightclicked.previous_velocity = 0
+    run_click_action = function(self, condition_name, process_type)
+      if self.settings[condition_name] and self.settings[condition_name].actions then
+        if self.process_type ~= process_type then
+          if self.process_type == self.processes.spawn then
+            self.settings[condition_name].previous_velocity = self.get_velocity(self)
           else
-            self.settings.when_rightclicked.previous_velocity = self.get_velocity(self)
+            self.settings[condition_name].previous_velocity = 0
           end
 
-          self.is_panched = false
-          self.is_rightclicked = true
+          self.process_type = process_type
         end
 
         self.set_animation(self, "stand")
         self.set_velocity(self, 0)
-        self.init_condition(self, self.settings.when_rightclicked)
+        self.init_condition(self, self.settings[condition_name])
       end
     end,
 
     on_punch = function(self, _)
-      if self.settings.when_punched and self.settings.when_punched.actions then
-        if not self.is_panched then
-          if self.is_rightclicked then
-            self.settings.when_punched.previous_velocity = 0
-          else
-            self.settings.when_punched.previous_velocity = self.get_velocity(self)
-          end
+      self.run_click_action(self, "when_punched", self.processes.punch)
+    end,
 
-          self.is_panched = true
-          self.is_rightclicked = false
-        end
-
-        self.set_animation(self, "stand")
-        self.set_velocity(self, 0)
-        self.init_condition(self, self.settings.when_punched)
-      end
+    on_rightclick = function(self, _)
+      self.run_click_action(self, "when_rightclicked", self.processes.rightclick)
     end,
 
     on_step = function(self, dtime)
       self.gravity(self)
 
-      if self.is_panched then
+      if self.process_type == self.processes.punch then
         self.when_punched(self, dtime)
-      elseif self.is_rightclicked then
+      elseif self.process_type == self.processes.rightclick then
         self.when_rightclicked(self, dtime)
       else
         self.when_spawned(self, dtime)

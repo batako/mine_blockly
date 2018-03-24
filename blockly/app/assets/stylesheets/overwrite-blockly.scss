@@ -1,0 +1,13 @@
+.blocklyTreeRow {
+  padding-right: 5px;
+  border-width: 5px !important;
+
+  .blocklyTreeIcon {
+    display: none !important;
+  }
+  .blocklyTreeLabel {
+    padding-left: 5px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+}

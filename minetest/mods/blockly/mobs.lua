@@ -201,7 +201,6 @@ function blocklymobs:register_mob(name, def)
       elseif condition.actions[condition.step].action == "forever" then
         if not condition.actions[condition.step].name then
           condition.actions[condition.step].name = "forever"
-          self.init_condition(self, condition.actions[condition.step])
         end
 
         self.run_action(self, dtime, condition.actions[condition.step])

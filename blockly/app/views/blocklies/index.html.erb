@@ -80,9 +80,9 @@
   </div>
 </div>
 
-<xml id="toolbox" style="display: none">
-  <category name="TechMage" colour="%{BKY_COLOUR_HUE}">
-    <block type="minetest_add_node">
+<xml class="toolbox" id="toolbox">
+  <category name="TechMage Basic" colour="%{BKY_COLOUR_HUE}">
+    <block type="minetest_mage_basic_add_node">
       <value name="material">
         <block type="minetest_dirt_block"></block>
       </value>
@@ -102,7 +102,7 @@
         </shadow>
       </value>
     </block>
-    <block type="minetest_add_text_node">
+    <block type="minetest_mage_basic_text_node">
   	  <value name="x">
         <shadow type="math_number">
           <field name="NUM">0</field>
@@ -134,7 +134,7 @@
         </shadow>
       </value>
     </block>
-    <block type="minetest_teleport">
+    <block type="minetest_mage_basic_teleport">
       <value name="name">
         <block type="text"></block>
       </value>
@@ -154,7 +154,7 @@
         </shadow>
       </value>
     </block>
-    <block type="minetest_teleport_all">
+    <block type="minetest_mage_basic_teleport_all">
       <value name="x">
         <shadow type="math_number">
           <field name="NUM">0</field>
@@ -174,7 +174,7 @@
   </category>
 
   <category name="TechMage Summons" colour="%{BKY_COLOUR_HUE}">
-    <block type="minetest_add_entity">
+    <block type="minetest_mage_summons_add_entity">
       <value name="entity">
         <block type="minetest_sheep_entity"></block>
       </value>
@@ -194,35 +194,35 @@
         </shadow>
       </value>
     </block>
-    <block type="minetest_forever"></block>
-    <block type="minetest_move_forward"></block>
-    <block type="minetest_turn">
+    <block type="minetest_mage_summons_forever"></block>
+    <block type="minetest_mage_summons_move_forward"></block>
+    <block type="minetest_mage_summons_turn">
       <field name="ACTION">turnLeft();</field>
     </block>
-    <block type="minetest_turn">
+    <block type="minetest_mage_summons_turn">
       <field name="ACTION">turnRight();</field>
     </block>
-    <block type="minetest_wait">
+    <block type="minetest_mage_summons_wait">
       <value name="seconds">
         <shadow type="math_number">
           <field name="NUM">1</field>
         </shadow>
       </value>
     </block>
-    <block type="minetest_disappear"></block>
-    <block type="minetest_play_sound"></block>
-    <block type="minetest_destroy_block"></block>
-    <block type="minetest_place">
+    <block type="minetest_mage_summons_disappear"></block>
+    <block type="minetest_mage_summons_play_sound"></block>
+    <block type="minetest_mage_summons_destroy_block"></block>
+    <block type="minetest_mage_summons_place">
       <value name="material">
         <block type="minetest_dirt_block"></block>
       </value>
     </block>
-    <block type="minetest_place_ahead">
+    <block type="minetest_mage_summons_place_ahead">
       <value name="material">
         <block type="minetest_dirt_block"></block>
       </value>
     </block>
-    <block type="minetest_drop">
+    <block type="minetest_mage_summons_drop">
       <value name="item">
         <block type="minetest_torch_item"></block>
       </value>

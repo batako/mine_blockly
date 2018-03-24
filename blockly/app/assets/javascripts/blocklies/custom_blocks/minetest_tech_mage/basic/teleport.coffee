@@ -1,7 +1,9 @@
-Blockly.Blocks["minetest_teleport_all"] =
+Blockly.Blocks["minetest_mage_basic_teleport"] =
   init: ->
     @appendDummyInput()
-      .appendField("teleport near")
+      .appendField("teleport")
+    @appendValueInput("name")
+      .setCheck("String")
     @appendValueInput("x")
       .setCheck("Number")
       .appendField("x")
@@ -20,13 +22,15 @@ Blockly.Blocks["minetest_teleport_all"] =
 getCode = (language, name, x, y, z) ->
   switch language
     when "JavaScript"
-      "teleport_all(#{x}, #{y}, #{z});\n"
+      "teleport(#{name}, #{x}, #{y}, #{z});\n"
     when "Ruby"
-      "teleport_all(#{x}, #{y}, #{z})\n"
+      "teleport(#{name}, #{x}, #{y}, #{z})\n"
 
 
 apply = (language) ->
-  Blockly[language]["minetest_teleport_all"] = (block) ->
+  Blockly[language]["minetest_mage_basic_teleport"] = (block) ->
+    name = Blockly[language].valueToCode(
+      block, "name")
     x = Blockly[language].valueToCode(
       block, "x", Blockly[language].ORDER_ATOMIC) || 0
     y = Blockly[language].valueToCode(

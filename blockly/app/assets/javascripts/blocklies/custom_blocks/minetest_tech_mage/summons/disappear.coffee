@@ -1,24 +1,21 @@
-Blockly.Blocks["minetest_move_forward"] =
+Blockly.Blocks["minetest_mage_summons_disappear"] =
   init: ->
     @appendDummyInput()
-      .appendField("move forward")
+        .appendField("disappear")
     @setPreviousStatement(true, null)
     @setNextStatement(true, null)
     @setColour(185)
 
-
 getCode = (language) ->
   switch language
     when "JavaScript"
-      "moveForward();\n"
+      "disappear();\n"
     when "Ruby"
-      "moveForward()\n"
-
+      "disappear()\n"
 
 apply = (language) ->
-  Blockly[language]["minetest_move_forward"] = (block) ->
+  Blockly[language]["minetest_mage_summons_disappear"] = (block) ->
     getCode(language)
-
 
 for language in [
   "JavaScript"

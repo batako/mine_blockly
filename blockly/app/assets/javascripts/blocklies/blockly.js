@@ -631,7 +631,7 @@ Code.runJS = function() {
     var code = '/bring ' + name + ' ' + x + ' ' + y + ' ' + z;
     codes.push(code);
   }
-  var teleport_all = function(x, y, z) {
+  var teleportAll = function(x, y, z) {
     var code = '/bring_all ' + x + ' ' + y + ' ' + z;
     codes.push(code);
   }

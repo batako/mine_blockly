@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_add_entity"] =
+Blockly.Blocks["minetest_mage_summons_add_entity"] =
   init: ->
     @appendDummyInput()
       .appendField("spawn")
@@ -42,7 +42,7 @@ getCode = (language, x, y, z, entity, spawn_actions, touched_actions, used_actio
 
 
 apply = (language) ->
-  Blockly[language]["minetest_add_entity"] = (block) ->
+  Blockly[language]["minetest_mage_summons_add_entity"] = (block) ->
     x = Blockly[language].valueToCode(
       block, "x", Blockly[language].ORDER_ATOMIC) || 0
     y = Blockly[language].valueToCode(

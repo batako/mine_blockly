@@ -345,6 +345,9 @@ body.blocklies {
       }
     }
 
+    .toolbox {
+      display: none;
+    }
     .blocklyTreeRoot {
       [role=group] [role=treeitem]:nth-child(2) {
         .blocklyTreeLabel {

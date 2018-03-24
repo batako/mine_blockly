@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_add_node"] =
+Blockly.Blocks["minetest_mage_basic_add_node"] =
   init: ->
     @appendValueInput("material")
       .setCheck("String")
@@ -28,7 +28,7 @@ getCode = (language, material, x, y, z) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_add_node"] = (block) ->
+  Blockly[language]["minetest_mage_basic_add_node"] = (block) ->
     material = Blockly[language].valueToCode(
       block, "material", Blockly[language].ORDER_ATOMIC).slice(1,-1) || "air"
     x = Blockly[language].valueToCode(

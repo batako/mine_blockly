@@ -41,6 +41,8 @@ function blocklymobs:register_mob(name, def)
 
       if condition.step < #condition.actions then
         action = condition.actions[condition.step + 1].action
+      elseif condition.step >= #condition.actions and condition.name == "forever" then
+        action = condition.actions[condition.step].action
       end
 
       return action

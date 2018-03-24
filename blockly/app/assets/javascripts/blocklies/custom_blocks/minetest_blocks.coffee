@@ -28,12 +28,12 @@ appy = (label, name, value) ->
 
 for params in [
   {label: "AIR", value: "air", name: "air"}
-  {label: "BOOKSHELF", value: "bookshelf", name: "bookshelf"}
-  {label: "BRICK", value: "brick", name: "brick"}
-  {label: "DIRT", value: "dirt", name: "dirt"}
-  {label: "GLASS", value: "glass", name: "glass"}
-  {label: "STONE", value: "stone", name: "stone"}
-  {label: "WOOD", value: "wood", name: "wood"}
+  {label: "BOOKSHELF", value: "default:bookshelf", name: "bookshelf"}
+  {label: "BRICK", value: "default:brick", name: "brick"}
+  {label: "DIRT", value: "default:dirt", name: "dirt"}
+  {label: "GLASS", value: "default:glass", name: "glass"}
+  {label: "STONE", value: "default:stone", name: "stone"}
+  {label: "WOOD", value: "default:wood", name: "wood"}
   {label: "GOLD", value: "default:goldblock", name: "gold"}
   {label: "DIAMOND", value: "default:diamondblock", name: "diamond"}
   {label: "WHITE WOOL", value: "wool:white", name: "wool_white"}

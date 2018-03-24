@@ -629,19 +629,11 @@ Code.runJS = function() {
     var code = '/bring_all ' + x + ' ' + y + ' ' + z;
     codes.push(code);
   }
-  var detect_block = function(operator, material, actionsFunc) {
+  var detectBlock = function(operator, material, direction, actionsFunc) {
     var original_actions_string = actions_string;
     actions_string = "";
     actionsFunc();
-    actions_string = original_actions_string + "{[\"action\"]=\"if_ahead\",[\"operator\"]=\"" + operator + "\",[\"block\"]=\"" + material + "\",[\"actions\"]={" + actions_string + "}},";
-  }
-  var if_ahead = function(material, actionsFunc) {
-    var operator = "equal";
-    detect_block(operator, material, actionsFunc);
-  }
-  var if_not_ahead = function(material, actionsFunc) {
-    var operator = "not";
-    detect_block(operator, material, actionsFunc);
+    actions_string = original_actions_string + "{[\"action\"]=\"detect_block\",[\"operator\"]=\"" + operator + "\",[\"direction\"]=\"" + direction + "\",[\"block\"]=\"" + material + "\",[\"actions\"]={" + actions_string + "}},";
   }
   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   try {

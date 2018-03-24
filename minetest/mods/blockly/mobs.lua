@@ -256,13 +256,15 @@ function blocklymobs:register_mob(name, def)
 
         self.run_action(self, dtime, condition.actions[condition.step])
 
-      elseif condition.actions[condition.step].action == "if_ahead" then
+      elseif condition.actions[condition.step].action == "detect_block" then
         if not condition.actions[condition.step].name then
-          condition.actions[condition.step].name = "if_ahead"
+          condition.actions[condition.step].name = "detect_block"
         end
 
         if not condition.actions[condition.step].ahead_node_name then
-          condition.actions[condition.step].ahead_node_name = self.get_ahead_node(self).name
+          if condition.actions[condition.step].direction == "ahead" then
+            condition.actions[condition.step].ahead_node_name = self.get_ahead_node(self).name
+          end
         end
 
         local run = nil
@@ -350,7 +352,7 @@ function blocklymobs:register_mob(name, def)
           elseif condition.actions[condition.step].action == "forever" then
             self.run_action(self, dtime, condition.actions[condition.step])
 
-          elseif condition.actions[condition.step].action == "if_ahead" then
+          elseif condition.actions[condition.step].action == "detect_block" then
             if condition.actions[condition.step].step <= #condition.actions[condition.step].actions then
               self.run_action(self, dtime, condition.actions[condition.step])
             else
@@ -525,7 +527,7 @@ function blocklymobs:register_mob(name, def)
       condition.step  = 1
       condition.stats = self.statuses.neutral
 
-      -- for if_ahead
+      -- for detect_block
       condition.ahead_node_name = nil
 
       for index, _ in pairs(condition.actions) do

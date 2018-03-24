@@ -265,7 +265,15 @@ function blocklymobs:register_mob(name, def)
           condition.actions[condition.step].ahead_node_name = self.get_ahead_node(self).name
         end
 
-        if condition.actions[condition.step].block == condition.actions[condition.step].ahead_node_name then
+        local run = nil
+
+        if condition.actions[condition.step].operator == "not" then
+          run = (condition.actions[condition.step].block ~= condition.actions[condition.step].ahead_node_name)
+        elseif condition.actions[condition.step].operator == "equal" then
+          run = (condition.actions[condition.step].block == condition.actions[condition.step].ahead_node_name)
+        end
+
+        if run then
           self.run_action(self, dtime, condition.actions[condition.step])
         else
           self.next_step(self, condition)

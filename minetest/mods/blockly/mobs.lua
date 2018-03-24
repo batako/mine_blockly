@@ -451,6 +451,10 @@ function blocklymobs:register_mob(name, def)
 
       for index, _ in pairs(condition.actions) do
         condition.actions[index].stats = self.statuses.neutral
+
+        if condition.actions[index].actions then
+          self.init_condition(self, condition.actions[index])
+        end
       end
     end,
 

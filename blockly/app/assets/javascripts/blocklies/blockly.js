@@ -635,6 +635,12 @@ Code.runJS = function() {
     var code = '/bring_all ' + x + ' ' + y + ' ' + z;
     codes.push(code);
   }
+  var if_ahead = function(material, actionsFunc) {
+    var original_actions_string = actions_string;
+    actions_string = "";
+    actionsFunc();
+    actions_string = original_actions_string + "{[\"action\"]=\"if_ahead\",[\"block\"]=\"" + material + "\",[\"actions\"]={" + actions_string + "}},";
+  }
   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   try {
     codes = [];

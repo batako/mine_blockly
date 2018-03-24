@@ -206,6 +206,21 @@ function blocklymobs:register_mob(name, def)
 
         self.run_action(self, dtime, condition.actions[condition.step])
 
+      elseif condition.actions[condition.step].action == "if_ahead" then
+        if not condition.actions[condition.step].name then
+          condition.actions[condition.step].name = "if_ahead"
+        end
+
+        if not condition.actions[condition.step].ahead_node_name then
+          condition.actions[condition.step].ahead_node_name = self.get_ahead_node(self).name
+        end
+
+        if condition.actions[condition.step].block == condition.actions[condition.step].ahead_node_name then
+          self.run_action(self, dtime, condition.actions[condition.step])
+        else
+          self.next_step(self, condition)
+        end
+
       else
         if condition.actions[condition.step].action == "left" then
           local velocity = self.get_velocity(self)
@@ -287,6 +302,12 @@ function blocklymobs:register_mob(name, def)
           elseif condition.actions[condition.step].action == "forever" then
             self.run_action(self, dtime, condition.actions[condition.step])
 
+          elseif condition.actions[condition.step].action == "if_ahead" then
+            if condition.actions[condition.step].step <= #condition.actions[condition.step].actions then
+              self.run_action(self, dtime, condition.actions[condition.step])
+            else
+              self.next_step(self, condition)
+            end
           end
         end
 
@@ -362,6 +383,13 @@ function blocklymobs:register_mob(name, def)
       end
 
       return angle
+    end,
+
+    get_ahead_node = function(self)
+      local pos = self.get_ahead_pos(self)
+      local ahead_node = minetest.get_node(pos)
+
+      return ahead_node
     end,
 
     get_ahead_pos = function(self)
@@ -448,6 +476,9 @@ function blocklymobs:register_mob(name, def)
     init_condition = function(self, condition)
       condition.step  = 1
       condition.stats = self.statuses.neutral
+
+      -- for if_ahead
+      condition.ahead_node_name = nil
 
       for index, _ in pairs(condition.actions) do
         condition.actions[index].stats = self.statuses.neutral

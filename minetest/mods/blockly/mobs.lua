@@ -50,6 +50,18 @@ function blocklymobs:register_mob(name, def)
     },
     is_dirty_pos = nil,
 
+    round = function(num)
+      local correction_value = nil
+
+      if num >= 0 then
+        correction_value = 0.5
+      else
+        correction_value = 0.4
+      end
+
+      return math.floor(num + correction_value)
+    end,
+
     is_reverse = function(self)
       return self.walk_velocity < 0
     end,
@@ -203,9 +215,9 @@ function blocklymobs:register_mob(name, def)
         condition.actions[condition.step].next_pos = next_pos
       else
         condition.actions[condition.step].next_pos = {
-          x = math.floor(next_pos.x + 0.5),
+          x = self.round(next_pos.x),
           y = next_pos.y,
-          z = math.floor(next_pos.z + 0.5),
+          z = self.round(next_pos.z),
         }
       end
     end,

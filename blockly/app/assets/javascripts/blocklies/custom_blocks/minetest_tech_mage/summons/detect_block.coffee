@@ -9,7 +9,7 @@ Blockly.Blocks["minetest_mage_summons_detect_block"] =
       ]), "operator")
     @appendDummyInput()
       .appendField(new Blockly.FieldDropdown([
-        ["ahead", "ahead"]
+        ["front", "front"]
       ]), "direction")
     @appendStatementInput("actions")
       .setCheck(null)
@@ -22,9 +22,11 @@ Blockly.Blocks["minetest_mage_summons_detect_block"] =
 getCode = (language, operator, material, direction, actions) ->
   switch language
     when "JavaScript"
-      "detectBlock('#{operator}', #{material}, '#{direction}', function() {\n#{actions}});\n"
+      "detectBlock('#{operator}', #{material}, '#{direction}', " \
+        + "function() {\n#{actions}});\n"
     when "Ruby"
-      "detect_block('#{operator}', #{material}, '#{direction}', ->{\n#{actions}})\n"
+      "detect_block('#{operator}', #{material}, '#{direction}', " \
+        + "->{\n#{actions}})\n"
 
 
 apply = (language) ->

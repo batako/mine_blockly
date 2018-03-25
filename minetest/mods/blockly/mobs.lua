@@ -126,7 +126,7 @@ function blocklymobs:register_mob(name, def)
       if self.is_slowdown(self) then
         self.set_velocity(self, self.walk_velocity)
 
-        if self.get_under_node(self).name == "air" then
+        if self.get_node(self, "bottom").name == "air" then
           self.fall(self)
         else
           self.jump(self)
@@ -218,7 +218,7 @@ function blocklymobs:register_mob(name, def)
     end,
 
     set_next_pos = function(self, condition)
-      local ahead_pos = self.get_ahead_pos(self)
+      local ahead_pos = self.get_pos(self, "front")
 
       condition.actions[condition.step].next_pos = {
         x = ahead_pos.x,
@@ -262,9 +262,10 @@ function blocklymobs:register_mob(name, def)
         end
 
         if not condition.actions[condition.step].ahead_node_name then
-          if condition.actions[condition.step].direction == "ahead" then
-            condition.actions[condition.step].ahead_node_name = self.get_ahead_node(self).name
-          end
+          condition.actions[condition.step].ahead_node_name = self.get_node(
+            self,
+            condition.actions[condition.step].direction
+          ).name
         end
 
         local run = nil
@@ -305,7 +306,7 @@ function blocklymobs:register_mob(name, def)
               pos = self.object:getpos()
               self.object:setpos({x = pos.x, y = pos.y + 1, z = pos.z})
             elseif condition.actions[condition.step].type == "ahead" then
-              pos = self.get_ahead_pos(self)
+              pos = self.get_pos(self, "front")
             end
 
             minetest.add_node(pos, { name = material })
@@ -315,7 +316,7 @@ function blocklymobs:register_mob(name, def)
           self.object:remove()
 
         elseif condition.actions[condition.step].action == "destroy_block" then
-          local ahead_pos = self.get_ahead_pos(self)
+          local ahead_pos = self.get_pos(self, "front")
           local ahead_node = minetest.get_node(ahead_pos)
           local current_pos = self.object:getpos()
 
@@ -435,52 +436,53 @@ function blocklymobs:register_mob(name, def)
       return angle
     end,
 
-    get_ahead_node = function(self)
-      local pos = self.get_ahead_pos(self)
-      local ahead_node = minetest.get_node(pos)
-
-      return ahead_node
-    end,
-
-    get_ahead_pos = function(self)
+    get_pos = function(self, type)
       local current_pos = self.object:getpos()
-      local ahead_pos = {}
-      local angle = self.get_angle(self)
+      local radian = nil
+      local distance = 1
+      local destination_pos = {x = nil, y = nil, z = nil}
 
-      if angle == 0 then
-        ahead_pos = {
-          x = current_pos.x,
-          y = current_pos.y,
-          z = current_pos.z + 1,
-        }
-      elseif angle == 90 then
-        ahead_pos = {
-          x = current_pos.x - 1,
-          y = current_pos.y,
-          z = current_pos.z,
-        }
-      elseif angle == 180 then
-        ahead_pos = {
-          x = current_pos.x,
-          y = current_pos.y,
-          z = current_pos.z - 1,
-        }
-      elseif angle == 270 then
-        ahead_pos = {
-          x = current_pos.x + 1,
-          y = current_pos.y,
-          z = current_pos.z,
-        }
+      if type == "right" or type == "right_top" or type == "right_bottom" then
+        radian = self.object:getyaw() - math.pi
+      elseif type == "front_right" or type == "front_top_right" or type == "front_bottom_right" then
+        radian = self.object:getyaw() - (math.pi*3)/4
+      elseif type == "front" or type == "front_top" or type == "front_bottom" then
+        radian = self.object:getyaw() - math.pi/2
+      elseif type == "front_left" or type == "front_top_left" or type == "front_bottom_left" then
+        radian = self.object:getyaw() - math.pi/4
+      elseif type == "left" or type == "left_top" or type == "left_bottom" then
+        radian = self.object:getyaw()
+      elseif type == "back_left" or type == "back_top_left" or type == "back_bottom_left" then
+        radian = self.object:getyaw() + math.pi/4
+      elseif type == "back" or type == "back_top" or type == "back_bottom" then
+        radian = self.object:getyaw() + math.pi/2
+      elseif type == "back_right" or type == "back_top_right" or type == "back_bottom_right" then
+        radian = self.object:getyaw() + math.pi/2
       end
 
-      return ahead_pos
+      if radian then
+        destination_pos.x = current_pos.x - (math.cos(radian) * distance)
+        destination_pos.z = current_pos.z - (math.sin(radian) * distance)
+      else
+        destination_pos.x = current_pos.x
+        destination_pos.z = current_pos.z
+      end
+
+      if string.match(type, "top") then
+        destination_pos.y = current_pos.y + distance
+      elseif string.match(type, "bottom") then
+        destination_pos.y = current_pos.y - distance
+      else
+        destination_pos.y = current_pos.y
+      end
+
+      return destination_pos
     end,
 
-    get_under_node = function(self)
-      local pos = self.object:getpos()
-      pos.y = pos.y - 1
-
-      return minetest.get_node(pos)
+    get_node = function(self, type)
+      return minetest.get_node(
+        self.get_pos(self, type)
+      )
     end,
 
     jump = function(self)
@@ -492,7 +494,7 @@ function blocklymobs:register_mob(name, def)
     end,
 
     gravity = function(self)
-      if self.get_under_node(self).name == "air" then
+      if self.get_node(self, "bottom").name == "air" then
         self.fall(self)
       end
     end,

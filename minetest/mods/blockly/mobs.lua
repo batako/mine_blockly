@@ -175,9 +175,11 @@ function blocklymobs:register_mob(name, def)
     end,
 
     wait = function(self, dtime, condition)
+      local seconds = tonumber(condition.actions[condition.step].seconds) or 0
+
       condition.actions[condition.step].dtime = condition.actions[condition.step].dtime + dtime
 
-      if condition.actions[condition.step].dtime > 1 then
+      if condition.actions[condition.step].dtime > seconds then
         self.next_step(self, condition)
       end
     end,

@@ -595,11 +595,7 @@ Code.runJS = function() {
   }
   var wait = function(seconds) {
     if( !(seconds > 0) ) return;
-    var i = 0;
-    while(i < seconds) {
-        actions_string += "{[\"action\"]=\"stand\"},";
-        i=(i+1)|0;
-    }
+    actions_string += "{[\"action\"]=\"stand\",seconds=\"" + seconds + "\"},";
   }
   var disappear = function() {
     actions_string += "{[\"action\"]=\"disappear\"},";

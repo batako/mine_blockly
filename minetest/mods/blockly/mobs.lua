@@ -267,6 +267,9 @@ function blocklymobs:register_mob(name, def)
         self.set_animation(self, "walk")
 
       elseif condition.actions[condition.step].action == "stand" then
+        self.set_velocity(self, 0)
+        self.set_animation(self, "stand")
+
         condition.actions[condition.step].dtime = 0
 
       elseif condition.actions[condition.step].action == "forever" then

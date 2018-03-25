@@ -15,9 +15,9 @@ Blockly.Blocks['minetest_mage_summons_wait'] =
 getCode = (language, seconds) ->
   switch language
     when "JavaScript"
-      "wait(#{seconds});\n"
+      "wait({seconds: #{seconds}});\n"
     when "Ruby"
-      "wait(#{seconds})\n"
+      "wait({seconds: #{seconds}})\n"
 
 
 apply = (language) ->

@@ -593,9 +593,12 @@ Code.runJS = function() {
     actionsFunc();
     actions_string = original_actions_string + "{[\"action\"]=\"forever\",[\"actions\"]={" + actions_string + "}},";
   }
-  var wait = function(seconds) {
-    if( !(seconds > 0) ) return;
-    actions_string += "{[\"action\"]=\"stand\",seconds=\"" + seconds + "\"},";
+  var wait = function(params = {seconds: 0, type: null}) {
+    if (params.type) {
+      actions_string += "{[\"action\"]=\"stand\",type=\"" + params.type + "\"},";
+    } else if (params.seconds > 0) {
+      actions_string += "{[\"action\"]=\"stand\",seconds=\"" + params.seconds + "\"},";
+    }
   }
   var disappear = function() {
     actions_string += "{[\"action\"]=\"disappear\"},";

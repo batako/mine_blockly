@@ -177,6 +177,24 @@ function blocklymobs:register_mob(name, def)
     wait = function(self, dtime, condition)
       local seconds = tonumber(condition.actions[condition.step].seconds) or 0
 
+      if condition.actions[condition.step].type then
+        if condition.actions[condition.step].type == "very_short" then
+          seconds = 0.1
+        elseif condition.actions[condition.step].type == "short" then
+          seconds = 0.5
+        elseif condition.actions[condition.step].type == "medium" then
+          seconds = 1
+        elseif condition.actions[condition.step].type == "long" then
+          seconds = 2
+        elseif condition.actions[condition.step].type == "very_long" then
+          seconds = 3
+        elseif condition.actions[condition.step].type == "random" then
+          math.randomseed(os.time())
+
+          seconds = math.random(0, 30)/10
+        end
+      end
+
       condition.actions[condition.step].dtime = condition.actions[condition.step].dtime + dtime
 
       if condition.actions[condition.step].dtime > seconds then

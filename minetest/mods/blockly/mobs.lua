@@ -48,6 +48,7 @@ function blocklymobs:register_mob(name, def)
       "wool:magenta",
       "wool:violet",
     },
+    is_dirty_pos = nil,
 
     is_reverse = function(self)
       return self.walk_velocity < 0
@@ -67,10 +68,14 @@ function blocklymobs:register_mob(name, def)
 
     next_step = function(self, condition)
       if condition.actions[condition.step].action == "walk" then
+        local next_pos = condition.actions[condition.step].next_pos
+
         self.set_velocity(self, 0)
-        self.object:setpos(
-          condition.actions[condition.step].next_pos
-        )
+        self.object:setpos({
+          x = next_pos.x,
+          y = self.object:getpos().y,
+          z = next_pos.z,
+        })
 
         if self.next_action(self, condition) ~= "walk" then
           self.set_animation(self, "stand")
@@ -114,6 +119,7 @@ function blocklymobs:register_mob(name, def)
 
       -- Intercepted
       if current_radian ~= condition.actions[condition.step].radian then
+        self.is_dirty_pos = true
         condition.actions[condition.step].radian = current_radian
         condition.actions[condition.step].distance = condition.actions[condition.step].distance - migratory_distance
 
@@ -191,7 +197,17 @@ function blocklymobs:register_mob(name, def)
     end,
 
     set_next_pos = function(self, condition, distance)
-      condition.actions[condition.step].next_pos = self.get_pos(self, "front", distance)
+      local next_pos = self.get_pos(self, "front", distance)
+
+      if self.is_dirty_pos then
+        condition.actions[condition.step].next_pos = next_pos
+      else
+        condition.actions[condition.step].next_pos = {
+          x = math.floor(next_pos.x + 0.5),
+          y = next_pos.y,
+          z = math.floor(next_pos.z + 0.5),
+        }
+      end
     end,
 
     convert_material = function(self, material)

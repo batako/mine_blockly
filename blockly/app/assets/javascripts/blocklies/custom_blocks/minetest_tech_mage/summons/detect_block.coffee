@@ -9,7 +9,31 @@ Blockly.Blocks["minetest_mage_summons_detect_block"] =
       ]), "operator")
     @appendDummyInput()
       .appendField(new Blockly.FieldDropdown([
+        ["right", "right"]
+        # ["right top", "right_top"]
+        # ["right bottom", "right_bottom"]
+        # ["front right", "front_right"]
+        # ["front top_right", "front_top_right"]
+        # ["front bottom_right", "front_bottom_right"]
         ["front", "front"]
+        # ["front top", "front_top"]
+        ["front bottom", "front_bottom"]
+        # ["front left", "front_left"]
+        # ["front top_left", "front_top_left"]
+        # ["front bottom_left", "front_bottom_left"]
+        ["left", "left"]
+        # ["left top", "left_top"]
+        # ["left bottom", "left_bottom"]
+        # ["back left", "back_top_left"]
+        # ["back bottom_left", "back_bottom_left"]
+        ["back", "back"]
+        # ["back top", "back_top"]
+        # ["back bottom", "back_bottom"]
+        # ["back right", "back_right"]
+        # ["back top_right", "back_top_right"]
+        # ["back bottom_right", "back_bottom_right"]
+        ["top", "top"]
+        ["bottom", "bottom"]
       ]), "direction")
     @appendStatementInput("actions")
       .setCheck(null)

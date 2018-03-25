@@ -65,48 +65,12 @@ function blocklymobs:register_mob(name, def)
       return action
     end,
 
-    fix_pos_after_walk = function(self, condition)
-      local pos = self.object:getpos()
-
-      -- +dz
-      if condition.actions[condition.step].angle == 0 then
-        self.object:setpos({
-          x = pos.x,
-          y = pos.y,
-          z = condition.actions[condition.step].next_pos.z,
-        })
-
-      -- -dx
-      elseif condition.actions[condition.step].angle == 90 then
-        self.object:setpos({
-          x = condition.actions[condition.step].next_pos.x,
-          y = pos.y,
-          z = pos.z,
-        })
-
-      -- -dz
-      elseif condition.actions[condition.step].angle == 180 then
-        self.object:setpos({
-          x = pos.x,
-          y = pos.y,
-          z = condition.actions[condition.step].next_pos.z,
-        })
-
-      -- +dx
-      elseif condition.actions[condition.step].angle == 270 then
-        self.object:setpos({
-          x = condition.actions[condition.step].next_pos.x,
-          y = pos.y,
-          z = pos.z,
-        })
-
-      end
-    end,
-
     next_step = function(self, condition)
       if condition.actions[condition.step].action == "walk" then
         self.set_velocity(self, 0)
-        self.fix_pos_after_walk(self, condition)
+        self.object:setpos(
+          condition.actions[condition.step].next_pos
+        )
 
         if self.next_action(self, condition) ~= "walk" then
           self.set_animation(self, "stand")
@@ -134,43 +98,32 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
+    get_distance = function(start_pos, end_pos)
+      return math.sqrt(
+        (end_pos.x - start_pos.x)^2 + (end_pos.z - start_pos.z)^2
+      )
+    end,
+
     walk = function(self, condition)
       local pos = self.object:getpos()
-      local current_angle = self.get_angle(self)
+      local current_radian = self.object:getyaw()
+      local migratory_distance = self.get_distance(
+        condition.actions[condition.step].start_pos,
+        self.object:getpos()
+      )
 
       -- Intercepted
-      if current_angle ~= condition.actions[condition.step].angle then
-        condition.actions[condition.step].angle = current_angle
-        -- FIXME: distance
-        self.set_next_pos(self, condition)
+      if current_radian ~= condition.actions[condition.step].radian then
+        condition.actions[condition.step].radian = current_radian
+        condition.actions[condition.step].distance = condition.actions[condition.step].distance - migratory_distance
+
+        self.set_next_pos(self, condition, condition.actions[condition.step].distance)
       end
 
       self.collision_detection(self)
 
-      -- +dz
-      if condition.actions[condition.step].angle == 0 then
-        if pos.z >= condition.actions[condition.step].next_pos.z then
-          self.next_step(self, condition)
-        end
-
-      -- -dx
-      elseif condition.actions[condition.step].angle == 90 then
-        if pos.x <= condition.actions[condition.step].next_pos.x then
-          self.next_step(self, condition)
-        end
-
-      -- -dz
-      elseif condition.actions[condition.step].angle == 180 then
-        if pos.z <= condition.actions[condition.step].next_pos.z then
-          self.next_step(self, condition)
-        end
-
-      -- +dx
-      elseif condition.actions[condition.step].angle == 270 then
-        if pos.x >= condition.actions[condition.step].next_pos.x then
-          self.next_step(self, condition)
-        end
-
+      if migratory_distance >= condition.actions[condition.step].distance then
+        self.next_step(self, condition)
       end
     end,
 
@@ -202,16 +155,16 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
-    turn = function(self, angle)
-      self.object:setyaw(self.object:getyaw() + (angle/180*math.pi) )
+    turn = function(self, radian)
+      self.object:setyaw(self.object:getyaw() + radian )
     end,
 
     turn_left = function(self)
-      self.turn(self, 90)
+      self.turn(self, math.pi/2)
     end,
 
     turn_right = function(self)
-      self.turn(self, -90)
+      self.turn(self, -math.pi/2)
     end,
 
     turn_random = function(self)
@@ -237,14 +190,8 @@ function blocklymobs:register_mob(name, def)
       end
     end,
 
-    set_next_pos = function(self, condition)
-      local ahead_pos = self.get_pos(self, "front")
-
-      condition.actions[condition.step].next_pos = {
-        x = ahead_pos.x,
-        y = ahead_pos.y,
-        z = ahead_pos.z,
-      }
+    set_next_pos = function(self, condition, distance)
+      condition.actions[condition.step].next_pos = self.get_pos(self, "front", distance)
     end,
 
     convert_material = function(self, material)
@@ -260,7 +207,9 @@ function blocklymobs:register_mob(name, def)
 
     action = function(self, condition, dtime)
       if condition.actions[condition.step].action == "walk" then
-        condition.actions[condition.step].angle = self.get_angle(self)
+        condition.actions[condition.step].radian = self.object:getyaw()
+        condition.actions[condition.step].start_pos = self.object:getpos()
+        condition.actions[condition.step].distance = 1
 
         self.set_next_pos(self, condition)
         self.set_velocity(self, self.walk_velocity)
@@ -459,11 +408,11 @@ function blocklymobs:register_mob(name, def)
       return angle
     end,
 
-    get_pos = function(self, type)
+    get_pos = function(self, type, distance)
       local current_pos = self.object:getpos()
       local radian = nil
-      local distance = 1
       local destination_pos = {x = nil, y = nil, z = nil}
+      local distance = distance or 1
 
       if type == "right" or type == "right_top" or type == "right_bottom" then
         radian = self.object:getyaw() - math.pi

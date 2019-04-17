@@ -51,7 +51,7 @@ function whereami.update_hud_displays(player)
   player:hud_change(
     whereami.playerhuds[name],
     "text",
-    S("Coordinates: X=@1, Y=@2, Z=@3", pos.x, pos.y, pos.z)
+    S("@1  Coordinates: X=@2, Y=@3, Z=@4",name, pos.x, pos.y, pos.z)
   )
 end
 

@@ -14,6 +14,6 @@ if [ -z "`grep 'rbenv' ~/.bash_profile`" ] ; then
   source ~/.bash_profile
 fi
 
-echo Installing ruby 2.5.0...
-rbenv install 2.5.0
-rbenv global 2.5.0
+echo Installing ruby 2.6.2...
+rbenv install 2.6.2
+rbenv global 2.6.2

@@ -1,0 +1,3 @@
+# Use the alternative shape for the leaves and needles?
+# Usare la forma alternativa per foglie e aghi di pino?
+round_trunks_leaves (Alternative Leaves) bool false

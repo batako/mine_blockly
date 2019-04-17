@@ -1,0 +1,37 @@
+minetest.register_chatcommand("ainoshima", {
+        description = "Teleport player to first point",
+        func = function(name)
+                local player = minetest.get_player_by_name(name)
+                if player == nil then
+                        return
+                end
+
+           -- Get world path:
+           local worldpath = minetest.get_worldpath()
+           -- Get world name:
+           local worldname = worldpath:match( "([^/]+)$" )
+
+           local xStep = math.random(0,3)
+           local yStep = math.random(0,0)
+           local zStep = math.random(0,3)
+           local lengthStep = 20
+
+           if(worldname == "shingutown" 
+           ) then
+                xx=380
+                yy=2
+                zz=-850
+           else
+                xx=0
+                yy=0
+                zz=0
+           end
+
+           xx = xx + xStep * lengthStep
+           yy = yy + xStep * lengthStep
+           zz = zz + xStep * lengthStep
+           
+                player:moveto({ x = xx, y = yy, z = zz})
+        end,
+})
+

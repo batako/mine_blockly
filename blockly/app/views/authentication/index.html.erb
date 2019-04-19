@@ -1,0 +1,5 @@
+<%= form_with url: sign_in_path, local: true do |form| %>
+  I'm
+  <%= form.text_field :login_id, class: 'name', id: 'name' %>
+  <%= form.button '!' %>
+<% end %>

@@ -18,6 +18,17 @@ body.blocklies {
       text-align: right;
       padding-top: 7.5px;
       padding-right: 15px;
+
+      .user,
+      .log-out a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .user {
+        margin-right: 10px;
+      }
     }
 
     /* Buttons */

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309034651) do
+ActiveRecord::Schema.define(version: 20190418125916) do
+
+  create_table "users", force: :cascade do |t|
+    t.string "login_id", null: false
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["login_id"], name: "index_users_on_login_id", unique: true
+    t.index ["token"], name: "index_users_on_token", unique: true
+  end
 
   create_table "workspaces", force: :cascade do |t|
     t.string "name"

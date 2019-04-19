@@ -2,6 +2,7 @@ class BlockliesController < ApplicationController
   before_action :create_blockly_mod_home, only: :run
 
   def index
+    @user = User.current
     @workspaces = Workspace.order(id: :desc).all
   end
 

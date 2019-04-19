@@ -274,16 +274,46 @@ body.blocklies {
     .dashboard-wrap {
       .dashboard {
         padding: 5px;
-        background-color: #e7f8ff;
         position: fixed;
-        right: -350px;
+        right: -450px;
         top: 81px;
         z-index: 500;
-        width: 350px;
+        width: 450px;
         -webkit-transition: .3s;
 
         &.open {
           right: 0;
+        }
+
+        &.mine {
+          background-color: #e7f8ff;
+
+          .workspace-form,
+          .workspaces {
+            .share {
+              display: none;
+            }
+          }
+          .workspaces {
+            .row {
+              border-bottom: 2px dashed #91d0ea;
+            }
+          }
+        }
+        &.share {
+          background-color: #FFDBC9;
+
+          .workspace-form {
+            visibility: hidden;
+          }
+          .workspaces .mine {
+            display: none;
+          }
+          .workspaces {
+            .row {
+              border-bottom: 2px dashed #ff9800;
+            }
+          }
         }
 
         .index {
@@ -295,7 +325,6 @@ body.blocklies {
           top: 86px;
           transform: rotate(-90deg);
 
-          background: #03A9F4;
           padding: 2px 10px;
           font-size: 13px;
           letter-spacing: 2px;
@@ -309,29 +338,58 @@ body.blocklies {
           -moz-user-select: none;
           -webkit-user-select: none;
           -ms-user-select: none;
+
+          &.mine {
+            left: -90px;
+            top: 86px;
+            background-color: #03A9F4;
+          }
+          &.share {
+            left: -109px;
+            top: 272px;
+            background-color: #FF6928;
+          }
         }
 
         .workspaces {
           overflow: auto;
+          line-height: 24px;
 
           .row {
-            border-bottom: 2px dashed #91d0ea;
             padding: 3px 0 3px;
 
             .name {
+              padding-left: 10px;
               word-wrap: break-word;
               font-weight: bold;
             }
 
-            .restore a {
+            .public,
+            .private {
+              padding: 0;
+            }
+            .public,
+            .private,
+            .restore,
+            .destroy {
               font-size: 14px;
               font-weight: bold;
+              text-align: center;
+            }
+
+            .public a {
+              color: #FF6928;
+              letter-spacing: 1.1px;
+            }
+            .private a {
+              color: #03A9F4;
+            }
+
+            .restore a {
               color: #189a1d;
             }
 
             .destroy a {
-              font-size: 14px;
-              font-weight: bold;
               color: #dc3545;
             }
           }

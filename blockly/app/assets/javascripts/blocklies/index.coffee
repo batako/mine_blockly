@@ -45,6 +45,11 @@ $ ->
     , 500
 
 
+  removeIndexClassOfDashboard = ->
+    $('#dashboard').removeClass('mine')
+    $('#dashboard').removeClass('share')
+
+
   $("#navbar_sideButton").on "click", ->
     openSideNav()
 
@@ -58,11 +63,17 @@ $ ->
 
 
   $("#dashboard_wrap #overlay").on "click", ->
+    removeIndexClassOfDashboard()
     closeDashboad()
 
 
-  $("#dashboard_wrap #index").on "click", ->
-    if isOpenedDashboad()
+  $("#dashboard_wrap #indexMine, #dashboard_wrap #indexShare").on "click", ->
+    removeIndexClassOfDashboard()
+
+    if isOpenedDashboad() && $('#dashboard').data('index-type') == $(this).data('index-type')
       closeDashboad()
     else
+      $('#dashboard').addClass(
+        $(this).data('index-type')
+      ).data('index-type', $(this).data('index-type'))
       openDashboard()

@@ -1,14 +1,30 @@
-<% workspaces.each do |workspace| %>
+<span class="mine">
+<% workspaces._mine.each do |workspace| %>
   <div class="row none-margin">
+    <% if workspace.share %>
+      <div class="col-sm-2 public">
+      <%= link_to "[PUBLIC]",
+                  workspace_path(workspace.id, workspace: {share: false}),
+                  method: :put,
+                  remote: true %>
+      </div>
+    <% else %>
+      <div class="col-sm-2 private">
+      <%= link_to "[PRIVATE]",
+                  workspace_path(workspace.id, workspace: {share: true}),
+                  method: :put,
+                  remote: true %>
+      </div>
+    <% end %>
     <div class="col-sm-6 name none-padding"><%= workspace.name %></div>
-    <div class="col-sm-3 restore">
+    <div class="col-sm-2 restore">
       <%= link_to "Restore",
                   edit_workspace_path(workspace.id),
                   method: :get,
                   id: "restore",
                   remote: true %>
     </div>
-    <div class="col-sm-3 destroy">
+    <div class="col-sm-2 destroy">
       <%= link_to "Destroy",
                   workspace,
                   method: :delete,
@@ -17,3 +33,19 @@
     </div>
   </div>
 <% end %>
+</span>
+<span class="share">
+<% workspaces._theirs._share.each do |workspace| %>
+  <div class="row none-margin">
+    <div class="col-sm-9 name none-padding"><%= workspace.name %></div>
+    <div class="col-sm-3 restore">
+      <%= link_to "Restore",
+                  "javascript:
+                    Code.workspace.clear();
+                    Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(
+                      '#{ workspace.xml }'),Code.workspace
+                    );" %>
+    </div>
+  </div>
+<% end %>
+</span>

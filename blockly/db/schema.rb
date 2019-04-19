@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190418125916) do
+ActiveRecord::Schema.define(version: 20190419085234) do
 
   create_table "users", force: :cascade do |t|
     t.string "login_id", null: false
@@ -26,6 +26,9 @@ ActiveRecord::Schema.define(version: 20190418125916) do
     t.string "xml"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by", null: false
+    t.boolean "share", default: false, null: false
+    t.index ["created_by"], name: "index_workspaces_on_created_by"
   end
 
 end

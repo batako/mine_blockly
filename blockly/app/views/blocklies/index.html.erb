@@ -9,8 +9,9 @@
 <div class="dashboard-wrap" id="dashboard_wrap">
   <div class="overlay" id="overlay"></div>
   <div class="dashboard" id="dashboard">
-    <div class="index" id="index">Shared Workspaces</div>
-    <div id="workspace_form">
+    <div class="index mine" id="indexMine" data-index-type="mine">My Workspaces</div>
+    <div class="index share" id="indexShare" data-index-type="share">Shared Workspaces</div>
+    <div class="workspace-form" id="workspace_form">
       <%= render "blocklies/workspaces/new" %>
     </div>
     <div class="workspaces" id="workspaces">
@@ -29,7 +30,7 @@
               class="navbar-toggler pull-xs-right"
               id="navbar_sideButton">&#9776;</button> -->
       <span class="user">
-        Hi, <%= @user.login_id %>!
+        Hi, <%= @user.login_id %> !
       </span>
       <span class="log-out">
         <%= link_to "Log Out", sign_out_path, method: :delete, remote: false %>

@@ -1,5 +1,9 @@
 $ ->
-  if $('body').hasClass('authentication') && $('body').hasClass('index')
+  return unless $('body').hasClass('authentication')
+
+  if $('body').hasClass('index')
+    localStorage.clear()
+
     $('#name').on 'input', (e) ->
       str = $(e.target).val()
 

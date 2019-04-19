@@ -38,10 +38,10 @@ class Blocklies::WorkspacesController < ApplicationController
     end
 
     def set_valiables
-      @workspaces = Workspace.order(id: :desc).all
+      @workspaces = Workspace._mine.or(Workspace._share).order(id: :desc).all
     end
 
     def workspace_params
-      params.require(:workspace).permit(:name, :xml)
+      params.require(:workspace).permit(:name, :xml, :share)
     end
 end

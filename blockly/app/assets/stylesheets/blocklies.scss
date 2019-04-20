@@ -125,7 +125,26 @@ body.blocklies {
           font-size: 10px;
           font-weight: bold;
           line-height: 24px;
+          text-align: center;
 
+          &#tab_blocks,
+          &#tab_javascript,
+          &#tab_ruby,
+          &#tab_xml {
+            display: inline-block;
+          }
+          &#tab_blocks {
+            width: 97px;
+          }
+          &#tab_javascript {
+            width: 131px;
+          }
+          &#tab_ruby {
+            width: 84px;
+          }
+          &#tab_xml {
+            width: 79px;
+          }
           &.tabon {
             border-bottom-color: #ddd !important;
             background-color: #ddd;

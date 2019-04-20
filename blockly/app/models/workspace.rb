@@ -12,6 +12,8 @@
 #
 
 class Workspace < ApplicationRecord
+  default_scope { order(created_at: :desc) }
+
   belongs_to :creator, class_name:'User', foreign_key: :created_by
 
   validates :name, presence: true

@@ -41,7 +41,10 @@
       <%= workspace.user_name %>
     </div>
     <div class="col-sm-7 none-padding">
-      <span class="updated-at">[<%= workspace.updated_at.strftime('%m/%d') %>]</span>
+      <span class="updated-at"
+            title="<%= workspace.updated_at.strftime('%Y/%m/%d %H:%M') %>">
+        [<%= workspace.updated_at.strftime('%m/%d') %>]
+      </span>
       <span class="workspace-name"><%= workspace.name %></span>
     </div>
     <div class="col-sm-2 restore">

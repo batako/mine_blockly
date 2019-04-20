@@ -37,8 +37,14 @@
 <span class="share">
 <% workspaces._theirs._share.each do |workspace| %>
   <div class="row none-margin">
-    <div class="col-sm-9 name none-padding"><%= workspace.name %></div>
-    <div class="col-sm-3 restore">
+    <div class="col-sm-3 user-name">
+      <%= workspace.user_name %>
+    </div>
+    <div class="col-sm-7 none-padding">
+      <span class="updated-at">[<%= workspace.updated_at.strftime('%m/%d') %>]</span>
+      <span class="workspace-name"><%= workspace.name %></span>
+    </div>
+    <div class="col-sm-2 restore">
       <%= link_to "Restore",
                   "javascript:
                     Code.workspace.clear();

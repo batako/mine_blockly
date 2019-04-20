@@ -3,7 +3,7 @@ html[dir=rtl] body.blocklies.index {
     text-align: left;
   }
   td.tabmax {
-    text-align: left;
+    text-align: right !important;
   }
 }
 
@@ -171,7 +171,7 @@ body.blocklies {
             width: 99%;
             padding-left: 10px;
             padding-right: 10px;
-            text-align: right;
+            text-align: left;
           }
         }
       }

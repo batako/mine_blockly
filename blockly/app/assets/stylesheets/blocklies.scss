@@ -404,12 +404,12 @@ body.blocklies {
             }
 
             .user-name {
-              word-break: break-all;
               padding: 0 5px;
             }
             .user-name,
             .workspace-name {
               font-weight: bold;
+              word-break: break-all;
             }
             .updated-at {
               font-size: 10px;

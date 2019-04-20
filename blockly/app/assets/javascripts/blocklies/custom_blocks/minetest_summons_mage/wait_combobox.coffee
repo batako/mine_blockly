@@ -1,4 +1,4 @@
-Blockly.Blocks['minetest_mage_summons_wait_combobox'] =
+Blockly.Blocks['minetest_summons_mage_wait_combobox'] =
   init: ->
     @appendDummyInput()
       .appendField("wait")
@@ -25,7 +25,7 @@ getCode = (language, block) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_mage_summons_wait_combobox"] = (block) ->
+  Blockly[language]["minetest_summons_mage_wait_combobox"] = (block) ->
     getCode(language, block)
 
 

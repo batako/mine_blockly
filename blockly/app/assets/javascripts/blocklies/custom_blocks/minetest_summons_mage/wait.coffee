@@ -1,4 +1,4 @@
-Blockly.Blocks['minetest_mage_summons_wait'] =
+Blockly.Blocks['minetest_summons_mage_wait'] =
   init: ->
     @appendDummyInput()
       .appendField("wait")
@@ -21,7 +21,7 @@ getCode = (language, seconds) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_mage_summons_wait"] = (block) ->
+  Blockly[language]["minetest_summons_mage_wait"] = (block) ->
     seconds = Blockly.JavaScript.valueToCode(
       block, "seconds", Blockly.JavaScript.ORDER_ATOMIC) || 0
 

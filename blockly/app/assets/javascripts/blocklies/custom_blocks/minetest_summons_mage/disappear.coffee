@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_mage_summons_disappear"] =
+Blockly.Blocks["minetest_summons_mage_disappear"] =
   init: ->
     @appendDummyInput()
         .appendField("disappear")
@@ -14,7 +14,7 @@ getCode = (language) ->
       "disappear()\n"
 
 apply = (language) ->
-  Blockly[language]["minetest_mage_summons_disappear"] = (block) ->
+  Blockly[language]["minetest_summons_mage_disappear"] = (block) ->
     getCode(language)
 
 for language in [

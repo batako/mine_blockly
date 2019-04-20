@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_mage_basic_text_node"] =
+Blockly.Blocks["minetest_tech_mage_text_node"] =
   init: ->
     @appendDummyInput()
       .appendField("text to")
@@ -40,7 +40,7 @@ getCode = (language, command, text, x, y, z, dx, dy, dz) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_mage_basic_text_node"] = (block) ->
+  Blockly[language]["minetest_tech_mage_text_node"] = (block) ->
     text = block.getFieldValue("TEXT")
     command = block.getFieldValue("COMMAND")
     x = Blockly[language].valueToCode(

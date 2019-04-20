@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_mage_summons_move_forward"] =
+Blockly.Blocks["minetest_summons_mage_move_forward"] =
   init: ->
     @appendDummyInput()
       .appendField("move forward")
@@ -16,7 +16,7 @@ getCode = (language) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_mage_summons_move_forward"] = (block) ->
+  Blockly[language]["minetest_summons_mage_move_forward"] = (block) ->
     getCode(language)
 
 

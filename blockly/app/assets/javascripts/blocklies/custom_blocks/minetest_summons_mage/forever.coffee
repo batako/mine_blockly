@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_mage_summons_forever"] =
+Blockly.Blocks["minetest_summons_mage_forever"] =
   init: ->
     @appendDummyInput()
         .appendField("forever")
@@ -19,7 +19,7 @@ getCode = (language, actions) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_mage_summons_forever"] = (block) ->
+  Blockly[language]["minetest_summons_mage_forever"] = (block) ->
     actions = Blockly[language].statementToCode(block, "ACTIONS")
 
     getCode(language, actions)

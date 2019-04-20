@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_mage_summons_drop"] =
+Blockly.Blocks["minetest_summons_mage_drop"] =
   init: ->
     @appendValueInput("item")
       .setCheck("String")
@@ -18,7 +18,7 @@ getCode = (language, item) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_mage_summons_drop"] = (block) ->
+  Blockly[language]["minetest_summons_mage_drop"] = (block) ->
     item = Blockly[language].valueToCode(
       block, "item", Blockly[language].ORDER_ATOMIC).slice(1,-1) \
         || "default:torch"

@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_mage_basic_teleport"] =
+Blockly.Blocks["minetest_tech_mage_teleport"] =
   init: ->
     @appendDummyInput()
       .appendField("teleport")
@@ -28,7 +28,7 @@ getCode = (language, name, x, y, z) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_mage_basic_teleport"] = (block) ->
+  Blockly[language]["minetest_tech_mage_teleport"] = (block) ->
     name = Blockly[language].valueToCode(
       block, "name")
     x = Blockly[language].valueToCode(

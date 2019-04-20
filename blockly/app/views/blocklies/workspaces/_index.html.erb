@@ -1,6 +1,14 @@
 <span class="mine">
 <% workspaces._mine.each do |workspace| %>
   <div class="row none-margin">
+    <div class="col-sm-1 none-padding icons">
+      <%= link_to workspace_path(workspace.id, workspace: {pin: !workspace.pin}),
+                  method: :put,
+                  remote: true do %>
+        <i class="fas fa-thumbtack pin <%= workspace.pin %>"></i>
+      <% end %>
+      <%# <i class="fas fa-star star true"></i> %>
+    </div>
     <% if workspace.share %>
       <div class="col-sm-2 public">
       <%= link_to "[PUBLIC]",
@@ -16,7 +24,7 @@
                   remote: true %>
       </div>
     <% end %>
-    <div class="col-sm-6 name none-padding"><%= workspace.name %></div>
+    <div class="col-sm-5 name none-padding"><%= workspace.name %></div>
     <div class="col-sm-2 restore">
       <%= link_to "Restore",
                   edit_workspace_path(workspace.id),
@@ -37,10 +45,17 @@
 <span class="share">
 <% workspaces._theirs._share.each do |workspace| %>
   <div class="row none-margin">
+    <div class="col-sm-1 none-padding icons">
+      <%= link_to workspace_path(workspace.id, workspace: {pin: !workspace.pin}),
+                  method: :put,
+                  remote: true do %>
+        <i class="fas fa-thumbtack pin <%= workspace.pin %>"></i>
+      <% end %>
+    </div>
     <div class="col-sm-3 user-name">
       <%= workspace.user_name %>
     </div>
-    <div class="col-sm-7 none-padding">
+    <div class="col-sm-6 none-padding">
       <span class="updated-at"
             title="<%= workspace.created_at.strftime('%Y/%m/%d %H:%M') %>">
         [<%= workspace.created_at.strftime('%m/%d') %>]

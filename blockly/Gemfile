@@ -79,3 +79,4 @@ gem 'mini_racer'
 gem "bootstrap", ">= 4.3.1"
 gem 'request_store'
 gem 'active_decorator'
+gem 'font-awesome-sass'

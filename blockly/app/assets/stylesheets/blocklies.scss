@@ -376,6 +376,19 @@ body.blocklies {
           .row {
             padding: 3px 0 3px;
 
+            .icons {
+              text-align: center;
+
+              .pin {
+                &.true {
+                  color: red;
+                }
+                &.false {
+                  color: gray;
+                }
+              }
+            }
+
             .name {
               padding-left: 10px;
               word-wrap: break-word;

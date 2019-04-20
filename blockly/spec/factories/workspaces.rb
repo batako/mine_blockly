@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  created_by :integer          not null
 #  share      :boolean          default(FALSE), not null
+#  pin        :boolean          default(FALSE), not null
 #
 
 FactoryBot.define do

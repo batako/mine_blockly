@@ -9,17 +9,18 @@
 #  updated_at :datetime         not null
 #  created_by :integer          not null
 #  share      :boolean          default(FALSE), not null
+#  pin        :boolean          default(FALSE), not null
 #
 
 class Workspace < ApplicationRecord
-  default_scope { order(created_at: :desc) }
+  default_scope { order(pin: :desc).order(created_at: :desc) }
 
   belongs_to :creator, class_name:'User', foreign_key: :created_by
 
   validates :name, presence: true
   validates :xml, presence: true
 
-  before_validation :set_created_by
+  before_create :set_created_by
 
   scope :_mine, ->{ where(created_by: User.current) }
   scope :_theirs, ->{ where.not(created_by: User.current) }

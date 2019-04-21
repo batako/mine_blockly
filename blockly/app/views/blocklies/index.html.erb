@@ -30,7 +30,7 @@
               class="navbar-toggler pull-xs-right"
               id="navbar_sideButton">&#9776;</button> -->
       <span class="user">
-        Hi, <%= @user.login_id %> !
+        Hi, <%= @user.name.presence || @user.login_id %> !
       </span>
       <span class="log-out">
         <%= link_to "Log Out", sign_out_path, method: :delete, remote: false %>

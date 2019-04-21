@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  role       :integer          default("guest"), not null
+#  name       :string
 #
 
 class User < ApplicationRecord

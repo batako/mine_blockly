@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190421164614) do
+ActiveRecord::Schema.define(version: 20190421202050) do
 
   create_table "users", force: :cascade do |t|
     t.string "login_id", null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20190421164614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0, null: false
+    t.string "name"
     t.index ["login_id"], name: "index_users_on_login_id", unique: true
     t.index ["token"], name: "index_users_on_token", unique: true
   end

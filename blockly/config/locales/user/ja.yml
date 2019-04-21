@@ -6,6 +6,7 @@ ja:
       user:
         id:         ID
         login_id:   ログインID
+        name:       名前
         token:      トークン
         role:       権限
         created_at: 作成日時

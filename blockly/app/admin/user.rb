@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :login_id, :role
+  permit_params :login_id, :name, :role
 
   filter :login_id
   filter :role,
@@ -12,6 +12,7 @@ ActiveAdmin.register User do
     selectable_column
     column :id
     column :login_id
+    column :name
     column t('activerecord.attributes.user.role') do |user|
       user.role_i18n
     end
@@ -25,6 +26,7 @@ ActiveAdmin.register User do
     attributes_table do
       row :id
       row :login_id
+      row :name
       row t('activerecord.attributes.user.role') do |user|
         user.role_i18n
       end
@@ -34,6 +36,7 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs do
       f.input :login_id
+      f.input :name
       f.input :role,
         as: :select,
         collection: User.roles_i18n.invert,

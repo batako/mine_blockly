@@ -1,5 +1,5 @@
 <span class="mine">
-<% workspaces._mine.each do |workspace| %>
+<% workspaces._mine.sorted.each do |workspace| %>
   <div class="row none-margin">
     <div class="col-sm-1 none-padding icons">
       <%= link_to workspace_path(workspace.id, workspace: {pin: !workspace.pin}),
@@ -31,7 +31,15 @@
                   remote: true %>
       </div>
     <% end %>
-    <div class="col-sm-5 name none-padding"><%= workspace.name %></div>
+    <div class="col-sm-5 none-padding">
+      <span class="name"><%= workspace.name %></span>
+        <% if workspace.like_count > 0 %>
+          <span class="thumbs-up active">
+            <i class="fas fa-thumbs-up icon"></i>
+            <span class="count"><%= workspace.like_count %></span>
+          </span>
+        <% end %>
+    </div>
     <div class="col-sm-2 restore">
       <%= link_to "Restore",
                   edit_workspace_path(workspace.id),
@@ -50,7 +58,7 @@
 <% end %>
 </span>
 <span class="share">
-<% workspaces._theirs._share.each do |workspace| %>
+<% workspaces._theirs._share.sorted.each do |workspace| %>
   <div class="row none-margin">
     <div class="col-sm-1 none-padding icons">
       <%= link_to workspace_path(workspace.id, workspace: {pin: !workspace.pin}),
@@ -76,6 +84,17 @@
         [<%= workspace.created_at.strftime('%m/%d') %>]
       </span>
       <span class="workspace-name"><%= workspace.name %></span>
+      <%= link_to workspace_emotion_path(
+              workspace.id, :like,
+              {type: workspace.my_like.present? ? :delete : :create}
+            ),
+            method: :put,
+            remote: true do %>
+        <span class="thumbs-up <%= workspace.my_like.present? ? 'active' : '' %>">
+          <i class="fas fa-thumbs-up icon"></i>
+          <span class="count"><%= workspace.like_count if workspace.like_count > 0 %></span>
+        </span>
+      <% end %>
     </div>
     <div class="col-sm-2 restore">
       <%= link_to "Restore",

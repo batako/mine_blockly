@@ -13,13 +13,6 @@
 #
 
 class Workspace < ApplicationRecord
-  default_scope {
-    left_joins(:emotions).includes(:emotions) \
-      .order(pin: :desc) \
-      .order('CASE workspace_emotions.emotion WHEN 1 THEN 0 ELSE 1 END ASC') \
-      .order(created_at: :desc) \
-  }
-
   belongs_to :creator, class_name:'User', foreign_key: :created_by
   has_many :emotions, class_name: 'WorkspaceEmotion'
 
@@ -32,8 +25,26 @@ class Workspace < ApplicationRecord
   scope :_theirs, ->{ where.not(created_by: User.current) }
   scope :_share, ->{ where(share: true) }
 
+  def self.sorted
+    all.includes(:emotions).sort_by{|w|
+      [
+        w.pin ? 0 : 1,
+        w.emotions.find{|e| e.user_id == User.current.id && e.favorite? } ? 0: 1,
+        - w.created_at.to_i
+      ]
+    }
+  end
+
   def my_favorite
     emotions.favorite._mine.first
+  end
+
+  def my_like
+    emotions.like._mine.first
+  end
+
+  def like_count
+    emotions.like.size
   end
 
   private

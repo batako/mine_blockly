@@ -7,9 +7,9 @@ class BlockliesController < ApplicationController
   end
 
   def run
-    File.open("#{Settings.minetest.blockly_mod_home}/admin", 'a') do |file|
+    File.open("#{Settings.minetest.blockly_mod_home}/#{current_user.login_id}", 'a') do |file|
       codes.each do |code|
-        file.puts code
+        file.puts code.gsub('@LOGIN_ID', current_user.login_id)
       end
     end
 

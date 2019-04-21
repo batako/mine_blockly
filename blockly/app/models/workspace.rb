@@ -19,7 +19,7 @@ class Workspace < ApplicationRecord
   validates :name, presence: true
   validates :xml, presence: true
 
-  before_create :set_created_by
+  before_validation :set_created_by
 
   scope :_mine, ->{ where(created_by: User.current) }
   scope :_theirs, ->{ where.not(created_by: User.current) }
@@ -49,6 +49,6 @@ class Workspace < ApplicationRecord
 
   private
     def set_created_by
-      self.created_by = User.current.try(:id)
+      self.created_by ||= User.current.try(:id)
     end
 end

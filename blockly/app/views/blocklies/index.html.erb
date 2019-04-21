@@ -141,43 +141,45 @@
         </shadow>
       </value>
     </block>
-    <block type="minetest_tech_mage_teleport">
-      <value name="name">
-        <block type="text"></block>
-      </value>
-      <value name="x">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-      <value name="y">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-      <value name="z">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-    </block>
-    <block type="minetest_tech_mage_teleport_all">
-      <value name="x">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-      <value name="y">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-      <value name="z">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-    </block>
+    <% if current_user.admin? %>
+      <block type="minetest_tech_mage_teleport">
+        <value name="name">
+          <block type="text"></block>
+        </value>
+        <value name="x">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="z">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="minetest_tech_mage_teleport_all">
+        <value name="x">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="z">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+    <% end %>
   </category>
 
   <category name="SummonsMage" colour="%{BKY_COLOUR_HUE}">

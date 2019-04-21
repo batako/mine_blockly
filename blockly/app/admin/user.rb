@@ -2,6 +2,11 @@ ActiveAdmin.register User do
   permit_params :login_id, :role
 
   filter :login_id
+  filter :role,
+    as: :select,
+    collection: User.roles_i18n.invert.map{|label, key|
+      [label, User.roles[key]]
+    }.to_h
 
   index do
     selectable_column

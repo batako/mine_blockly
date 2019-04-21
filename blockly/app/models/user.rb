@@ -7,9 +7,15 @@
 #  token      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  role       :integer          default("guest"), not null
 #
 
 class User < ApplicationRecord
+  enum role: {
+    guest: 0,
+    admin: 1
+  }
+
   def self.authenticate!(login_id)
     user = find_or_create_by(login_id: login_id)
     user.generate_token!

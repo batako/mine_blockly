@@ -7,6 +7,7 @@
 #  token      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  role       :integer          default("guest"), not null
 #
 
 require 'rails_helper'

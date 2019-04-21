@@ -7,7 +7,9 @@ ActiveAdmin.register User do
     selectable_column
     column :id
     column :login_id
-    column :role
+    column t('activerecord.attributes.user.role') do |user|
+      user.role_i18n
+    end
     column :created_at
     column :updated_at
 
@@ -18,7 +20,9 @@ ActiveAdmin.register User do
     attributes_table do
       row :id
       row :login_id
-      row :role
+      row t('activerecord.attributes.user.role') do |user|
+        user.role_i18n
+      end
     end
   end
 

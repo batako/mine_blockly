@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   controller :authentication do
     post   'sign_in' => :sign_in
     delete 'sign_out' => :sign_out

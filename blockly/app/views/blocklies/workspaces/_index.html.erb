@@ -4,7 +4,8 @@
     <div class="col-sm-1 none-padding icons">
       <%= link_to workspace_path(workspace.id, workspace: {pin: !workspace.pin}),
                   method: :put,
-                  remote: true do %>
+                  remote: true,
+                  class: 'decoration-none' do %>
         <i class="fas fa-thumbtack pin <%= workspace.pin %>"></i>
       <% end %>
       <%= link_to workspace_emotion_path(
@@ -12,7 +13,8 @@
               {type: workspace.my_favorite.present? ? :delete : :create}
             ),
             method: :put,
-            remote: true do %>
+            remote: true,
+            class: 'decoration-none' do %>
         <i class="fas fa-star star <%= workspace.my_favorite.present? %>"></i>
       <% end %>
     </div>
@@ -63,7 +65,8 @@
     <div class="col-sm-1 none-padding icons">
       <%= link_to workspace_path(workspace.id, workspace: {pin: !workspace.pin}),
                   method: :put,
-                  remote: true do %>
+                  remote: true,
+                  class: 'decoration-none' do %>
         <i class="fas fa-thumbtack pin <%= workspace.pin %>"></i>
       <% end %>
       <%= link_to workspace_emotion_path(
@@ -71,7 +74,8 @@
               {type: workspace.my_favorite.present? ? :delete : :create}
             ),
             method: :put,
-            remote: true do %>
+            remote: true,
+            class: 'decoration-none' do %>
         <i class="fas fa-star star <%= workspace.my_favorite.present? %>"></i>
       <% end %>
     </div>
@@ -89,7 +93,8 @@
               {type: workspace.my_like.present? ? :delete : :create}
             ),
             method: :put,
-            remote: true do %>
+            remote: true,
+            class: 'decoration-none' do %>
         <span class="thumbs-up <%= workspace.my_like.present? ? 'active' : '' %>">
           <i class="fas fa-thumbs-up icon"></i>
           <span class="count"><%= workspace.like_count if workspace.like_count > 0 %></span>

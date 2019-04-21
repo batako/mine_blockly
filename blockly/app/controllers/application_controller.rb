@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :authenticate_user_by_token!
+  before_action :authenticate_user!
 
   def current_user
     User.current
@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   private
-    def authenticate_user_by_token!
+    def authenticate_user!
       if user = User.find_by(token: session[:token])
         User.current = user
       else

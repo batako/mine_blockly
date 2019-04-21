@@ -1,5 +1,5 @@
 class AuthenticationController < ApplicationController
-  skip_before_action :authenticate_user_by_token!, only: [:index, :sign_in]
+  skip_before_action :authenticate_user!, only: [:index, :sign_in]
 
   def index
   end

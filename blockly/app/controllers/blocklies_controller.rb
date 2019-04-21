@@ -3,7 +3,7 @@ class BlockliesController < ApplicationController
 
   def index
     @user = User.current
-    @workspaces = Workspace.order(id: :desc).all
+    @workspaces = Workspace._mine.or(Workspace._theirs._share).all
   end
 
   def run

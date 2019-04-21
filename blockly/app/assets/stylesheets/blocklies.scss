@@ -379,12 +379,20 @@ body.blocklies {
             .icons {
               text-align: center;
 
+              .pin,
+              .star {
+                &.false {
+                  color: lightgray;
+                }
+              }
               .pin {
                 &.true {
                   color: red;
                 }
-                &.false {
-                  color: gray;
+              }
+              .star {
+                &.true {
+                  color: #EBC85D;
                 }
               }
             }

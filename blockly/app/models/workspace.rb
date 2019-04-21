@@ -13,9 +13,15 @@
 #
 
 class Workspace < ApplicationRecord
-  default_scope { order(pin: :desc).order(created_at: :desc) }
+  default_scope {
+    left_joins(:emotions).includes(:emotions) \
+      .order(pin: :desc) \
+      .order('CASE workspace_emotions.emotion WHEN 1 THEN 0 ELSE 1 END ASC') \
+      .order(created_at: :desc) \
+  }
 
   belongs_to :creator, class_name:'User', foreign_key: :created_by
+  has_many :emotions, class_name: 'WorkspaceEmotion'
 
   validates :name, presence: true
   validates :xml, presence: true
@@ -25,6 +31,10 @@ class Workspace < ApplicationRecord
   scope :_mine, ->{ where(created_by: User.current) }
   scope :_theirs, ->{ where.not(created_by: User.current) }
   scope :_share, ->{ where(share: true) }
+
+  def my_favorite
+    emotions.favorite._mine.first
+  end
 
   private
     def set_created_by

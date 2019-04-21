@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190420161140) do
+ActiveRecord::Schema.define(version: 20190420172610) do
 
   create_table "users", force: :cascade do |t|
     t.string "login_id", null: false
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 20190420161140) do
     t.datetime "updated_at", null: false
     t.index ["login_id"], name: "index_users_on_login_id", unique: true
     t.index ["token"], name: "index_users_on_token", unique: true
+  end
+
+  create_table "workspace_emotions", force: :cascade do |t|
+    t.integer "workspace_id"
+    t.integer "emotion"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_workspace_emotions_on_user_id"
+    t.index ["workspace_id"], name: "index_workspace_emotions_on_workspace_id"
   end
 
   create_table "workspaces", force: :cascade do |t|

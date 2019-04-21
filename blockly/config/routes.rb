@@ -9,7 +9,9 @@ Rails.application.routes.draw do
 
     scope module: :blocklies do
       collection do
-        resources :workspaces, except: [:index, :show]
+        resources :workspaces, except: [:index, :show] do
+          resources :emotions, only: :update, param: :emotion, controller: 'workspaces/emotions'
+        end
       end
     end
   end

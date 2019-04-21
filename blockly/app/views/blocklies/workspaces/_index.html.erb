@@ -7,7 +7,14 @@
                   remote: true do %>
         <i class="fas fa-thumbtack pin <%= workspace.pin %>"></i>
       <% end %>
-      <%# <i class="fas fa-star star true"></i> %>
+      <%= link_to workspace_emotion_path(
+              workspace.id, :favorite,
+              {type: workspace.my_favorite.present? ? :delete : :create}
+            ),
+            method: :put,
+            remote: true do %>
+        <i class="fas fa-star star <%= workspace.my_favorite.present? %>"></i>
+      <% end %>
     </div>
     <% if workspace.share %>
       <div class="col-sm-2 public">
@@ -50,6 +57,14 @@
                   method: :put,
                   remote: true do %>
         <i class="fas fa-thumbtack pin <%= workspace.pin %>"></i>
+      <% end %>
+      <%= link_to workspace_emotion_path(
+              workspace.id, :favorite,
+              {type: workspace.my_favorite.present? ? :delete : :create}
+            ),
+            method: :put,
+            remote: true do %>
+        <i class="fas fa-star star <%= workspace.my_favorite.present? %>"></i>
       <% end %>
     </div>
     <div class="col-sm-3 user-name">

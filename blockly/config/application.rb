@@ -17,5 +17,10 @@ module Blockly
 
     config.assets.paths << config.root.join("vendor/assets/javascripts")
     config.assets.paths << config.root.join("vendor/assets/stylesheets")
+
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+    config.i18n.default_locale = :ja
+
+    config.time_zone = 'Tokyo'
   end
 end

@@ -27,7 +27,7 @@ ActiveAdmin.register User do
       f.input :login_id
       f.input :role,
         as: :select,
-        collection: User.roles,
+        collection: User.roles_i18n.invert,
         include_blank: false
     end
     actions

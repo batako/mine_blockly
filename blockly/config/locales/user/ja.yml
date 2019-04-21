@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザ
+    attributes:
+      user:
+        id:         ID
+        login_id:   ログインID
+        token:      トークン
+        role:       権限
+        created_at: 作成日時
+        updated_at: 更新日時
+  enums:
+    user:
+      role:
+        guest: ゲスト
+        admin: 管理者

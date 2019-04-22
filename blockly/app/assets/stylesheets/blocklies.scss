@@ -194,6 +194,10 @@ body.blocklies {
     }
     .content-blocks {
       padding: 0;
+
+      .blocklyToolboxDiv {
+        width: 130px;
+      }
     }
     .blocklySvg {
       border-top: none !important;
@@ -503,7 +507,7 @@ body.blocklies {
     .blocklyTreeRoot {
       [role=group] [role=treeitem]:nth-child(2) {
         .blocklyTreeLabel {
-          font-size: 10px;
+          font-size: 13px;
         }
       }
     }

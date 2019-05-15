@@ -26,6 +26,11 @@ RUN apk update \
     && gem install bundler -v 2.0.1 \
     && bundle install -j4 \
     && apk del .build-dependencies \
-    && mkdir -p $APP_HOME/tmp/sockets $APP_HOME/tmp/pids
+    && mkdir -p tmp/sockets tmp/pids minetest \
+    && addgroup -g 1000 -S blockly \
+    && adduser -u 1000 -S blockly -G blockly \
+    && chown -R blockly:blockly $APP_HOME
+
+USER blockly
 
 ENTRYPOINT ["pumactl", "start"]

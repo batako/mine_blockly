@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
   ActiveAdmin.routes(self)
   controller :authentication do
     post   'sign_in' => :sign_in
@@ -18,6 +20,4 @@ Rails.application.routes.draw do
   end
 
   root to: 'authentication#index'
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

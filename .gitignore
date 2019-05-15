@@ -8,6 +8,4 @@ minetest/worlds/*
 !minetest/worlds/world
 minetest/worlds/world/*
 !minetest/minetest.conf
-vagrant_scripts/blockly/blockly.service
-vagrant_scripts/minetest/minetest-server.service
-vagrant_scripts/nginx/nginx.conf
+/blockly/minetest

@@ -1,2 +1,0 @@
-minetest:
-  blockly_mod_home: <%= ENV.fetch("BLOCKLY_MOD_HOME") { "#{ENV['HOME']}/.minetest/blockly" } %>

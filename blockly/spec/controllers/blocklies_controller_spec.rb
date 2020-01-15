@@ -11,7 +11,7 @@ RSpec.describe BlockliesController, type: :controller do
   describe "GET #index" do
     it "returns a success response" do
       get :index, params: {}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -25,7 +25,7 @@ RSpec.describe BlockliesController, type: :controller do
     end
 
     it "returns a success response" do
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it "creates a blockly codes file" do

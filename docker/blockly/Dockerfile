@@ -1,10 +1,16 @@
-FROM ruby:2.6.3-alpine3.9
+FROM ruby:2.6.5-alpine3.11
 
 ENV LANG C.UTF-8
 ENV APP_HOME /blockly
 
 WORKDIR $APP_HOME
-ADD ["blockly/Gemfile", "blockly/Gemfile.lock", "./"]
+ADD [ \
+    "blockly/Gemfile", \
+    "blockly/Gemfile.lock", \
+    "blockly/package.json", \
+    "blockly/yarn.lock", \
+    "./" \
+]
 
 RUN apk update \
     && apk add --update --no-cache --virtual=.build-dependencies \
@@ -17,14 +23,21 @@ RUN apk update \
         yaml-dev \
         zlib-dev \
     && apk add --update --no-cache \
+        git \
         nodejs \
         openssh \
         ruby-json \
         sqlite-dev \
         tzdata \
+        xz-libs \
         yaml \
-    && gem install bundler -v 2.0.1 \
+        # test environment
+        less \
+        # deployment environment
+        yarn \
+    && gem install bundler -v 2.1.4 \
     && bundle install -j4 \
+    && yarn install \
     && apk del .build-dependencies \
     && mkdir -p tmp/sockets tmp/pids minetest \
     && addgroup -g 1000 -S blockly \

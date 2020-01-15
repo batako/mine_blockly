@@ -13,6 +13,6 @@
 
 FactoryBot.define do
   factory :user do
-    
+    sequence(:login_id){|n| "login_id_#{n}"}
   end
 end

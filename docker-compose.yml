@@ -20,12 +20,12 @@ services:
       - ./blockly:/blockly
       - app_blockly_mod_home:/blockly/minetest
       - app_blockly_tmp:/blockly/tmp
+      # exclude volumes
+      - /blockly/node_modules
     environment:
       RAILS_ENV: development
       BLOCKLY_MOD_HOME: /blockly/minetest
       SECRET_KEY_BASE: d11ef1afc5934e4a7c908330ab0723529338d2732de53cebc2af81b849732b4d1c1115d92c1d50f882bfb64f81dd7dadb4f8348be234d2a62e1fa948a9c2826c
-    tty: true
-    stdin_open: true
   nginx:
     build:
       context: ./docker/nginx

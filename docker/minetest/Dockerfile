@@ -4,7 +4,7 @@ ENV MINETEST_PATH /minetest
 ENV MINETEST_HOME /var/lib/minetest/.minetest
 ENV EPEL_FILE_NAME epel-release-latest-7.noarch.rpm
 ENV EPEL_URL http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-ENV MINETEST_DOWNLOAD_SHA256 33b8b8250960874014d7c66d04ef12df3a71277b9eb6f2146bba7553daeaf910
+ENV MINETEST_DOWNLOAD_SHA256 d6bb83c00ab3af26ded56459e7d6fceabfef66efbe0780b4dedbe81d62c07cd5
 
 COPY minetest $MINETEST_PATH
 

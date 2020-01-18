@@ -8,6 +8,8 @@ class AuthenticationController < ApplicationController
     @user = User.authenticate!(params[:login_id])
     session[:token] = @user.token
     redirect_to blocklies_path
+  rescue
+    redirect_to root_path
   end
 
   def sign_out

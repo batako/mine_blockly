@@ -17,6 +17,9 @@
 #
 
 class User < ApplicationRecord
+  has_many :workspaces, foreign_key: 'created_by'
+  has_many :emotions, through: :workspaces
+
   enum role: {
     guest: 0,
     admin: 1

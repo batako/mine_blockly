@@ -18,8 +18,8 @@
 #
 
 class Workspace < ApplicationRecord
-  belongs_to :creator, class_name:'User', foreign_key: :created_by
-  has_many :emotions, class_name: 'WorkspaceEmotion'
+  belongs_to :creator, class_name: 'User', foreign_key: :created_by
+  has_many :emotions, class_name: 'WorkspaceEmotion', dependent: :destroy
 
   validates :name, presence: true
   validates :xml, presence: true

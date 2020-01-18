@@ -16,6 +16,6 @@ FactoryBot.define do
   factory :workspace do
     sequence(:name){|n| "NAME #{n}"}
     sequence(:xml){|n| "XML #{n}"}
-    creator { build :user }
+    creator { create :user }
   end
 end

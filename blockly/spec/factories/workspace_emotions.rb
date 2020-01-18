@@ -12,7 +12,9 @@
 
 FactoryBot.define do
   factory :workspace_emotion do
-    user { nil }
-    emotion { 1 }
+    emotion { WorkspaceEmotion.emotions.values.sample }
+
+    association :workspace
+    association :user
   end
 end

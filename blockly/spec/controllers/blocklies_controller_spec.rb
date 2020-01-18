@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe BlockliesController, type: :controller do
+  before { sign_in :user }
 
   let(:valid_attributes) {
     {codes: ["test code 1", "test code 2"]}

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Blocklies::WorkspacesController, type: :request do
+  before { sign_in :user }
+
   describe "GET #new" do
     subject { get new_workspace_path, xhr: true }
 

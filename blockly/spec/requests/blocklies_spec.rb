@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe BlockliesController, type: :request do
+  before { sign_in :user }
+
   describe "GET #index" do
     subject { get blocklies_path }
 

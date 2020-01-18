@@ -1,4 +1,4 @@
-FROM ruby:2.6.5-alpine3.11
+FROM ruby:2.7.0-alpine3.11
 
 ENV LANG C.UTF-8
 ENV APP_HOME /blockly
@@ -36,7 +36,7 @@ RUN apk update \
         # deployment environment
         yarn \
     && gem install bundler -v 2.1.4 \
-    && bundle install -j4 \
+    && bundle install -j$(getconf _NPROCESSORS_ONLN) \
     && yarn install \
     && apk del .build-dependencies \
     && mkdir -p tmp/sockets tmp/pids minetest \

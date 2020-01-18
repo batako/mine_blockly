@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Blocklies::WorkspacesController, type: :controller do
+  before { sign_in :user }
 
   let(:valid_attributes) {
     {name: "NAME", xml: "XML"}

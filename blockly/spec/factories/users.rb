@@ -3,12 +3,17 @@
 # Table name: users
 #
 #  id         :integer          not null, primary key
-#  login_id   :string           not null
+#  name       :string
+#  role       :integer          default("guest"), not null
 #  token      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  role       :integer          default("guest"), not null
-#  name       :string
+#  login_id   :string           not null
+#
+# Indexes
+#
+#  index_users_on_login_id  (login_id) UNIQUE
+#  index_users_on_token     (token) UNIQUE
 #
 
 FactoryBot.define do

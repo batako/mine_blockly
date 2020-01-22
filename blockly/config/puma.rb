@@ -31,7 +31,8 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 #
 # preload_app!
 
-bind ENV.fetch("SOCKET") { "unix://#{Rails.root}/tmp/sockets/puma.sock" }
+rails_root = File.expand_path("../..", __FILE__)
+bind ENV.fetch("SOCKET") { "unix://#{rails_root}/tmp/sockets/puma.sock" }
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 state_path "tmp/pids/puma.state"
 stdout_redirect "log/puma.stdout.log", "log/puma.stderr.log", true

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Blocklies::Workspaces::EmotionsController, type: :controller do
   describe "PUT #update" do
-    subject { post :update, params: params, xhr: true }
+    subject { put :update, params: params, xhr: true }
     let(:user) { workspace_emotion.user }
     let(:workspace) { create :workspace }
     let(:workspace_emotion) { create :workspace_emotion }
@@ -28,11 +28,14 @@ RSpec.describe Blocklies::Workspaces::EmotionsController, type: :controller do
         {
           type:         type,
           workspace_id: workspace_emotion.workspace_id,
-          emotion:      WorkspaceEmotion.emotions.keys.sample
+          emotion:      workspace_emotion.emotion
         }
       }
 
-      before { subject }
+      before {
+        sign_in :user
+        subject
+      }
 
       it "returns a success response" do
         expect(response).to be_successful
@@ -40,7 +43,7 @@ RSpec.describe Blocklies::Workspaces::EmotionsController, type: :controller do
 
       it "delete a workspace_emotion" do
         expect(
-          WorkspaceEmotion.find_by(id: workspace_emotion.workspace_id)
+          WorkspaceEmotion.find_by(id: workspace_emotion.id)
         ).to eq nil
       end
     end

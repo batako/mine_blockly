@@ -21,4 +21,45 @@ require 'rails_helper'
 
 RSpec.describe Workspace, type: :model do
   it_behaves_like 'factory'
+
+  describe "Workspace.sorted" do
+    pending "add some examples to (or delete) #{__FILE__}"
+  end
+
+  describe "#my_favorite" do
+    subject { workspace.my_favorite }
+    let(:workspace) { workspace_emotion.workspace }
+    let(:workspace_emotion) { create :workspace_emotion, emotion: :favorite }
+
+    it "works" do
+      expect(subject.id).to_not eq nil
+      expect(subject.id).to eq workspace_emotion.id
+    end
+  end
+
+  describe "#my_like" do
+    subject { workspace.my_like }
+    let(:workspace) { workspace_emotion.workspace }
+    let(:workspace_emotion) { create :workspace_emotion, emotion: :like }
+
+    it "works" do
+      expect(subject.id).to_not eq nil
+      expect(subject.id).to eq workspace_emotion.id
+    end
+  end
+
+  describe "#like_count" do
+    subject { workspace.like_count }
+    let(:workspace) { create :workspace }
+    let!(:favorite_emotion) {
+      create :workspace_emotion, emotion: :favorite, workspace: workspace
+    }
+    let!(:like_emotion) {
+      create :workspace_emotion, emotion: :like, workspace: workspace
+    }
+
+    it "works" do
+      expect(subject).to eq 1
+    end
+  end
 end

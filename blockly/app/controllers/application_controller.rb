@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   private
     def authenticate_user!
-      if user = User.find_by(token: session[:token])
+      if user = User._has_token.find_by(token: session[:token])
         User.current = user
       else
         redirect_to root_path

@@ -25,10 +25,18 @@ class User < ApplicationRecord
     admin: 1
   }
 
+  scope :_has_token, ->{ where.not(token: nil) }
+
   def self.authenticate!(login_id)
     user = find_or_create_by(login_id: login_id)
     user.generate_token!
+    User.current = user
     user
+  end
+
+  def self.extinguish!
+    User.current.update!(token: nil)
+    User.current = nil
   end
 
   def self.current
@@ -43,10 +51,10 @@ class User < ApplicationRecord
     token = nil
 
     loop do
-      self.token = Digest::MD5.hexdigest(SecureRandom.urlsafe_base64)
-      break unless User.exists?(token: self.token)
+      token = Digest::MD5.hexdigest(SecureRandom.urlsafe_base64)
+      break unless User.exists?(token: token)
     end
 
-    save!
+    update!(token: token)
   end
 end

@@ -11,11 +11,9 @@ RSpec.describe Blocklies::WorkspacesController, type: :controller do
     {name: nil, xml: nil}
   }
 
-  let(:valid_session) { {} }
-
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session, xhr: true
+      get :new, params: {}, xhr: true
       expect(response).to be_successful
     end
   end
@@ -23,7 +21,7 @@ RSpec.describe Blocklies::WorkspacesController, type: :controller do
   describe "GET #edit" do
     it "returns a success response" do
       workspace = Workspace.create! valid_attributes
-      get :edit, params: {id: workspace.to_param}, session: valid_session, xhr: true
+      get :edit, params: {id: workspace.to_param}, xhr: true
       expect(response).to be_successful
     end
   end
@@ -32,14 +30,14 @@ RSpec.describe Blocklies::WorkspacesController, type: :controller do
     context "with valid params" do
       it "creates a new Workspace" do
         expect {
-          post :create, params: {workspace: valid_attributes}, session: valid_session, xhr: true
+          post :create, params: {workspace: valid_attributes}, xhr: true
         }.to change(Workspace, :count).by(1)
       end
     end
 
     context "with invalid params" do
       it "returns a success response" do
-        post :create, params: {workspace: invalid_attributes}, session: valid_session, xhr: true
+        post :create, params: {workspace: invalid_attributes}, xhr: true
         expect(response).to be_successful
       end
     end
@@ -53,7 +51,7 @@ RSpec.describe Blocklies::WorkspacesController, type: :controller do
 
       it "updates the requested workspace" do
         workspace = Workspace.create! valid_attributes
-        put :update, params: {id: workspace.to_param, workspace: new_attributes}, session: valid_session, xhr: true
+        put :update, params: {id: workspace.to_param, workspace: new_attributes}, xhr: true
         workspace.reload
         expect(workspace.name).to eq new_attributes[:name]
         expect(workspace.xml).to eq new_attributes[:xml]
@@ -63,7 +61,7 @@ RSpec.describe Blocklies::WorkspacesController, type: :controller do
     context "with invalid params" do
       it "returns a success response" do
         workspace = Workspace.create! valid_attributes
-        put :update, params: {id: workspace.to_param, workspace: invalid_attributes}, session: valid_session, xhr: true
+        put :update, params: {id: workspace.to_param, workspace: invalid_attributes}, xhr: true
         expect(response).to be_successful
       end
     end
@@ -73,7 +71,7 @@ RSpec.describe Blocklies::WorkspacesController, type: :controller do
     it "destroys the requested workspace" do
       workspace = Workspace.create! valid_attributes
       expect {
-        delete :destroy, params: {id: workspace.to_param}, session: valid_session, xhr: true
+        delete :destroy, params: {id: workspace.to_param}, xhr: true
       }.to change(Workspace, :count).by(-1)
     end
   end

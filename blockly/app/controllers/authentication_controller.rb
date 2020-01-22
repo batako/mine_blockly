@@ -13,8 +13,8 @@ class AuthenticationController < ApplicationController
   end
 
   def sign_out
-    User.find_by(token: session[:token]).update!(token: nil)
-    session[:token] = nil
+    User.extinguish!
+    reset_session
     redirect_to root_path
   end
 end

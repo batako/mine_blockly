@@ -24,8 +24,8 @@ RSpec.describe AuthenticationController, type: :controller do
       end
 
       it "get a user token" do
-        expect(session[:token]).to_not eq nil
-        expect(session[:token]).to eq user.reload.token
+        expect(User.current.token).to_not eq nil
+        expect(User.current.token).to eq user.reload.token
       end
 
       it "redirect to home" do
@@ -55,8 +55,8 @@ RSpec.describe AuthenticationController, type: :controller do
     before { sign_in }
 
     it "signed in" do
-      expect(session[:token]).to_not eq nil
-      expect(session[:token]).to eq user.reload.token
+      expect(User.current.token).to_not eq nil
+      expect(User.current.token).to eq user.reload.token
     end
 
     it "returns a success response" do
@@ -66,7 +66,7 @@ RSpec.describe AuthenticationController, type: :controller do
 
     it "delete a user token" do
       subject
-      expect(session[:token]).to eq nil
+      expect(User.current).to eq nil
       expect(user.reload.token).to eq nil
     end
 

@@ -63,6 +63,7 @@ group :test do
   gem 'webdrivers'
 
   gem 'coveralls', require: false
+  gem 'simplecov', require: false
   gem "faker"
   gem "database_cleaner"
   gem "launchy"

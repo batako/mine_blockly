@@ -1,3 +1,8 @@
+require 'coveralls'
+Coveralls.wear!
+require 'simplecov'
+SimpleCov.start 'rails'
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
@@ -58,6 +63,3 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include TestHelpers
 end
-
-require 'coveralls'
-Coveralls.wear!('rails')

@@ -441,6 +441,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   shoulda-matchers
+  simplecov
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)

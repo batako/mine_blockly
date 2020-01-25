@@ -18,6 +18,8 @@
 
 FactoryBot.define do
   factory :user do
+    sequence(:name){|n| "name_#{n}"}
     sequence(:login_id){|n| "login_id_#{n}"}
+    role { "guest" }
   end
 end

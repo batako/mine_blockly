@@ -2,4 +2,6 @@ language: ruby
 rvm:
   - 2.7.0
 script: ./build.sh
-cache: bundler
+cache:
+  directories:
+    - blockly/vendor/bundle

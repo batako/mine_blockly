@@ -1,5 +1,8 @@
-$ ->
+$(window).on 'load', ->
   return unless $("body").hasClass("blocklies") && $("body").hasClass("index")
+
+  init = ->
+    fitDashboard()
 
 
   openSideNav = ->
@@ -58,7 +61,7 @@ $ ->
     closeSideNav()
 
 
-  $(window).on "load resize", ->
+  $(window).on "resize", ->
     fitDashboard()
 
 
@@ -77,3 +80,6 @@ $ ->
         $(this).data('index-type')
       ).data('index-type', $(this).data('index-type'))
       openDashboard()
+
+
+  init()

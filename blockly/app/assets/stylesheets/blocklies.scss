@@ -30,6 +30,19 @@ body.blocklies {
       }
     }
 
+    .workspace-header {
+      .buttons {
+        height: 0;
+        text-align: center;
+        display: flow-root;
+
+        .spacer {
+          width: 200px;
+          display: inline-block;
+        }
+      }
+    }
+
     /* Buttons */
     button {
       margin: 1px 5px;
@@ -301,7 +314,7 @@ body.blocklies {
         top: 81px;
         z-index: 500;
         width: 450px;
-        -webkit-transition: .3s;
+        transition: .3s;
 
         &.open {
           right: 0;
@@ -339,21 +352,12 @@ body.blocklies {
         }
 
         .index {
-          color: white;
-          font-weight: bold;
           cursor: pointer;
+          width: 23px;
+          background-size: 23px;
+          background-repeat: no-repeat;
           position: absolute;
-          left: -109px;
-          top: 86px;
-          transform: rotate(-90deg);
-
-          padding: 2px 10px;
-          font-size: 13px;
-          letter-spacing: 2px;
-
-          border-radius: 10px 10px 0px 0px;
-          -webkit-border-radius: 10px 10px 0px 0px;
-          -moz-border-radius: 10px 10px 0px 0px;
+          left: -23px;
 
           // disable focus
           user-select: none;
@@ -362,14 +366,15 @@ body.blocklies {
           -ms-user-select: none;
 
           &.mine {
-            left: -90px;
-            top: 86px;
-            background-color: #03A9F4;
+            top: 5px;
+            background-image: image-url('blocklies/my-workspaces');
+            height: 134.97px;
           }
+
           &.share {
-            left: -109px;
-            top: 272px;
-            background-color: #FF6928;
+            top: 146px;
+            background-image: image-url('blocklies/shared-workspaces');
+            height: 163.7px;
           }
         }
 
@@ -447,6 +452,7 @@ body.blocklies {
             .private,
             .restore,
             .destroy {
+              padding: 0;
               font-size: 14px;
               font-weight: bold;
               text-align: center;

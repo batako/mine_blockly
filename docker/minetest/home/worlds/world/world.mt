@@ -61,3 +61,4 @@ load_mod_go_programming = true
 viewing_range = 1000
 default_privs = interact,shout,fast,fly,train_admin
 max_users = 100
+auth_backend = files

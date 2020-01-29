@@ -1,29 +1,48 @@
-FROM centos:7
+FROM alpine:3.11
 
-ENV MINETEST_PATH /minetest
-ENV MINETEST_HOME /var/lib/minetest/.minetest
-ENV EPEL_FILE_NAME epel-release-latest-7.noarch.rpm
-ENV EPEL_URL http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-ENV MINETEST_DOWNLOAD_SHA256 d6bb83c00ab3af26ded56459e7d6fceabfef66efbe0780b4dedbe81d62c07cd5
+ENV MINETEST_HOME /minetest
 
-COPY minetest $MINETEST_PATH
+RUN apk update; \
+    apk add --update --no-cache --virtual=.build-dependencies \
+        build-base \
+        bzip2-dev \
+        cmake \
+        git \
+        jpeg-dev \
+        jsoncpp-dev \
+        libxxf86vm-dev \
+        mesa-dev \
+        zlib-dev \
+    ; \
+    apk add --update --no-cache \
+        curl-dev \
+        freetype-dev \
+        gmp-dev \
+        irrlicht-dev \
+        libogg-dev \
+        libpng-dev \
+        libvorbis-dev \
+        luajit-dev \
+        openal-soft-dev \
+        sqlite-dev \
+    ; \
+    git clone --depth 1 -b 0.4.17.1 https://github.com/minetest/minetest.git $MINETEST_HOME; \
+    git clone --depth 1 -b 0.4.17.1 https://github.com/minetest/minetest_game.git $MINETEST_HOME/games/minetest_game; \
+    cd $MINETEST_HOME; \
+    cmake . -DRUN_IN_PLACE=TRUE; \
+    make -j$(getconf _NPROCESSORS_ONLN); \
+    addgroup -S minetest; \
+    adduser -S minetest -G minetest; \
+    chown -R minetest:minetest $MINETEST_HOME; \
+    apk del --purge .build-dependencies;
 
-WORKDIR /tmp
-RUN yum -y update \
-    && yum install -y sudo \
-    && curl -o epel.rpm $EPEL_URL \
-    && echo "${MINETEST_DOWNLOAD_SHA256} epel.rpm" | sha256sum -c - \
-    && rpm -Uvh epel.rpm \
-    && /bin/rm -f epel.rpm \
-    && yum install -y minetest \
-    && yum clean all \
-    && chown -R minetest.minetest $MINETEST_PATH \
-    && sudo -u minetest ln -s $MINETEST_PATH $MINETEST_HOME
+COPY --chown=minetest:minetest home $MINETEST_HOME
 
-WORKDIR $MINETEST_PATH
+WORKDIR $MINETEST_HOME
+
 USER minetest
 
-ENTRYPOINT ["minetestserver"]
-CMD ["--quiet"]
+ENTRYPOINT ["bin/minetest"]
+CMD ["--server", "--quiet"]
 
 EXPOSE 30000/udp

@@ -1,11 +1,3 @@
-.vagrant
-Vagrantfile
-minetest/*
-!minetest/mods
-!minetest/worlds
-minetest/worlds/*
-!minetest/worlds/world.mt.example
-!minetest/worlds/world
-minetest/worlds/world/*
-!minetest/minetest.conf
-/blockly/minetest
+blockly/minetest
+docker/minetest/home/worlds/world/*
+!docker/minetest/home/worlds/world/world.mt

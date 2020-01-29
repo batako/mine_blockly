@@ -5,15 +5,7 @@ services:
       context: .
       dockerfile: ./docker/blockly/Dockerfile
     container_name: mine_blockly_app
-    entrypoint:
-      - bundle
-      - exec
-      - rails
-      - s
-      - -p
-      - '3000'
-      - -b
-      - '0.0.0.0'
+    entrypoint: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     ports:
       - 3000:3000
     volumes:
@@ -22,9 +14,6 @@ services:
       - app_blockly_tmp:/blockly/tmp
       # exclude volumes
       - /blockly/node_modules
-    environment:
-      BLOCKLY_MOD_HOME: /blockly/minetest
-      SECRET_KEY_BASE: d11ef1afc5934e4a7c908330ab0723529338d2732de53cebc2af81b849732b4d1c1115d92c1d50f882bfb64f81dd7dadb4f8348be234d2a62e1fa948a9c2826c
   nginx:
     build:
       context: ./docker/nginx
@@ -41,7 +30,9 @@ services:
       context: ./docker/minetest
     container_name: mine_blockly_minetest
     volumes:
-      - app_minetest:/minetest
+      - ./docker/minetest/home/mods:/minetest/mods
+      - ./docker/minetest/home/worlds:/minetest/worlds
+      - ./docker/minetest/home/minetest.conf:/minetest/minetest.conf
       - app_blockly_mod_home:/minetest/blockly
     ports:
       - 30000:30000/udp

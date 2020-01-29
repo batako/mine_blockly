@@ -31,8 +31,8 @@ RUN apk update; \
     cd $MINETEST_HOME; \
     cmake . -DRUN_IN_PLACE=TRUE; \
     make -j$(getconf _NPROCESSORS_ONLN); \
-    addgroup -S minetest; \
-    adduser -S minetest -G minetest; \
+    addgroup -g 1000 -S minetest; \
+    adduser -u 1000 -S minetest -G minetest; \
     chown -R minetest:minetest $MINETEST_HOME; \
     apk del --purge .build-dependencies;
 

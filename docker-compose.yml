@@ -36,6 +36,13 @@ services:
       - app_blockly_mod_home:/minetest/blockly
     ports:
       - 30000:30000/udp
+  android:
+    build:
+      context: .
+      dockerfile: ./docker/android/Dockerfile
+    container_name: mine_blockly_android
+    volumes:
+      - ./docker/android/apk:/minetest/build/android/build/outputs/apk/
 volumes:
   app_blockly_tmp:
   app_minetest:

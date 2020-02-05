@@ -1,3 +1,5 @@
 blockly/minetest
 docker/minetest/home/worlds/world/*
 !docker/minetest/home/worlds/world/world.mt
+docker/android/apk/*
+!docker/android/apk/.keep

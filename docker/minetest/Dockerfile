@@ -26,8 +26,8 @@ RUN apk update; \
         openal-soft-dev \
         sqlite-dev \
     ; \
-    git clone --depth 1 -b 0.4.17.1 https://github.com/minetest/minetest.git $MINETEST_HOME; \
-    git clone --depth 1 -b 0.4.17.1 https://github.com/minetest/minetest_game.git $MINETEST_HOME/games/minetest_game; \
+    git clone --depth 1 https://github.com/minetest/minetest.git $MINETEST_HOME; \
+    git clone --depth 1 https://github.com/minetest/minetest_game.git $MINETEST_HOME/games/minetest_game; \
     cd $MINETEST_HOME; \
     cmake . -DRUN_IN_PLACE=TRUE; \
     make -j$(getconf _NPROCESSORS_ONLN); \

@@ -16,37 +16,32 @@ minetest.register_chatcommand("createblock", {
   end,
 })
 
-minetest.register_chatcommand("placeonplayer", {
-  params = "material playername x y z moveplayer",
-  description = "Creates block <material> near <playername> at (<x>, <y>, <z>)",
+minetest.register_chatcommand("createblock_on_player", {
+  params = "material player_name x y z teleport",
+  description = "Creates block <material> near <player_name> at (<x>, <y>, <z>)",
   func = function(name, param)
-		local found, _, material, playername, xx, yy, zz, moveplayer = param:find("^(.*)%s+(.*)%s+([+-]?%d+)%s+([+-]?%d+)%s+([+-]?%d+)%s+(.*)$")
+    local found, _, material, player_name, xx, yy, zz, teleport = param:find("^(.*)%s+(.*)%s+([+-]?%d+)%s+([+-]?%d+)%s+([+-]?%d+)%s+(.*)$")
 
-		if found == nil then
-		  print("failed")
-		  return
-		end
+    if found == nil then
+      return
+    end
 
-		local player = minetest.get_player_by_name(playername)
-		if not player then
-		  print("player not found")
-		  return
-		else
-		local pos = player:getpos()
+    local player = minetest.get_player_by_name(player_name)
+    if player then
+      local pos = player:getpos()
 
-		xc = tonumber(pos.x + xx)
-		yc = tonumber(pos.y + yy + 0.5)
-		zc = tonumber(pos.z + zz)
+      xc = tonumber(pos.x + xx)
+      yc = tonumber(pos.y + yy + 0.5)
+      zc = tonumber(pos.z + zz)
 
-		print(yc)
-
-		minetest.add_node({ x = xc, y = yc, z = zc}, { name = material })
-		if moveplayer == "TRUE" then
-		  minetest.after(0, function() player:set_pos({x=xc, y=yc+1, z=zc}) end)
-		end
+      minetest.add_node({ x = xc, y = yc, z = zc}, { name = material })
+      if teleport == "true" then
+        minetest.after(0, function() player:set_pos({x=xc, y=yc+1, z=zc}) end)
+      end
     end
   end,
 })
+
 
 minetest.register_chatcommand("createcube", {
 params = "material playername x1 y1 z1 x2 y2 z2",
@@ -82,7 +77,7 @@ func = function (name, param)
       local a = VoxelArea:new{
           MinEdge = emin,
           MaxEdge = emax
-      }    
+      }
       local data = vm:get_data()
       -- Modify data
         for z = pos1.z, pos2.z do
@@ -105,7 +100,7 @@ func = function (name, param)
         end
         vm:set_data(data)
         vm:write_to_map(true)
-      end 
+      end
 end
 })
 

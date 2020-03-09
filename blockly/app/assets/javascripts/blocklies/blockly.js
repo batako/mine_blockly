@@ -542,6 +542,14 @@ Code.runJS = function() {
     var code = '/createblock ' + material + ' ' + x + ' ' + y + ' ' + z;
     codes.push(code);
   }
+  var createblockOnPlayer = function(material, x, y, z, teleport){
+    if (material == "wool:random") {
+      material = getRandomWool()
+    }
+
+    var code = '/createblock_on_player ' + material + ' @LOGIN_ID ' + x + ' ' + y + ' ' + z + ' ' + teleport;
+    codes.push(code);
+  }
   var createtextblock = function(materialitext, x, y, z, dx, dy, dz) {
     var code = '/createtextblock ' + materialitext + ' ' + x + ' ' + y + ' ' + z + ' ' + dx + ' ' + dy + ' ' + dz;
     codes.push(code);

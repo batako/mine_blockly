@@ -15,7 +15,7 @@ Blockly.Blocks["minetest_tech_mage_add_node"] =
     @setInputsInline(true)
     @setPreviousStatement(true, "null")
     @setNextStatement(true, "null")
-    @setColour(45)
+    @setColour(10)
     @setTooltip("Create a minetest block of a given material, at coordinates x, y, z")
 
 

@@ -26,7 +26,18 @@ minetest.register_chatcommand("createblock_on_player", {
       return
     end
 
-    local player = minetest.get_player_by_name(player_name)
+    local player
+    for _,user in ipairs(minetest.get_connected_players()) do
+      local name = user:get_player_name()
+      local str1 = player_name:lower()
+      local str2 = name:lower()
+      if str1 == str2 then
+        player = user
+      else
+        print("couldn't find a player "..player_name)
+      end
+    end
+
     if player then
       local pos = player:getpos()
 

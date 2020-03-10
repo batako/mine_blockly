@@ -103,11 +103,10 @@
     </div>
     <div class="col-sm-2 restore">
       <%= link_to "Restore",
-                  "javascript:
-                    Code.workspace.clear();
-                    Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(
-                      '#{ workspace.xml }'),Code.workspace
-                    );" %>
+                  edit_workspace_path(workspace.id),
+                  method: :get,
+                  id: "restore",
+                  remote: true %>
     </div>
   </div>
 <% end %>

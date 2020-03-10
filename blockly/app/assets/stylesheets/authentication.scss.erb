@@ -1,0 +1,58 @@
+.authentication {
+
+  &.index {
+    background-image: url(<%= asset_url 'blur-background.png' %>);
+    background-size: cover;
+
+    form {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      margin: auto;
+      height: 352px;
+      font-size: 80px;
+      text-align: center;
+      font-family: 'arial black';
+      font-weight: bold;
+
+      .name-field {
+        position: relative;
+
+        .name {
+          width: 510px;
+          padding: 20px;
+          text-align: center;
+          background-color: rgba(255, 255, 255, 0.5);
+          border: 1px solid #ccc;
+          ime-mode: disabled;
+        }
+
+        .hint {
+          font-size: 16px;
+          position: absolute;
+          top: -24px;
+          right: 54px;
+          background-color: #e40050;
+          color: white;
+          padding: 5px;
+        }
+      }
+
+      .btn-wrap {
+        margin-top: 30px;
+
+        button {
+          border: none;
+          border-radius: 30px;
+          padding: 20px;
+          background-color: rgba(255, 255, 255, 0.1);
+          box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.5);
+          background-color: #e40050;
+          color: white;
+        }
+      }
+    }
+  }
+}

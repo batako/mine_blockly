@@ -1,5 +1,15 @@
 <%= form_with url: sign_in_path, local: true do |form| %>
   I'm
-  <%= form.text_field :login_id, class: 'name', id: 'name' %>
-  <%= form.button '!' %>
+  <span class="name-field">
+    <%= form.text_field :login_id,
+                        class: 'name',
+                        id: 'name',
+                        placeholder: 'your name' %>&nbsp;!
+    <span class="hint">
+      English-only
+    </span>
+  </span>
+  <div class="btn-wrap">
+    <%= form.button "Let's Start Coding" %>
+  </div>
 <% end %>

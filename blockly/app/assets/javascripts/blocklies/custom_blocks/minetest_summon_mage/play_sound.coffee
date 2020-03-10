@@ -1,4 +1,4 @@
-Blockly.Blocks['minetest_summons_mage_play_sound'] =
+Blockly.Blocks['minetest_summon_mage_play_sound'] =
   init: ->
     @appendDummyInput()
       .appendField("play sound")
@@ -26,7 +26,7 @@ getCode = (language, block) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_summons_mage_play_sound"] = (block) ->
+  Blockly[language]["minetest_summon_mage_play_sound"] = (block) ->
     getCode(language, block)
 
 

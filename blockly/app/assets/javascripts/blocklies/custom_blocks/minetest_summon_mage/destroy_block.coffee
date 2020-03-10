@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_summons_mage_destroy_block"] =
+Blockly.Blocks["minetest_summon_mage_destroy_block"] =
   init: ->
     @appendDummyInput()
         .appendField("destroy block")
@@ -14,7 +14,7 @@ getCode = (language) ->
       "destroy_block()\n"
 
 apply = (language) ->
-  Blockly[language]["minetest_summons_mage_destroy_block"] = (block) ->
+  Blockly[language]["minetest_summon_mage_destroy_block"] = (block) ->
     getCode(language)
 
 for language in [

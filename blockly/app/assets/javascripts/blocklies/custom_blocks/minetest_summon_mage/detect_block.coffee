@@ -1,4 +1,4 @@
-Blockly.Blocks["minetest_summons_mage_detect_block"] =
+Blockly.Blocks["minetest_summon_mage_detect_block"] =
   init: ->
     @appendValueInput("material")
       .setCheck("String")
@@ -54,7 +54,7 @@ getCode = (language, operator, material, direction, actions) ->
 
 
 apply = (language) ->
-  Blockly[language]["minetest_summons_mage_detect_block"] = (block) ->
+  Blockly[language]["minetest_summon_mage_detect_block"] = (block) ->
     operator = block.getFieldValue("operator")
     material = Blockly[language].valueToCode(block, "material")
     actions = Blockly[language].statementToCode(block, "actions")

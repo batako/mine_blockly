@@ -1,10 +1,8 @@
-Blockly.Blocks["minetest_summons_mage_place_ahead"] =
+Blockly.Blocks["minetest_summon_mage_place"] =
   init: ->
     @appendValueInput("material")
       .setCheck("String")
       .appendField("place")
-    @appendDummyInput()
-      .appendField("ahead")
     @setInputsInline(true)
     @setPreviousStatement(true, "null")
     @setNextStatement(true, "null")
@@ -14,13 +12,13 @@ Blockly.Blocks["minetest_summons_mage_place_ahead"] =
 getCode = (language, material) ->
   switch language
     when "JavaScript"
-      "place(#{material}, 'ahead');\n"
+      "place(#{material});\n"
     when "Ruby"
-      "place(#{material}, 'ahead')\n"
+      "place(#{material})\n"
 
 
 apply = (language) ->
-  Blockly[language]["minetest_summons_mage_place_ahead"] = (block) ->
+  Blockly[language]["minetest_summon_mage_place"] = (block) ->
     material = Blockly[language].valueToCode(
       block, "material", Blockly[language].ORDER_ATOMIC).slice(1,-1) || "air"
 

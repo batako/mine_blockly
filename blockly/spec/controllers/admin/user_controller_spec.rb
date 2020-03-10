@@ -29,8 +29,8 @@ RSpec.describe Admin::UsersController, type: :controller do
 
     context "filter login_id" do
       let(:filters_sidebar) { page.find('#filters_sidebar_section') }
-      let!(:matching_user) { create :user, login_id: 'ABCDEFG' }
-      let!(:non_matching_user) { create :user, login_id: 'HIJKLMN' }
+      let!(:matching_user) { create :user, login_id: 'abcdefg' }
+      let!(:non_matching_user) { create :user, login_id: 'hijklmn' }
 
       it "exists" do
         get :index
@@ -39,7 +39,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       it "works" do
-        get :index, params: { q: { login_id_contains: 'BCDEF' } }
+        get :index, params: { q: { login_id_contains: 'bcdef' } }
         expect(page).to have_content(matching_user.login_id)
         expect(page).not_to have_content(non_matching_user.login_id)
       end

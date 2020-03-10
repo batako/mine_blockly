@@ -43,17 +43,6 @@
         <button id="trashButton" class="notext" title="...">
           <%= image_tag("blocklies/1x1.gif", :class => "trash icon21") %>
         </button>
-        <span class="spacer"></span>
-        <!-- <button id="linkButton" class="notext" title="...">
-          <%= image_tag("blocklies/1x1.gif", :class => "link icon21") %>
-        </button> -->
-        <%= form_tag(run_blocklies_path, remote: true, class: "flat") do %>
-          <button id="runButton" class="notext primary" title="...">
-            <%= image_tag("blocklies/1x1.gif", :class => "run icon21") %>
-          </button>
-          <div id="runParams"></div>
-          <%= token_tag %>
-        <% end %>
       </span>
       <table width="100%">
         <tr id="tabRow" class="tab-row">
@@ -64,6 +53,15 @@
           <td id="tab_ruby" class="taboff" style="display:none;">Ruby</td>
           <td class="tabmin">&nbsp;</td>
           <td id="tab_xml" class="taboff">XML</td>
+          <td class="run-button-wrap">
+            <%= form_tag(run_blocklies_path, remote: true, class: "flat") do %>
+              <button id="runButton" class="notext primary" title="...">
+                <%= image_tag("blocklies/1x1.gif", :class => "run icon21") %>
+              </button>
+              <div id="runParams"></div>
+              <%= token_tag %>
+            <% end %>
+          </td>
           <td class="tabmax"></td>
         </tr>
       </table>

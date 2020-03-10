@@ -27,6 +27,12 @@ class User < ApplicationRecord
 
   scope :_has_token, ->{ where.not(token: nil) }
 
+  validates :login_id, presence: true,
+                       uniqueness: true,
+                       format: {
+                         with: /\A[a-z0-9]+\z/
+                       }
+
   def self.authenticate!(login_id)
     user = find_or_create_by(login_id: login_id)
     user.generate_token!

@@ -5,9 +5,9 @@ $ ->
     localStorage.clear()
 
     $('#name').on 'input', (e) ->
-      str = $(e.target).val()
+      str = $(e.target).val().toLowerCase()
 
-      while str.match(/[^A-Z^a-z\d\-]/)
-        str = str.replace(/[^A-Z^a-z\d\-]/,"")
+      while str.match(/[^a-z0-9]/)
+        str = str.replace(/[^a-z0-9]/, '')
 
       $(e.target).val(str)

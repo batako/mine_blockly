@@ -5,6 +5,7 @@ $ ->
     if $('body').hasClass('index')
       localStorage.clear()
 
+    bindEvent()
     validation()
 
 

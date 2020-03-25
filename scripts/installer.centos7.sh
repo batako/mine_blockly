@@ -16,7 +16,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 sudo yum install -y git
-git clone https://github.com/batako/mine_blockly.git $APP_ROOT
+git clone -b minetest-5.1.1 https://github.com/batako/mine_blockly.git $APP_ROOT
 
 cd $APP_ROOT
 sudo /usr/local/bin/docker-compose up -d blockly

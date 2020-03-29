@@ -52,6 +52,10 @@ class Workspace < ApplicationRecord
     emotions.like.size
   end
 
+  def mine?
+    created_by == User.current.id
+  end
+
   private
     def set_created_by
       self.created_by ||= User.current.try(:id)

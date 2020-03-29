@@ -62,4 +62,27 @@ RSpec.describe Workspace, type: :model do
       expect(subject).to eq 1
     end
   end
+
+  describe "#mine?" do
+    subject { workspace.mine? }
+    let(:workspace) { create :workspace, creator: creator }
+    let(:creator) { create :user }
+    let(:reviewer) { create :user }
+
+    context "when creator" do
+      before { User.current = creator }
+
+      it "works" do
+        expect(subject).to eq true
+      end
+    end
+
+    context "when reviewer" do
+      before { User.current = reviewer }
+
+      it "works" do
+        expect(subject).to eq false
+      end
+    end
+  end
 end

@@ -43,10 +43,9 @@
         <% end %>
     </div>
     <div class="col-sm-2 restore">
-      <%= link_to "Restore",
+      <%= link_to "Summon",
                   edit_workspace_path(workspace.id),
                   method: :get,
-                  id: "restore",
                   remote: true %>
     </div>
     <div class="col-sm-2 destroy">
@@ -105,7 +104,6 @@
       <%= link_to "Summon",
                   edit_workspace_path(workspace.id),
                   method: :get,
-                  id: "restore",
                   remote: true %>
     </div>
   </div>

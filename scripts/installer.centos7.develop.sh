@@ -16,8 +16,10 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-
 sudo chmod +x /bin/docker-compose
 
 sudo yum install -y git
-git clone -b minetest-5.1.1 https://github.com/batako/mine_blockly.git $APP_ROOT
+git clone https://github.com/batako/mine_blockly.git $APP_ROOT
 
 cd $APP_ROOT
-sudo docker-compose up -d blockly
-sudo docker-compose up -d minetest
+git checkout develop
+cp docker-compose.develop.yml docker-compose.yml
+sudo docker-compose up -d
+sudo docker-compose exec blockly rails db:migrate

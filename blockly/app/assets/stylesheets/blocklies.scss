@@ -123,6 +123,14 @@ body.blocklies {
         background: -moz-linear-gradient(to bottom, #4c8220, #3b2616 30%, #553b2e);
         background: -webkit-linear-gradient(to bottom, #4c8220,#3b2616 30%, #553b2e);
         background: linear-gradient(to bottom, #4c8220, #3b2616 30%, #553b2e);
+
+        .app-name {
+          display: inline-table;
+        }
+        .version {
+          color: white;
+          font-size: xx-small;
+        }
       }
 
       /* Tabs */

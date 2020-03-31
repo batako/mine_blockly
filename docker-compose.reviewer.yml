@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+  blockly:
+    build:
+      context: .
+      dockerfile: ./docker/blockly/Dockerfile
+    container_name: mine_blockly_app
+    entrypoint: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./blockly:/blockly
+      - app_blockly_mod_home:/blockly/minetest
+      - app_blockly_tmp:/blockly/tmp
+      # exclude volumes
+      - /blockly/node_modules
+  nginx:
+    build:
+      context: ./docker/nginx
+    container_name: mine_blockly_nginx
+    volumes:
+      - ./blockly/public:/app/public
+      - app_blockly_tmp:/app/tmp
+    ports:
+      - 80:8080
+    depends_on:
+      - blockly
+  minetest:
+    build:
+      context: ./docker/minetest
+    container_name: mine_blockly_minetest
+    volumes:
+      - ./docker/minetest/home/mods:/minetest/mods
+      - ./docker/minetest/home/worlds:/minetest/worlds
+      - ./docker/minetest/home/minetest.conf:/minetest/minetest.conf
+      - app_blockly_mod_home:/minetest/blockly
+    ports:
+      - 30000:30000/udp
+volumes:
+  app_blockly_tmp:
+  app_minetest:
+  app_blockly_mod_home:

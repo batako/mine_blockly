@@ -19,5 +19,7 @@ sudo yum install -y git
 git clone https://github.com/batako/mine_blockly.git $APP_ROOT
 
 cd $APP_ROOT
-sudo docker-compose up -d blockly
-sudo docker-compose up -d minetest
+git checkout develop
+cp docker-compose.develop.yml docker-compose.yml
+sudo docker-compose up -d
+sudo docker-compose exec blockly rails db:migrate

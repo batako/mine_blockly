@@ -30,7 +30,7 @@ function exec_command(command)
 end
 
 
-function load_file(filepath)
+function load_file(filepath, player_name)
   f = (io.open(filepath, "r"))
 
   if f ~= nil then
@@ -40,7 +40,7 @@ function load_file(filepath)
       local message = line
 
       if message ~= nil then
-        local player = minetest.get_player_by_name("singleplayer")
+        local player = minetest.get_player_by_name(player_name)
         local cmd, param = string.match(message, "^/([^ ]+) *(.*)")
 
         if not param then
@@ -50,7 +50,7 @@ function load_file(filepath)
         local cmd_def = minetest.chatcommands[cmd]
 
         if cmd_def then
-          cmd_def.func("singleplayer", param)
+          cmd_def.func(player_name, param)
         else
           local admin = minetest.setting_get("name")
           if admin == nil or admin == '' then
@@ -73,7 +73,7 @@ minetest.register_globalstep(
     local files = split(result, "\n")
 
     for _, file in pairs(files) do
-      load_file(commands_path .. "/" .. file)
+      load_file(commands_path .. "/" .. file, file)
     end
   end
 )

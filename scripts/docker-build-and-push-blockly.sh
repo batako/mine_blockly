@@ -15,7 +15,7 @@ fi
 git checkout build-docker
 git merge develop
 cp docker-compose.develop.yml docker-compose.yml
-dcbf blockly
+docker-compose build --no-cache blockly
 docker tag mine_blockly_blockly $USER/blockly:$VERSION
 docker push $USER/blockly:$VERSION
-drmi $USER/blockly:$VERSION
+docker rmi $USER/blockly:$VERSION

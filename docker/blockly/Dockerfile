@@ -4,13 +4,7 @@ ENV LANG C.UTF-8
 ENV APP_HOME /blockly
 
 WORKDIR $APP_HOME
-ADD [ \
-    "blockly/Gemfile", \
-    "blockly/Gemfile.lock", \
-    "blockly/package.json", \
-    "blockly/yarn.lock", \
-    "./" \
-]
+ADD blockly $APP_HOME
 
 RUN apk update \
     && apk add --update --no-cache --virtual=.build-dependencies \
@@ -31,9 +25,6 @@ RUN apk update \
         tzdata \
         xz-libs \
         yaml \
-        # test environment
-        less \
-        # deployment environment
         yarn \
     && gem install bundler -v 2.1.4 \
     && bundle install -j$(getconf _NPROCESSORS_ONLN) \

@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   blockly:
-    image: batako/blockly:0.4.0-alpine3.11
-    container_name: blockly_0.4.0-alpine3.11
+    image: batako/blockly:0.5.0-alpine3.11
+    container_name: blockly_0.5.0-alpine3.11
     ports:
       - 3000:3000
     volumes:

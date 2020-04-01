@@ -205,67 +205,69 @@
     <% end %>
   </category>
 
-  <category name="SummonMage" colour="%{BKY_COLOUR_HUE}">
-    <block type="minetest_summon_mage_add_entity">
-      <value name="entity">
-        <block type="minetest_sheep_entity"></block>
-      </value>
-      <value name="x">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-      <value name="y">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-      <value name="z">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-    </block>
-    <block type="minetest_summon_mage_detect_block">
-      <value name="material">
-        <block type="minetest_dirt_block"></block>
-      </value>
-    </block>
-    <block type="minetest_summon_mage_forever"></block>
-    <block type="minetest_summon_mage_move_forward"></block>
-    <block type="minetest_summon_mage_turn">
-      <field name="ACTION">turnLeft();</field>
-    </block>
-    <block type="minetest_summon_mage_turn">
-      <field name="ACTION">turnRight();</field>
-    </block>
-    <block type="minetest_summon_mage_wait">
-      <value name="seconds">
-        <shadow type="math_number">
-          <field name="NUM">1</field>
-        </shadow>
-      </value>
-    </block>
-    <block type="minetest_summon_mage_wait_combobox"></block>
-    <block type="minetest_summon_mage_disappear"></block>
-    <block type="minetest_summon_mage_play_sound"></block>
-    <block type="minetest_summon_mage_destroy_block"></block>
-    <block type="minetest_summon_mage_place">
-      <value name="material">
-        <block type="minetest_dirt_block"></block>
-      </value>
-    </block>
-    <block type="minetest_summon_mage_place_ahead">
-      <value name="material">
-        <block type="minetest_dirt_block"></block>
-      </value>
-    </block>
-    <block type="minetest_summon_mage_drop">
-      <value name="item">
-        <block type="minetest_torch_item"></block>
-      </value>
-    </block>
-  </category>
+  <% if current_user.admin? %>
+    <category name="SummonMage" colour="%{BKY_COLOUR_HUE}">
+      <block type="minetest_summon_mage_add_entity">
+        <value name="entity">
+          <block type="minetest_sheep_entity"></block>
+        </value>
+        <value name="x">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="z">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="minetest_summon_mage_detect_block">
+        <value name="material">
+          <block type="minetest_dirt_block"></block>
+        </value>
+      </block>
+      <block type="minetest_summon_mage_forever"></block>
+      <block type="minetest_summon_mage_move_forward"></block>
+      <block type="minetest_summon_mage_turn">
+        <field name="ACTION">turnLeft();</field>
+      </block>
+      <block type="minetest_summon_mage_turn">
+        <field name="ACTION">turnRight();</field>
+      </block>
+      <block type="minetest_summon_mage_wait">
+        <value name="seconds">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="minetest_summon_mage_wait_combobox"></block>
+      <block type="minetest_summon_mage_disappear"></block>
+      <block type="minetest_summon_mage_play_sound"></block>
+      <block type="minetest_summon_mage_destroy_block"></block>
+      <block type="minetest_summon_mage_place">
+        <value name="material">
+          <block type="minetest_dirt_block"></block>
+        </value>
+      </block>
+      <block type="minetest_summon_mage_place_ahead">
+        <value name="material">
+          <block type="minetest_dirt_block"></block>
+        </value>
+      </block>
+      <block type="minetest_summon_mage_drop">
+        <value name="item">
+          <block type="minetest_torch_item"></block>
+        </value>
+      </block>
+    </category>
+  <% end %>
 
   <category name="Blocks" colour="%{BKY_COLOUR_HUE}">
     <block type="minetest_wool_random_block"></block>

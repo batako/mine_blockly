@@ -3,7 +3,7 @@
 __DIR__=$(cd $(dirname $0); pwd)
 APP_PATH=${APP_PATH:-$(cd $__DIR__/..; pwd)}
 
-BLOCKLY_VERSION=0.5.0
+BLOCKLY_VERSION=$(cat $APP_PATH/blockly/config/settings.yml | grep 'version:' | tr ':' '\n' | tail -n +2 | xargs)
 BASE_IMAGE=$(cat $APP_PATH/docker/blockly/Dockerfile | grep FROM | tr ':' '\n' | grep -v FROM | tr '-' '\n' | tail -n +2)
 
 if [ -n "$BASE_IMAGE" ]; then

@@ -28,5 +28,6 @@ regist_mob = (name) ->
 for name in [
   "sheep"
   "chicken"
+  "cat"
 ]
   regist_mob(name)

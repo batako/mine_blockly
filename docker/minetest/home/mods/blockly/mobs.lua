@@ -687,3 +687,27 @@ blocklymobs:register_mob("blockly:mob_chicken", {
   },
   sounds = {random = "mob_chicken",},
 })
+
+blocklymobs:register_mob("blockly:mob_cat", {
+  stats = {
+    makes_footstep_sound = true,
+    physical             = true,
+    type                 = "animal",
+    visual               = "mesh",
+    walk_velocity        = -1,
+  },
+  model = {
+    animation = {
+      speed_normal = 50,
+      stand_start  = 31,
+      stand_end    = 50,
+      walk_start   = 0,
+      walk_end     = 30,
+    },
+    collisionbox         = {-0.25, -0.01, -0.3, 0.25, 0.45, 0.3},
+    drawtype             = "front",
+    mesh                 = "mob_cat.x",
+    textures             = {"mob_cat.png"},
+  },
+  sounds = {random = "mob_cat",},
+})

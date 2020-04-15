@@ -4,6 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  created_by :integer          not null
+#  lock       :boolean
 #  name       :string
 #  pin        :boolean          default(FALSE), not null
 #  share      :boolean          default(FALSE), not null

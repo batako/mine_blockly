@@ -1,5 +1,5 @@
 $("#workspace_form")
-  .html('<%= j( render "form", workspace: @workspace.mine? ? @workspace : Workspace.new ) %>');
+  .html('<%= j( render "form", workspace: @workspace.mine? && !@workspace.lock? ? @workspace : Workspace.new ) %>');
 
 Blockly.Xml.appendDomToWorkspace(
   Blockly.Xml.textToDom('<%= @workspace.xml.html_safe %>'),

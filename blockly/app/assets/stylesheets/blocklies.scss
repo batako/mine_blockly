@@ -395,10 +395,18 @@ body.blocklies {
             .icons {
               text-align: center;
 
+              .lock,
               .pin,
               .star {
                 &.false {
                   color: lightgray;
+                }
+              }
+              .lock {
+                width: 18px;
+
+                &.true {
+                  color: gold;
                 }
               }
               .pin {

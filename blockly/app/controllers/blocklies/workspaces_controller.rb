@@ -42,6 +42,12 @@ class Blocklies::WorkspacesController < ApplicationController
     end
 
     def workspace_params
-      params.require(:workspace).permit(:name, :xml, :share, :pin)
+      params.require(:workspace).permit(
+        :lock,
+        :name,
+        :pin,
+        :share,
+        :xml,
+      )
     end
 end

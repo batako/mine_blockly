@@ -23,6 +23,70 @@ require 'rails_helper'
 RSpec.describe Workspace, type: :model do
   it_behaves_like 'factory'
 
+  describe 'validation' do
+    describe '#reject_to_update_lock_workspace' do
+      let(:workspace) { build :workspace, name: name, xml: 'xml', lock: lock }
+      let(:name) { 'workspace_name' }
+      let(:modified_name) { 'modified_name' }
+      let(:modified_xml) { 'modified_xml' }
+
+      context 'lock workspace' do
+        let(:lock) { true }
+
+        context 'valid' do
+          subject { workspace.update(update_params) }
+          let(:update_params) {
+            {name: modified_name}
+          }
+          before { workspace.save }
+
+          it { expect(subject).to eq true }
+        end
+
+        context 'invalid' do
+          subject { workspace.update(update_params) }
+          let(:update_params) {
+            {xml: modified_xml}
+          }
+          before { workspace.save }
+
+          it { expect(subject).to eq false }
+        end
+
+        context 'reject to delete' do
+          before { workspace.save }
+
+          it {
+            expect { workspace.destroy }.to change(Workspace, :count).by(0)
+          }
+        end
+      end
+
+      context 'unlock workspace' do
+        subject { workspace.update(update_params) }
+        let(:lock) { false }
+
+        context 'valid' do
+          let(:update_params) {
+            {name: modified_name}
+          }
+          before { workspace.save }
+
+          it { expect(subject).to eq true }
+        end
+
+        context 'invalid' do
+          let(:update_params) {
+            {xml: modified_xml}
+          }
+          before { workspace.save }
+
+          it { expect(subject).to eq true }
+        end
+      end
+    end
+  end
+
   describe "Workspace.sorted" do
     pending "add some examples to (or delete) #{__FILE__}"
   end

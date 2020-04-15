@@ -1,13 +1,21 @@
 <span class="mine">
 <% workspaces._mine.sorted.each do |workspace| %>
   <div class="row none-margin">
-    <div class="col-sm-1 none-padding icons">
+    <div class="col-sm-2 none-padding icons">
+      <%= link_to workspace_path(workspace.id, workspace: {lock: !workspace.lock}),
+                  method: :put,
+                  remote: true,
+                  class: 'decoration-none' do %>
+        <i class="fas lock <%= workspace.lock? ? 'fa-lock true' : 'fa-lock-open false' %>"></i>
+      <% end %>
+
       <%= link_to workspace_path(workspace.id, workspace: {pin: !workspace.pin}),
                   method: :put,
                   remote: true,
                   class: 'decoration-none' do %>
         <i class="fas fa-thumbtack pin <%= workspace.pin %>"></i>
       <% end if current_user.admin? %>
+
       <%= link_to workspace_emotion_path(
               workspace.id, :favorite,
               {type: workspace.my_favorite.present? ? :delete : :create}
@@ -33,7 +41,7 @@
                   remote: true %>
       </div>
     <% end %>
-    <div class="col-sm-5 none-padding">
+    <div class="col-sm-4 none-padding">
       <span class="name"><%= workspace.name %></span>
         <% if workspace.like_count > 0 %>
           <span class="thumbs-up active">
@@ -53,7 +61,7 @@
                   workspace,
                   method: :delete,
                   data: { confirm: "Are you sure?" },
-                  remote: true %>
+                  remote: true if !workspace.lock %>
     </div>
   </div>
 <% end %>

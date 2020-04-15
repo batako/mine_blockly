@@ -15,6 +15,7 @@ ja:
     errors:
       models:
         workspace:
+          permission_denied: 操作権限がありません
           attributes:
             xml:
               lock_workspace_error: はロックしているため更新できません

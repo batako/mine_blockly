@@ -25,7 +25,8 @@ RSpec.describe Workspace, type: :model do
 
   describe 'validation' do
     describe '#reject_to_update_lock_workspace' do
-      let(:workspace) { build :workspace, name: name, xml: 'xml', lock: lock }
+      let(:workspace) { build :workspace, name: name, xml: 'xml', lock: lock, creator: creator }
+      let(:creator) { create :user }
       let(:name) { 'workspace_name' }
       let(:modified_name) { 'modified_name' }
       let(:modified_xml) { 'modified_xml' }
@@ -82,6 +83,22 @@ RSpec.describe Workspace, type: :model do
           before { workspace.save }
 
           it { expect(subject).to eq true }
+        end
+      end
+
+      context 'not owner' do
+        let(:lock) { false }
+        let(:other_user) { create :user }
+        before { User.current = other_user }
+
+        context 'valid' do
+          subject { workspace.update(update_params) }
+          let(:update_params) {
+            {name: modified_name}
+          }
+          before { workspace.save }
+
+          it { expect(subject).to eq false }
         end
       end
     end

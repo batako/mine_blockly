@@ -24,11 +24,12 @@ class Workspace < ApplicationRecord
 
   validates :name, presence: true
   validates :xml, presence: true
-  validate :reject_to_update_lock_workspace, if: -> {
-    persisted? && lock? && will_save_change_to_xml?
-  }
 
   before_validation :set_created_by
+  before_update :reject_to_update_lock_workspace, if: -> {
+    created_by != User.current.id \
+      || (lock? && will_save_change_to_xml?)
+  }
   before_destroy :reject_to_destroy_lock_workspace, if: :lock?
 
   scope :_mine, ->{ where(created_by: User.current) }
@@ -67,7 +68,12 @@ class Workspace < ApplicationRecord
     end
 
     def reject_to_update_lock_workspace
-      errors.add(:xml, :lock_workspace_error)
+      if created_by != User.current.id
+        errors.add(:base, :permission_denied)
+      else
+        errors.add(:xml, :lock_workspace_error)
+      end
+      throw :abort
     end
 
     def reject_to_destroy_lock_workspace

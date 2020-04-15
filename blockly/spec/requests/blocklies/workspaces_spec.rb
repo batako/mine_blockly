@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Blocklies::WorkspacesController, type: :request do
-  before { sign_in :user }
+  let(:user) { create :user }
+  before { sign_in user }
 
   describe "GET #new" do
     subject { get new_workspace_path, xhr: true }
@@ -44,7 +45,7 @@ RSpec.describe Blocklies::WorkspacesController, type: :request do
   describe "PUT #update" do
     subject { put workspace_path(workspace.to_param, workspace: params), xhr: true }
 
-    let!(:workspace) { create(:workspace) }
+    let!(:workspace) { create(:workspace, created_by: user.id) }
 
     context "with valid params" do
       let(:params) { {name: "updated NAME", xml: "updated XML"} }

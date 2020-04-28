@@ -23,5 +23,7 @@ module Blockly
     config.i18n.default_locale = :ja
 
     config.time_zone = 'Tokyo'
+
+    config.hosts << ENV["HOST"] if ENV["HOST"]
   end
 end
